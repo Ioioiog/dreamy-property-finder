@@ -17,6 +17,25 @@ interface PropertyGalleryProps {
 
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    const loadImages = async () => {
+      if (property) {
+        const urls = await Promise.all(
+          property.images.map(async (imageName) => {
+            const { data } = supabase.storage
+              .from('property_images')
+              .getPublicUrl(`${property.id}/${imageName}`);
+            return data.publicUrl;
+          })
+        );
+        console.log('Loaded gallery images:', urls);
+        setImageUrls(urls);
+      }
+    };
+    loadImages();
+  }, [property]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -32,21 +51,20 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   if (!property) return null;
 
   const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % property.images.length);
+    setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
   };
 
   const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+    setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl h-[90vh] p-0">
         <div className="h-full flex flex-col">
-          {/* Header */}
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
-              {property.title} - Imagine {currentIndex + 1} din {property.images.length}
+              {property.title} - Imagine {currentIndex + 1} din {imageUrls.length}
             </h3>
             <button
               onClick={onClose}
@@ -56,7 +74,6 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
           </div>
 
-          {/* Main Image */}
           <div className="flex-1 relative flex items-center justify-center px-4 bg-property-cream">
             <button
               onClick={prevImage}
@@ -67,7 +84,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={property.images[currentIndex]}
+              src={imageUrls[currentIndex] || '/placeholder.svg'}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
             />
@@ -81,10 +98,9 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
           </div>
 
-          {/* Thumbnails */}
           <div className="p-4 border-t bg-white">
             <div className="flex gap-2 overflow-x-auto pb-2 justify-center">
-              {property.images.map((image, index) => (
+              {imageUrls.map((imageUrl, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
@@ -96,7 +112,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     }`}
                 >
                   <img
-                    src={image}
+                    src={imageUrl}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
                   />

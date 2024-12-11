@@ -2,6 +2,7 @@ import { Property, propertyStatuses } from '@/types/property';
 import { Rotate3d, Eye, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
 interface PropertyCardProps {
   property: Property;
@@ -16,12 +17,20 @@ export default function PropertyCard({
   onViewDetails,
   on360View 
 }: PropertyCardProps) {
-  const getImageUrl = async (propertyId: string, imageName: string) => {
-    const { data } = supabase.storage
-      .from('property_images')
-      .getPublicUrl(`${propertyId}/${imageName}`);
-    return data.publicUrl;
-  };
+  const [imageUrl, setImageUrl] = useState<string>('');
+
+  useEffect(() => {
+    const loadImage = async () => {
+      if (property.images[0]) {
+        const { data } = supabase.storage
+          .from('property_images')
+          .getPublicUrl(`${property.id}/${property.images[0]}`);
+        console.log('Loading image:', data.publicUrl);
+        setImageUrl(data.publicUrl);
+      }
+    };
+    loadImage();
+  }, [property.id, property.images]);
 
   return (
     <motion.div 
@@ -34,7 +43,7 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={`${property.images[0]}`}
+          src={imageUrl || '/placeholder.svg'}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
