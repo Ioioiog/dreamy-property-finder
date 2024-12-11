@@ -8,11 +8,9 @@ export function use360Viewer(propertyId: string) {
   const [startX, setStartX] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // We'll check for image-1.jpg, image-2.jpg etc. instead of specific room types
-  // since these are panorama images from iPhone
   useEffect(() => {
     console.log('🔄 Initializing 360 viewer for property:', propertyId);
-    setCurrentImageIndex(1); // Start from image-1
+    setCurrentImageIndex(1);
     checkTotalImages();
   }, [propertyId]);
 
@@ -22,7 +20,7 @@ export function use360Viewer(propertyId: string) {
     let checking = true;
     let index = 1;
 
-    while (checking && index <= 20) { // Check up to 20 images
+    while (checking && index <= 20) {
       try {
         const imagePath = `/assets/360/${propertyId}/image-${index}.jpg`;
         console.log(`🔍 Checking image path: ${imagePath}`);
@@ -33,11 +31,11 @@ export function use360Viewer(propertyId: string) {
         await new Promise((resolve) => {
           img.onload = () => {
             foundImages++;
-            console.log(`✅ Found image-${index}.jpg at ${imagePath}`);
+            console.log(`✅ Found image-${index}.jpg`);
             resolve(true);
           };
           img.onerror = () => {
-            checking = false; // Stop checking when we find a gap
+            checking = false;
             console.log(`❌ No more images found after image-${index-1}.jpg`);
             resolve(false);
           };
@@ -59,18 +57,13 @@ export function use360Viewer(propertyId: string) {
         description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
         variant: "destructive"
       });
-      setIsLoading(false);
-      return false;
     }
     
     setTotalImages(foundImages);
     setIsLoading(false);
-    return true;
   };
 
-  const getCurrentImageNumber = () => {
-    return `image-${currentImageIndex}`;
-  };
+  const getCurrentImageNumber = () => `image-${currentImageIndex}`;
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
