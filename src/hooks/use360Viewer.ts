@@ -19,18 +19,22 @@ export function use360Viewer(propertyId: string) {
     let count = 0;
     for (const imageType of imageTypes) {
       try {
-        console.log(`Checking for image ${imageType} in property ${propertyId}`);
-        const response = await fetch(`/assets/360/${propertyId}/${imageType}.jpg`);
+        const imagePath = `/assets/360/${propertyId}/${imageType}.jpg`;
+        console.log(`Checking image path: ${imagePath}`);
+        
+        const response = await fetch(imagePath);
         if (response.ok) {
           count++;
-          console.log(`Found image ${imageType}`);
+          console.log(`✅ Found image: ${imageType}.jpg`);
         } else {
-          console.log(`Image ${imageType} not found`);
+          console.log(`❌ Image not found: ${imageType}.jpg (Status: ${response.status})`);
         }
       } catch (error) {
         console.error(`Error checking image ${imageType}:`, error);
       }
     }
+    
+    console.log(`Total images found for property ${propertyId}: ${count}`);
     
     if (count === 0) {
       console.error('No 360° images found for property:', propertyId);
@@ -42,7 +46,6 @@ export function use360Viewer(propertyId: string) {
       return false;
     }
     
-    console.log(`Total images found for property ${propertyId}:`, count);
     setTotalImages(count);
     return true;
   };
