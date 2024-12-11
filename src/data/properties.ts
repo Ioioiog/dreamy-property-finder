@@ -1,3 +1,5 @@
+import { Property } from '@/types/property';
+
 export const propertyStatuses = {
   AVAILABLE: 'available',
   RENTED: 'rented',
@@ -20,38 +22,170 @@ export const filterOptions = {
   ],
   complex: [
     { label: 'Toate', value: 'all' },
-    { label: 'Complex A', value: 'complex-a' },
-    { label: 'Complex B', value: 'complex-b' },
+    { label: 'Yacht Kid', value: 'yacht-kid' },
+    { label: 'Prima Vista', value: 'prima-vista' },
   ],
   priceRange: [
     { label: 'Toate', value: 'all' },
-    { label: '0-100000', value: '0-100000' },
-    { label: '100001-200000', value: '100001-200000' },
-    { label: '200001+', value: '200001' },
+    { label: '1000-1300€', value: '1000-1300' },
+    { label: '1301-1600€', value: '1301-1600' },
+    { label: '1601+€', value: '1601-9999' },
   ],
 };
 
-export const propertyData = [
+export const propertyData: Property[] = [
   {
-    id: 1,
-    title: "Apartament Modern în Complex A",
-    description: "Apartament spațios cu 2 camere și vedere panoramică",
+    id: 'a25',
+    title: 'Apartament A.2.5 - Yacht Kid',
+    price: 1500,
+    description: 'Apartament spațios în complexul Yacht Kid, cu 3 camere și balcon generos de 37.1 mp. Ideal pentru familii, oferind un living confortabil și două dormitoare.',
     status: propertyStatuses.AVAILABLE,
-    price: 150000,
     details: {
-      rooms: 2,
-      area: 65,
-      floor: 3,
-      building: "A",
-      totalArea: 72,
-      balcony: 7
+      rooms: 3,
+      area: 71.4,
+      totalArea: 108.5,
+      floor: '2',
+      building: 'A',
+      balcony: 37.1
     },
     location: {
-      complex: "complex-a",
-      address: "Strada Exemplu, nr. 1, Complex A"
+      address: 'Complex Yacht Kid, Corp A',
+      complex: 'yacht-kid',
+      coordinates: [44.426912264449236, 26.11123675633533]
     },
-    images: ["1.jpg", "2.jpg", "3.jpg"],
-    amenities: ["Parcare", "Aer condiționat", "Centrală proprie", "Mobilat complet"],
-    availableFrom: "2024-03-01"
+    images: ['1.jpg'],
+    amenities: ['Balcon generos', 'Vedere panoramică', 'Parcare']
+  },
+  {
+    id: 'b110',
+    title: 'Apartament B.1.10 - Yacht Kid',
+    price: 1200,
+    description: 'Apartament modern în Yacht Kid, perfect pentru cupluri sau persoane singure. Dispune de un living mare și un dormitor confortabil, cu balcon de 12.6 mp.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 2,
+      area: 52.4,
+      totalArea: 65,
+      floor: '1',
+      building: 'B',
+      balcony: 12.6
+    },
+    location: {
+      address: 'Complex Yacht Kid, Corp B',
+      complex: 'yacht-kid',
+      coordinates: [44.42841495259169, 26.105463339845763]
+    },
+    images: ['1.jpg'],
+    amenities: ['Balcon', 'Parcare', 'Depozitare']
+  },
+  {
+    id: 'b27',
+    title: 'Apartament B.2.7 - Yacht Kid',
+    price: 1200,
+    description: 'Apartament eficient în Yacht Kid, cu două camere și balcon. Oferă un spațiu de living generos și un dormitor confortabil, ideal pentru un stil de viață urban.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 2,
+      area: 51.1,
+      totalArea: 63.8,
+      floor: '2',
+      building: 'B',
+      balcony: 12.7
+    },
+    location: {
+      address: 'Complex Yacht Kid, Corp B',
+      complex: 'yacht-kid',
+      coordinates: [44.427336515998576, 26.106689630289278]
+    },
+    images: ['1.jpg'],
+    amenities: ['Balcon', 'Parcare', 'Depozitare']
+  },
+  {
+    id: 'b29',
+    title: 'Apartament B.2.9 - Yacht Kid',
+    price: 1200,
+    description: 'Apartament bine compartimentat în Yacht Kid, cu două camere și balcon. Dispune de un living și un dormitor spațioase, perfect pentru cei care apreciază confortul.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 2,
+      area: 52.2,
+      totalArea: 64.5,
+      floor: '2',
+      building: 'B',
+      balcony: 12.3
+    },
+    location: {
+      address: 'Complex Yacht Kid, Corp B',
+      complex: 'yacht-kid',
+      coordinates: [44.42929604108499, 26.108057494961265]
+    },
+    images: ['1.jpg'],
+    amenities: ['Balcon', 'Parcare', 'Depozitare']
+  },
+  {
+    id: 'p26',
+    title: 'Apartament Prima 26 - Prima Vista',
+    price: 1200,
+    description: 'Apartament luxos în complexul Prima Vista, cu 3 camere și balcoane impresionante totalizând 58.2 mp. Oferă o vedere panoramică și spații generoase de locuit.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 68,
+      totalArea: 126.2,
+      floor: '5',
+      building: '4B',
+      balcony: 58.2
+    },
+    location: {
+      address: 'Complex Prima Vista, Corp 4B',
+      complex: 'prima-vista',
+      coordinates: [44.42763169599856, 26.105758692854238]
+    },
+    images: ['1.jpg'],
+    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
+  },
+  {
+    id: 'p21',
+    title: 'Apartament Prima 21 - Prima Vista',
+    price: 1200,
+    description: 'Apartament elegant în Prima Vista, cu 3 camere și multiple balcoane (46.9 mp în total). Perfect pentru cei care doresc spațiu extra și posibilități de relaxare în aer liber.',
+    status: propertyStatuses.RESERVED,
+    details: {
+      rooms: 3,
+      area: 68.5,
+      totalArea: 115.4,
+      floor: '4',
+      building: '4B',
+      balcony: 46.9
+    },
+    location: {
+      address: 'Complex Prima Vista, Corp 4B',
+      complex: 'prima-vista',
+      coordinates: [44.43555871126546, 26.103366204191687]
+    },
+    images: ['1.jpg'],
+    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
+  },
+  {
+    id: 'p51',
+    title: 'Penthouse Prima 51 - Prima Vista',
+    price: 1800,
+    description: 'Penthouse spectaculos pe două niveluri în Prima Vista. Cu 4 camere și o suprafață generoasă, oferă un living impresionant și dormitoare spațioase. Ideal pentru cei care caută lux și exclusivitate.',
+    status: propertyStatuses.RENTED,
+    details: {
+      rooms: 4,
+      area: 149.9,
+      totalArea: 149.9,
+      floor: '10',
+      building: '4B',
+      balcony: 70
+    },
+    location: {
+      address: 'Complex Prima Vista, Corp 4B',
+      complex: 'prima-vista',
+      coordinates: [44.42838350522629, 26.103564375902668]
+    },
+    images: ['1.jpg'],
+    amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Parcare']
   }
 ];
