@@ -5,7 +5,6 @@ import { propertyData } from '@/data/properties';
 import PropertyModal from '@/components/PropertyModal';
 import PropertyCard from '@/components/PropertyCard';
 import PropertyFilters from '@/components/PropertyFilters';
-import ApartmentViewer360 from '@/components/ApartmentViewer360';
 import { toast } from '@/components/ui/use-toast';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -16,7 +15,6 @@ interface PropertyListProps {
 export default function PropertyList({ onPropertySelect }: PropertyListProps) {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showModal, setShowModal] = useState(false);
-  const [show360View, setShow360View] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<Filters>({
     status: 'all',
@@ -34,24 +32,6 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
-
-  const handle360View = (property: Property) => {
-    const img = new Image();
-    img.src = `/assets/360/${property.id}/image-1.jpg`;
-    
-    img.onload = () => {
-      setSelectedProperty(property);
-      setShow360View(true);
-    };
-    
-    img.onerror = () => {
-      toast({
-        title: "Vedere 360° indisponibilă",
-        description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
-        variant: "destructive"
-      });
-    };
-  };
 
   const filteredProperties = useMemo(() => {
     return propertyData.filter(property => {
@@ -195,7 +175,6 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
                   setSelectedProperty(property);
                   setShowModal(true);
                 }}
-                on360View={handle360View}
               />
             ))}
           </motion.div>
@@ -232,14 +211,6 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
               setShowModal(false);
               onPropertySelect(selectedProperty);
             }}
-          />
-        )}
-
-        {show360View && selectedProperty && (
-          <ApartmentViewer360
-            isOpen={show360View}
-            onClose={() => setShow360View(false)}
-            propertyId={selectedProperty.id}
           />
         )}
       </div>
