@@ -22,11 +22,21 @@ export default function PropertyCard({
   useEffect(() => {
     const loadImage = async () => {
       if (property.images[0]) {
+        console.log('Attempting to load image for property:', property.id);
+        console.log('Image path:', `${property.id}/${property.images[0]}`);
+        
         const { data } = supabase.storage
           .from('property_images')
           .getPublicUrl(`${property.id}/${property.images[0]}`);
-        console.log('Loading image:', data.publicUrl);
+        
+        console.log('Generated public URL:', data.publicUrl);
         setImageUrl(data.publicUrl);
+
+        // Verify if the image exists by trying to load it
+        const img = new Image();
+        img.onload = () => console.log('Image loaded successfully:', data.publicUrl);
+        img.onerror = () => console.error('Failed to load image:', data.publicUrl);
+        img.src = data.publicUrl;
       }
     };
     loadImage();
