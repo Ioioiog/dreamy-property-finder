@@ -3,9 +3,7 @@ import { Property, Filters } from '@/types/property';
 import { propertyData } from '@/data/properties';
 import PropertyModal from '@/components/PropertyModal';
 import { toast } from '@/components/ui/use-toast';
-import { motion } from 'framer-motion';
-import SearchBar from './PropertyList/SearchBar';
-import FilterButton from './PropertyList/FilterButton';
+import SearchAndFilter from './PropertyList/SearchAndFilter';
 import PropertyFilters from './PropertyFilters';
 import PropertyGrid from './PropertyList/PropertyGrid';
 import NoResults from './PropertyList/NoResults';
@@ -82,29 +80,12 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
   return (
     <section id="properties" className="py-16 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="mb-8"
-        >
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <h2 className="text-3xl font-bold text-property-stone">
-              Proprietăți Disponibile
-            </h2>
-            
-            <div className="w-full md:w-auto flex flex-wrap gap-4">
-              <SearchBar 
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-              />
-              <FilterButton 
-                showFilters={showFilters}
-                onToggleFilters={() => setShowFilters(!showFilters)}
-              />
-            </div>
-          </div>
-        </motion.div>
+        <SearchAndFilter
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          showFilters={showFilters}
+          onToggleFilters={() => setShowFilters(!showFilters)}
+        />
 
         {showFilters && (
           <PropertyFilters
