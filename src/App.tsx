@@ -7,11 +7,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
 import PropertyList from './components/PropertyList';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import PropertyGallery from './components/PropertyGallery';
 import AgentPortal from './pages/agent/AgentPortal';
 import ViewingRequestForm from './components/ViewingRequestForm';
 
@@ -34,31 +32,14 @@ const RootLayout = () => {
 
 // Main Layout Component
 const MainLayout = () => {
-  const [selectedProperty, setSelectedProperty] = useState(null);
-  const [showGallery, setShowGallery] = useState(false);
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Hero />
-      <About />
-      <PropertyList 
-        onPropertySelect={(property) => {
-          setSelectedProperty(property);
-          setShowGallery(true);
-        }}
-      />
+      <PropertyList />
       <AgentPortal />
       <Contact />
       <Footer />
-      {showGallery && selectedProperty && (
-        <PropertyGallery
-          isOpen={showGallery}
-          onClose={() => setShowGallery(false)}
-          title={selectedProperty.title}
-          images={selectedProperty.images}
-        />
-      )}
     </div>
   );
 };
