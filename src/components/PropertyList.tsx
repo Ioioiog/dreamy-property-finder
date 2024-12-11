@@ -3,7 +3,6 @@ import { Search, SlidersHorizontal } from 'lucide-react';
 import { Property, Filters } from '@/types/property';
 import { propertyData, filterOptions, propertyStatuses } from '@/data/properties';
 import PropertyModal from '@/components/PropertyModal';
-import PropertyGallery from '@/components/PropertyGallery';
 import PropertyFilterButton from '@/components/PropertyFilterButton';
 
 interface PropertyListProps {
@@ -250,18 +249,10 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
                 setSearchTerm('');
               }}
               className="px-4 py-2 bg-brand-orange text-white rounded-md hover:bg-brand-orange-dark transition-colors"
-              >
+            >
               Resetează filtrele
             </button>
           </div>
-        )}
-
-        {showGallery && selectedProperty && (
-          <PropertyGallery
-            isOpen={showGallery}
-            onClose={() => setShowGallery(false)}
-            property={selectedProperty}
-          />
         )}
 
         {showModal && selectedProperty && (
@@ -270,7 +261,7 @@ export default function PropertyList({ onPropertySelect }: PropertyListProps) {
             onClose={() => setShowModal(false)}
             onOpenGallery={() => {
               setShowModal(false);
-              setShowGallery(true);
+              onPropertySelect(selectedProperty);
             }}
           />
         )}
