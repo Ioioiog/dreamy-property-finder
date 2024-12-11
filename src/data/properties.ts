@@ -51,7 +51,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Yacht Kid, Corp A',
       complex: 'yacht-kid',
-      coordinates: [44.426912264449236, 26.11123675633533]
+      coordinates: [44.426912264449236, 26.11123675633533] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcon generos', 'Vedere panoramică', 'Parcare']
@@ -73,7 +73,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Yacht Kid, Corp B',
       complex: 'yacht-kid',
-      coordinates: [44.42841495259169, 26.105463339845763]
+      coordinates: [44.42841495259169, 26.105463339845763] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare']
@@ -95,7 +95,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Yacht Kid, Corp B',
       complex: 'yacht-kid',
-      coordinates: [44.427336515998576, 26.106689630289278]
+      coordinates: [44.427336515998576, 26.106689630289278] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare']
@@ -117,7 +117,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Yacht Kid, Corp B',
       complex: 'yacht-kid',
-      coordinates: [44.42929604108499, 26.108057494961265]
+      coordinates: [44.42929604108499, 26.108057494961265] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare']
@@ -139,7 +139,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Prima Vista, Corp 4B',
       complex: 'prima-vista',
-      coordinates: [44.42763169599856, 26.105758692854238]
+      coordinates: [44.42763169599856, 26.105758692854238] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
@@ -161,7 +161,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Prima Vista, Corp 4B',
       complex: 'prima-vista',
-      coordinates: [44.43555871126546, 26.103366204191687]
+      coordinates: [44.43555871126546, 26.103366204191687] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
@@ -183,7 +183,7 @@ export const propertyData: Property[] = [
     location: {
       address: 'Complex Prima Vista, Corp 4B',
       complex: 'prima-vista',
-      coordinates: [44.42838350522629, 26.103564375902668]
+      coordinates: [44.42838350522629, 26.103564375902668] as [number, number]
     },
     images: ['1.jpg'],
     amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Parcare']

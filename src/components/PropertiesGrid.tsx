@@ -2,7 +2,7 @@ import PropertyCard from './PropertyCard';
 import { Property } from '@/types/property';
 import { toast } from '@/components/ui/use-toast';
 
-const properties = [
+const properties: Property[] = [
   {
     id: 'a25',
     title: 'Luxury Penthouse',
@@ -19,13 +19,13 @@ const properties = [
     location: {
       address: 'Central District, Bucharest',
       complex: 'Luxury Towers',
-      coordinates: [44.426912264449236, 26.11123675633533]
+      coordinates: [44.426912264449236, 26.11123675633533] as [number, number]
     },
     images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
     amenities: ['Parking', 'Pool', 'Gym']
   },
   {
-    id: 2,
+    id: 'b2',
     title: 'Modern Villa',
     price: 380000,
     description: 'Spacious modern villa with garden',
@@ -39,13 +39,14 @@ const properties = [
     },
     location: {
       address: 'North Area, Bucharest',
-      complex: 'Green Valley'
+      complex: 'Green Valley',
+      coordinates: [44.43555871126546, 26.103366204191687] as [number, number]
     },
     images: ['https://images.unsplash.com/photo-1600585154340-be6161a56a0c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
     amenities: ['Garden', 'Garage', 'Fireplace']
   },
   {
-    id: 3,
+    id: 'c3',
     title: 'Garden Apartment',
     price: 295000,
     description: 'Cozy apartment with a beautiful garden',
@@ -59,7 +60,8 @@ const properties = [
     },
     location: {
       address: 'Floreasca, Bucharest',
-      complex: 'Floreasca Residence'
+      complex: 'Floreasca Residence',
+      coordinates: [44.42838350522629, 26.103564375902668] as [number, number]
     },
     images: ['https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
     amenities: ['Garden', 'Balcony', 'Storage']
