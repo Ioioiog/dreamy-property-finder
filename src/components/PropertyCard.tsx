@@ -1,65 +1,66 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Bed, Bath, Square } from 'lucide-react';
+import { Property, propertyStatuses } from '@/types/property';
 
 interface PropertyCardProps {
-  image: string;
-  title: string;
-  price: string;
-  beds: number;
-  baths: number;
-  sqm: number;
-  location: string;
+  property: Property;
+  onViewGallery: (property: Property) => void;
+  onViewDetails: (property: Property) => void;
 }
 
-export const PropertyCard = ({ image, title, price, beds, baths, sqm, location }: PropertyCardProps) => {
-  const [isHovered, setIsHovered] = useState(false);
-
+export default function PropertyCard({ property, onViewGallery, onViewDetails }: PropertyCardProps) {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="group relative overflow-hidden rounded-xl bg-white shadow-lg transition-all duration-300 hover:shadow-xl"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className="aspect-[4/3] overflow-hidden">
+    <div className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all">
+      <div className="relative h-64 overflow-hidden">
         <img
-          src={image}
-          alt={title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+          src={`../assets/images/properties/${property.id}/1.jpg`}
+          alt={property.title}
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         />
-      </div>
-      <div className="p-6">
-        <div className="mb-2 flex items-center gap-2">
-          <span className="rounded-full bg-property-cream px-3 py-1 text-xs font-medium text-property-stone">
-            Featured
-          </span>
-        </div>
-        <h3 className="mb-2 text-xl font-semibold text-property-stone">{title}</h3>
-        <p className="mb-4 text-sm text-property-muted">{location}</p>
-        <div className="mb-4 flex items-center gap-4 text-sm text-property-muted">
-          <div className="flex items-center gap-1">
-            <Bed className="h-4 w-4" />
-            <span>{beds} beds</span>
+        {property.status !== propertyStatuses.AVAILABLE && (
+          <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 
+            bg-black/70 text-white backdrop-blur-sm">
+            {property.status === propertyStatuses.RENTED ? 'Închiriat' : 'Rezervat'}
           </div>
-          <div className="flex items-center gap-1">
-            <Bath className="h-4 w-4" />
-            <span>{baths} baths</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <Square className="h-4 w-4" />
-            <span>{sqm} m²</span>
-          </div>
-        </div>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold text-property-gold">{price}</span>
-          <button className="rounded-lg bg-property-cream px-4 py-2 text-sm font-medium text-property-stone transition-colors hover:bg-property-gold hover:text-white">
-            View Details
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
+          <button
+            onClick={() => onViewGallery(property)}
+            className="absolute bottom-4 right-4 bg-white/90 text-brand-dark px-4 py-2 rounded-md 
+              hover:bg-property-gold hover:text-white transition-colors"
+          >
+            Vezi galerie foto
           </button>
         </div>
       </div>
-    </motion.div>
+
+      <div className="p-6">
+        <h3 className="text-xl font-bold text-brand-dark mb-2">{property.title}</h3>
+        <div className="flex justify-between items-center mb-4">
+          <div className="text-brand-gray-medium">
+            {property.details.rooms} camere • {property.details.area} mp
+          </div>
+          <div className="text-2xl font-bold text-property-gold">
+            {property.price}€
+          </div>
+        </div>
+
+        <p className="text-brand-gray-medium mb-4 line-clamp-2">
+          {property.description}
+        </p>
+
+        {property.status === propertyStatuses.AVAILABLE ? (
+          <button
+            onClick={() => onViewDetails(property)}
+            className="w-full px-4 py-2 bg-property-gold text-white rounded-md 
+              hover:bg-property-stone transition-colors"
+          >
+            Vezi detalii
+          </button>
+        ) : (
+          <div className="text-center text-brand-gray-medium text-sm">
+            Disponibil din: {property.availableFrom}
+          </div>
+        )}
+      </div>
+    </div>
   );
-};
+}
