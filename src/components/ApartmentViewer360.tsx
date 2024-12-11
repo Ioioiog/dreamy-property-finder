@@ -7,8 +7,6 @@ interface ApartmentViewer360Props {
 }
 
 export default function ApartmentViewer360({ isOpen, onClose, propertyId }: ApartmentViewer360Props) {
-  console.log('🏠 Opening 360° viewer for property:', propertyId);
-  
   return (
     <ViewerContainer
       isOpen={isOpen}

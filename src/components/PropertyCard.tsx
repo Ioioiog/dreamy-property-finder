@@ -18,12 +18,12 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
 
-  const getPropertyImageUrl = (imageName: string) => {
-    // Use the correct path to public assets
-    const path = `/assets/properties/${property.id}/${imageName}`;
-    console.log('🖼️ Loading property image:', path);
-    return path;
+  // GitHub raw content URL
+  const getGitHubImageUrl = (imageName: string) => {
+    return `/assets/properties/${property.id}/${imageName}`;
   };
+
+  console.log('Loading property card image:', property.images[0]);
 
   return (
     <motion.div 
@@ -36,18 +36,11 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageError ? '/placeholder.svg' : getPropertyImageUrl(property.images[0])}
+          src={imageError ? '/placeholder.svg' : getGitHubImageUrl(property.images[0])}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
-          onError={() => {
-            console.error('❌ Failed to load image:', property.images[0]);
-            setImageError(true);
-          }}
-          onLoad={() => {
-            console.log('✅ Successfully loaded image:', property.images[0]);
-            setImageError(false);
-          }}
+          onError={() => setImageError(true)}
         />
         {property.status !== propertyStatuses.AVAILABLE && (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 
