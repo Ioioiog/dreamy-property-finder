@@ -19,25 +19,34 @@ export function use360Viewer(propertyId: string) {
     let count = 0;
     for (const imageType of imageTypes) {
       try {
+        // Using the correct GitHub repository path structure
         const imagePath = `/assets/360/${propertyId}/${imageType}.jpg`;
-        console.log(`Checking image path: ${imagePath}`);
+        console.log(`🔍 Checking image path: ${imagePath}`);
         
-        const response = await fetch(imagePath);
-        if (response.ok) {
-          count++;
-          console.log(`✅ Found image: ${imageType}.jpg`);
-        } else {
-          console.log(`❌ Image not found: ${imageType}.jpg (Status: ${response.status})`);
-        }
+        // Create an Image object to check if the image exists
+        const img = new Image();
+        img.src = imagePath;
+        
+        await new Promise((resolve, reject) => {
+          img.onload = () => {
+            count++;
+            console.log(`✅ Found image: ${imageType}.jpg at ${imagePath}`);
+            resolve(true);
+          };
+          img.onerror = () => {
+            console.log(`❌ Image not found: ${imageType}.jpg at ${imagePath}`);
+            resolve(false);
+          };
+        });
       } catch (error) {
         console.error(`Error checking image ${imageType}:`, error);
       }
     }
     
-    console.log(`Total images found for property ${propertyId}: ${count}`);
+    console.log(`📊 Total images found for property ${propertyId}: ${count}`);
     
     if (count === 0) {
-      console.error('No 360° images found for property:', propertyId);
+      console.error('❌ No 360° images found for property:', propertyId);
       toast({
         title: "Vedere 360° indisponibilă",
         description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
@@ -57,7 +66,7 @@ export function use360Viewer(propertyId: string) {
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
       const next = (prev + 1) % totalImages;
-      console.log('Moving to next image:', next, 'Type:', imageTypes[next]);
+      console.log('➡️ Moving to next image:', next, 'Type:', imageTypes[next]);
       return next;
     });
   };
@@ -65,7 +74,7 @@ export function use360Viewer(propertyId: string) {
   const previousImage = () => {
     setCurrentImageIndex((prev) => {
       const previous = prev === 0 ? totalImages - 1 : prev - 1;
-      console.log('Moving to previous image:', previous, 'Type:', imageTypes[previous]);
+      console.log('⬅️ Moving to previous image:', previous, 'Type:', imageTypes[previous]);
       return previous;
     });
   };
@@ -73,7 +82,7 @@ export function use360Viewer(propertyId: string) {
   const handleDragStart = (clientX: number) => {
     setIsDragging(true);
     setStartX(clientX);
-    console.log('Started dragging at position:', clientX);
+    console.log('🖱️ Started dragging at position:', clientX);
   };
 
   const handleDragMove = (clientX: number) => {
@@ -92,7 +101,7 @@ export function use360Viewer(propertyId: string) {
 
   const handleDragEnd = () => {
     setIsDragging(false);
-    console.log('Ended dragging');
+    console.log('🖱️ Ended dragging');
   };
 
   return {
