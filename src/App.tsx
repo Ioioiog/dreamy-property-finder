@@ -8,7 +8,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PropertyList from './components/PropertyList';
-import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PropertyGallery from './components/PropertyGallery';
