@@ -16,12 +16,9 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
 
-  // GitHub raw content URL
   const getGitHubImageUrl = (imageName: string) => {
     return `/assets/properties/${property.id}/${imageName}`;
   };
-
-  console.log('Loading property card image:', property.images[0]);
 
   return (
     <motion.div 
