@@ -1,7 +1,7 @@
 export interface PropertyDetails {
   rooms: number;
   area: number;
-  floor: number;
+  floor: string | number;  // Updated to accept both string and number
   building: string;
   totalArea: number;
   balcony?: number;
