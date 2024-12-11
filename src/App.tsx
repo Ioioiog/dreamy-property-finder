@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,21 +14,6 @@ import PropertyGallery from './components/PropertyGallery';
 import { Property } from './types/property';
 
 const queryClient = new QueryClient();
-
-// Root Layout Component
-const RootLayout = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <div className="min-h-screen">
-          <Outlet />
-        </div>
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-};
 
 // Main Layout Component
 const MainLayout = () => {
@@ -59,16 +44,24 @@ const MainLayout = () => {
 };
 
 // Router Configuration
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route element={<RootLayout />}>
-      <Route path="/" element={<MainLayout />} />
-    </Route>
-  )
-);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <MainLayout />
+        </TooltipProvider>
+      </QueryClientProvider>
+    ),
+  }
+]);
 
 // App Component
 const App = () => {
+  console.log('🚀 App rendering, initializing router');
   return <RouterProvider router={router} />;
 };
 
