@@ -11,7 +11,6 @@ import PropertyList from './components/PropertyList';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PropertyGallery from './components/PropertyGallery';
-import AgentPortal from './pages/agent/AgentPortal';
 import { Property } from './types/property';
 
 const queryClient = new QueryClient();
@@ -46,7 +45,6 @@ const MainLayout = () => {
           setShowGallery(true);
         }}
       />
-      <AgentPortal />
       <Contact />
       <Footer />
       {showGallery && selectedProperty && (
@@ -65,7 +63,6 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
       <Route path="/" element={<MainLayout />} />
-      <Route path="/agentportal" element={<AgentPortal />} />
     </Route>
   )
 );
