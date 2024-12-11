@@ -1,6 +1,7 @@
 import { Property, propertyStatuses } from '@/types/property';
 import { Rotate3d, Eye, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 
 interface PropertyCardProps {
   property: Property;
@@ -15,6 +16,13 @@ export default function PropertyCard({
   onViewDetails,
   on360View 
 }: PropertyCardProps) {
+  const getImageUrl = async (propertyId: string, imageName: string) => {
+    const { data } = supabase.storage
+      .from('property_images')
+      .getPublicUrl(`${propertyId}/${imageName}`);
+    return data.publicUrl;
+  };
+
   return (
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
@@ -26,7 +34,7 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={`../assets/images/properties/${property.id}/1.jpg`}
+          src={`${property.images[0]}`}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
