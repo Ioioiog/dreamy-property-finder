@@ -1,8 +1,7 @@
 import { Property, propertyStatuses } from '@/types/property';
 import { Rotate3d, Eye, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PropertyCardProps {
   property: Property;
@@ -17,20 +16,14 @@ export default function PropertyCard({
   onViewDetails,
   on360View 
 }: PropertyCardProps) {
-  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageError, setImageError] = useState(false);
 
-  useEffect(() => {
-    const loadImage = async () => {
-      if (property.images[0]) {
-        const { data } = supabase.storage
-          .from('property_images')
-          .getPublicUrl(`${property.id}/${property.images[0]}`);
-        console.log('Loading image:', data.publicUrl);
-        setImageUrl(data.publicUrl);
-      }
-    };
-    loadImage();
-  }, [property.id, property.images]);
+  // GitHub raw content URL
+  const getGitHubImageUrl = (imageName: string) => {
+    return `/assets/properties/${property.id}/${imageName}`;
+  };
+
+  console.log('Loading property card image:', property.images[0]);
 
   return (
     <motion.div 
@@ -43,10 +36,11 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageUrl || '/placeholder.svg'}
+          src={imageError ? '/placeholder.svg' : getGitHubImageUrl(property.images[0])}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
+          onError={() => setImageError(true)}
         />
         {property.status !== propertyStatuses.AVAILABLE && (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 

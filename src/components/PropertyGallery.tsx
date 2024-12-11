@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface Property {
   id: string;
@@ -17,45 +16,24 @@ interface PropertyGalleryProps {
 
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadImages = async () => {
-      if (property) {
-        const urls = await Promise.all(
-          property.images.map(async (imageName) => {
-            const { data } = supabase.storage
-              .from('property_images')
-              .getPublicUrl(`${property.id}/${imageName}`);
-            return data.publicUrl;
-          })
-        );
-        console.log('Loaded gallery images:', urls);
-        setImageUrls(urls);
-      }
-    };
-    loadImages();
-  }, [property]);
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') nextImage();
-      if (e.key === 'ArrowLeft') prevImage();
-      if (e.key === 'Escape') onClose();
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentIndex, onClose]);
+  const [imageError, setImageError] = useState<Record<number, boolean>>({});
 
   if (!property) return null;
 
+  const getGitHubImageUrl = (imageName: string) => {
+    return `/assets/properties/${property.id}/${imageName}`;
+  };
+
   const nextImage = () => {
-    setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
+    setCurrentIndex((prev) => (prev + 1) % property.images.length);
   };
 
   const prevImage = () => {
-    setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
+    setCurrentIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
+  };
+
+  const handleImageError = (index: number) => {
+    setImageError(prev => ({ ...prev, [index]: true }));
   };
 
   return (
@@ -64,7 +42,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
-              {property.title} - Imagine {currentIndex + 1} din {imageUrls.length}
+              {property.title} - Imagine {currentIndex + 1} din {property.images.length}
             </h3>
             <button
               onClick={onClose}
@@ -84,9 +62,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={imageUrls[currentIndex] || '/placeholder.svg'}
+              src={imageError[currentIndex] ? '/placeholder.svg' : getGitHubImageUrl(property.images[currentIndex])}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
+              onError={() => handleImageError(currentIndex)}
             />
 
             <button
@@ -100,7 +79,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
           <div className="p-4 border-t bg-white">
             <div className="flex gap-2 overflow-x-auto pb-2 justify-center">
-              {imageUrls.map((imageUrl, index) => (
+              {property.images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
@@ -112,9 +91,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     }`}
                 >
                   <img
-                    src={imageUrl}
+                    src={imageError[index] ? '/placeholder.svg' : getGitHubImageUrl(image)}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
+                    onError={() => handleImageError(index)}
                   />
                 </button>
               ))}
