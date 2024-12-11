@@ -3,7 +3,7 @@ import { Dialog, DialogContent } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Property {
-  id: number;
+  id: string;
   title: string;
   images: string[];
 }
@@ -38,6 +38,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     setCurrentIndex((prev) => (prev - 1 + property.images.length) % property.images.length);
   };
 
+  const getImagePath = (imageName: string) => {
+    return `/assets/properties/${property.id}/${imageName}`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl h-[90vh] p-0">
@@ -66,7 +70,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={property.images[currentIndex]}
+              src={getImagePath(property.images[currentIndex])}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
             />
@@ -95,7 +99,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     }`}
                 >
                   <img
-                    src={image}
+                    src={getImagePath(image)}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
                   />
