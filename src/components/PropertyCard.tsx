@@ -1,5 +1,6 @@
 import { Property, propertyStatuses } from '@/types/property';
-import { Rotate3d } from 'lucide-react';
+import { Rotate3d, Eye, Info } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 interface PropertyCardProps {
   property: Property;
@@ -15,12 +16,20 @@ export default function PropertyCard({
   on360View 
 }: PropertyCardProps) {
   return (
-    <div className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all">
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all"
+      role="article"
+      aria-label={`${property.title} - ${property.price}€`}
+    >
       <div className="relative h-64 overflow-hidden">
         <img
           src={`../assets/images/properties/${property.id}/1.jpg`}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+          loading="lazy"
         />
         {property.status !== propertyStatuses.AVAILABLE && (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 
@@ -31,30 +40,37 @@ export default function PropertyCard({
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="absolute bottom-4 right-4 flex gap-2">
             {on360View && (
-              <button
+              <motion.button
                 onClick={() => on360View(property)}
-                className="bg-white/90 text-brand-dark px-4 py-2 rounded-md 
+                className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
                   hover:bg-property-gold hover:text-white transition-colors flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Vezi apartamentul în 360°"
               >
                 <Rotate3d size={18} />
                 Vedere 360°
-              </button>
+              </motion.button>
             )}
-            <button
+            <motion.button
               onClick={() => onViewGallery(property)}
-              className="bg-white/90 text-brand-dark px-4 py-2 rounded-md 
-                hover:bg-property-gold hover:text-white transition-colors"
+              className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
+                hover:bg-property-gold hover:text-white transition-colors flex items-center gap-2"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Vezi galeria foto"
             >
-              Vezi galerie foto
-            </button>
+              <Eye size={18} />
+              Galerie foto
+            </motion.button>
           </div>
         </div>
       </div>
 
       <div className="p-6">
-        <h3 className="text-xl font-bold text-brand-dark mb-2">{property.title}</h3>
+        <h3 className="text-xl font-bold text-property-stone mb-2">{property.title}</h3>
         <div className="flex justify-between items-center mb-4">
-          <div className="text-brand-gray-medium">
+          <div className="text-property-muted">
             {property.details.rooms} camere • {property.details.area} mp
           </div>
           <div className="text-2xl font-bold text-property-gold">
@@ -62,24 +78,28 @@ export default function PropertyCard({
           </div>
         </div>
 
-        <p className="text-brand-gray-medium mb-4 line-clamp-2">
+        <p className="text-property-muted mb-4 line-clamp-2">
           {property.description}
         </p>
 
         {property.status === propertyStatuses.AVAILABLE ? (
-          <button
+          <motion.button
             onClick={() => onViewDetails(property)}
             className="w-full px-4 py-2 bg-property-gold text-white rounded-md 
-              hover:bg-property-stone transition-colors"
+              hover:bg-property-stone transition-colors flex items-center justify-center gap-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            aria-label="Vezi detalii complete"
           >
+            <Info size={18} />
             Vezi detalii
-          </button>
+          </motion.button>
         ) : (
-          <div className="text-center text-brand-gray-medium text-sm">
+          <div className="text-center text-property-muted text-sm">
             Disponibil din: {property.availableFrom}
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
