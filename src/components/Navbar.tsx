@@ -70,8 +70,8 @@ export default function Navbar() {
               href="https://chiriasi.apartamentdelux.ro"
               className={`px-4 py-2 rounded-md transition-colors ${
                 isScrolled 
-                  ? 'bg-property-gold text-white hover:bg-property-gold/90'
-                  : 'bg-white/10 text-white hover:bg-white/20'
+                  ? 'bg-property-orange hover:bg-property-orange-dark text-white'
+                  : 'bg-property-orange hover:bg-property-orange-dark text-white'
               }`}
             >
               Portal Chiriași
@@ -109,7 +109,7 @@ export default function Navbar() {
               </a>
               <a 
                 href="https://chiriasi.apartamentdelux.ro" 
-                className="block px-3 py-2 text-white bg-property-gold rounded-md text-center hover:bg-property-gold/90"
+                className="block px-3 py-2 text-white bg-property-orange hover:bg-property-orange-dark rounded-md text-center"
               >
                 Portal Chiriași
               </a>
