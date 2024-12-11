@@ -10,11 +10,11 @@ export interface PropertyDetails {
 export interface PropertyLocation {
   complex: string;
   address: string;
-  coordinates: [number, number]; // Added coordinates as tuple of numbers
+  coordinates: [number, number];
 }
 
 export interface Property {
-  id: string; // Changed from number to string
+  id: string;
   title: string;
   price: number;
   description: string;
