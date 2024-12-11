@@ -1,71 +1,10 @@
 import React, { useState, useMemo } from 'react';
 import { Search, SlidersHorizontal } from 'lucide-react';
-import PropertyGallery from './PropertyGallery';
-import PropertyModal from './PropertyModal';
-
-interface Property {
-  id: number;
-  title: string;
-  description: string;
-  status: string;
-  price: number;
-  details: {
-    rooms: number;
-    area: number;
-  };
-  location: {
-    complex: string;
-  };
-  availableFrom?: string;
-  images: string[];
-}
-
-interface FilterButtonProps {
-  label: string;
-  value: string;
-  currentValue: string;
-  onChange: (value: string) => void;
-}
-
-interface Filters {
-  status: string;
-  rooms: string;
-  complex: string;
-  priceRange: string;
-}
-
-const filterOptions = {
-  status: [
-    { label: 'Toate', value: 'all' },
-    { label: 'Disponibile', value: 'available' },
-    { label: 'Închiriate', value: 'rented' },
-    { label: 'Rezervate', value: 'reserved' },
-  ],
-  rooms: [
-    { label: 'Toate', value: 'all' },
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-    { label: '3', value: '3' },
-    { label: '4+', value: '4' },
-  ],
-  complex: [
-    { label: 'Toate', value: 'all' },
-    { label: 'Complex A', value: 'complex-a' },
-    { label: 'Complex B', value: 'complex-b' },
-  ],
-  priceRange: [
-    { label: 'Toate', value: 'all' },
-    { label: '0-100000', value: '0-100000' },
-    { label: '100001-200000', value: '100001-200000' },
-    { label: '200001+', value: '200001' },
-  ],
-};
-
-const propertyStatuses = {
-  AVAILABLE: 'available',
-  RENTED: 'rented',
-  RESERVED: 'reserved',
-};
+import { Property, Filters } from '@/types/property';
+import { propertyData, filterOptions, propertyStatuses } from '@/data/properties';
+import PropertyModal from '@/components/PropertyModal';
+import PropertyGallery from '@/components/PropertyGallery';
+import PropertyFilterButton from '@/components/PropertyFilterButton';
 
 export default function PropertyList() {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
@@ -109,19 +48,6 @@ export default function PropertyList() {
       return true;
     });
   }, [searchTerm, filters]);
-
-  const FilterButton: React.FC<FilterButtonProps> = ({ label, value, currentValue, onChange }) => (
-    <button
-      onClick={() => onChange(value)}
-      className={`px-3 py-1 rounded-full text-sm transition-colors ${
-        currentValue === value
-          ? 'bg-property-gold text-white'
-          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-      }`}
-    >
-      {label}
-    </button>
-  );
 
   return (
     <section id="properties" className="py-16 bg-gray-50">
@@ -177,7 +103,7 @@ export default function PropertyList() {
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Status</h4>
                   <div className="flex flex-wrap gap-2">
                     {filterOptions.status.map(option => (
-                      <FilterButton
+                      <PropertyFilterButton
                         key={option.value}
                         label={option.label}
                         value={option.value}
@@ -192,7 +118,7 @@ export default function PropertyList() {
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Număr camere</h4>
                   <div className="flex flex-wrap gap-2">
                     {filterOptions.rooms.map(option => (
-                      <FilterButton
+                      <PropertyFilterButton
                         key={option.value}
                         label={option.label}
                         value={option.value}
@@ -207,7 +133,7 @@ export default function PropertyList() {
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Complex</h4>
                   <div className="flex flex-wrap gap-2">
                     {filterOptions.complex.map(option => (
-                      <FilterButton
+                      <PropertyFilterButton
                         key={option.value}
                         label={option.label}
                         value={option.value}
@@ -222,7 +148,7 @@ export default function PropertyList() {
                   <h4 className="text-sm font-medium text-gray-700 mb-2">Preț</h4>
                   <div className="flex flex-wrap gap-2">
                     {filterOptions.priceRange.map(option => (
-                      <FilterButton
+                      <PropertyFilterButton
                         key={option.value}
                         label={option.label}
                         value={option.value}
@@ -330,7 +256,6 @@ export default function PropertyList() {
           </div>
         )}
 
-        {/* Property Gallery Modal */}
         {showGallery && selectedProperty && (
           <PropertyGallery
             isOpen={showGallery}
@@ -339,7 +264,6 @@ export default function PropertyList() {
           />
         )}
 
-        {/* Property Details Modal */}
         {showModal && selectedProperty && (
           <PropertyModal
             property={selectedProperty}
@@ -354,41 +278,3 @@ export default function PropertyList() {
     </section>
   );
 }
-
-// Adaugă StatusBadge component pentru a afișa statusul proprietății
-const StatusBadge = ({ status }) => {
-  const statusConfig = {
-    [propertyStatuses.AVAILABLE]: {
-      text: 'Disponibil',
-      className: 'bg-green-100 text-green-800'
-    },
-    [propertyStatuses.RENTED]: {
-      text: 'Închiriat',
-      className: 'bg-red-100 text-red-800'
-    },
-    [propertyStatuses.RESERVED]: {
-      text: 'Rezervat',
-      className: 'bg-yellow-100 text-yellow-800'
-    }
-  };
-
-  const config = statusConfig[status];
-  
-  return (
-    <span className={`px-2 py-1 rounded-full text-xs font-medium ${config.className}`}>
-      {config.text}
-    </span>
-  );
-};
-
-
-// Adaugă ScheduleViewingButton component pentru a facilita programarea vizionării proprietății
-const ScheduleViewingButton = () => {
-  return (
-    <button
-      className="w-full px-4 py-2 bg-brand-orange text-white rounded-md hover:bg-brand-orange-dark transition-colors"
-    >
-      Programă vizionare
-    </button>
-  );
-};
