@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet, Navigate } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,8 +10,9 @@ import Hero from './components/Hero';
 import PropertyList from './components/PropertyList';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import PropertyGallery from './components/PropertyGallery';
 import AgentPortal from './pages/agent/AgentPortal';
-import ViewingRequestForm from './components/ViewingRequestForm';
+import { Property } from './types/property';
 
 const queryClient = new QueryClient();
 
@@ -32,14 +33,29 @@ const RootLayout = () => {
 
 // Main Layout Component
 const MainLayout = () => {
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
+  const [showGallery, setShowGallery] = useState(false);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Hero />
-      <PropertyList />
+      <PropertyList 
+        onPropertySelect={(property) => {
+          setSelectedProperty(property);
+          setShowGallery(true);
+        }}
+      />
       <AgentPortal />
       <Contact />
       <Footer />
+      {showGallery && selectedProperty && (
+        <PropertyGallery
+          isOpen={showGallery}
+          onClose={() => setShowGallery(false)}
+          property={selectedProperty}
+        />
+      )}
     </div>
   );
 };
@@ -50,10 +66,6 @@ const router = createBrowserRouter(
     <Route element={<RootLayout />}>
       <Route path="/" element={<MainLayout />} />
       <Route path="/agentportal" element={<AgentPortal />} />
-      <Route 
-        path="/agent/viewing-request-form" 
-        element={<Navigate to="/" replace />} // Redirect to home since this form should only be opened via modal
-      />
     </Route>
   )
 );
