@@ -1,4 +1,4 @@
-import { PropertyCard } from './PropertyCard';
+import PropertyCard from './PropertyCard';
 
 const properties = [
   {

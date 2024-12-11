@@ -25,6 +25,12 @@ export interface Property {
   amenities: string[];
 }
 
+export const propertyStatuses = {
+  AVAILABLE: 'available',
+  RENTED: 'rented',
+  RESERVED: 'reserved',
+} as const;
+
 export interface FilterButtonProps {
   label: string;
   value: string;
