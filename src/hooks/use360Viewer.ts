@@ -7,6 +7,8 @@ export function use360Viewer(propertyId: string) {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
 
+  const imageTypes = ['living', 'bedroom', 'bathroom', 'balcony', 'kitchen'];
+
   useEffect(() => {
     console.log('Initializing 360 viewer for property:', propertyId);
     setCurrentImageIndex(1);
@@ -15,20 +17,18 @@ export function use360Viewer(propertyId: string) {
 
   const checkTotalImages = async () => {
     let count = 0;
-    for (let i = 1; i <= 36; i++) {
+    for (const imageType of imageTypes) {
       try {
-        console.log(`Checking for image ${i} in property ${propertyId}`);
-        const response = await fetch(`/assets/360/${propertyId}/image-${i}.jpg`);
+        console.log(`Checking for image ${imageType} in property ${propertyId}`);
+        const response = await fetch(`/assets/360/${propertyId}/${imageType}.jpg`);
         if (response.ok) {
-          count = i;
-          console.log(`Found image ${i}`);
+          count++;
+          console.log(`Found image ${imageType}`);
         } else {
-          console.log(`Image ${i} not found, stopping search`);
-          break;
+          console.log(`Image ${imageType} not found`);
         }
       } catch (error) {
-        console.error(`Error checking image ${i}:`, error);
-        break;
+        console.error(`Error checking image ${imageType}:`, error);
       }
     }
     
@@ -50,7 +50,7 @@ export function use360Viewer(propertyId: string) {
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
       const next = (prev % totalImages) + 1;
-      console.log('Moving to next image:', next);
+      console.log('Moving to next image:', next, 'Type:', imageTypes[next - 1]);
       return next;
     });
   };
@@ -58,7 +58,7 @@ export function use360Viewer(propertyId: string) {
   const previousImage = () => {
     setCurrentImageIndex((prev) => {
       const previous = prev === 1 ? totalImages : prev - 1;
-      console.log('Moving to previous image:', previous);
+      console.log('Moving to previous image:', previous, 'Type:', imageTypes[previous - 1]);
       return previous;
     });
   };
