@@ -25,8 +25,8 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "hsl(24, 95%, 53%)", // Orange color
+          foreground: "hsl(0, 0%, 100%)", // White text for contrast
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
@@ -57,6 +57,8 @@ export default {
           cream: "#F5F5F0",
           stone: "#2C2C2C",
           muted: "#6B6B6B",
+          orange: "#F97316", // Adding orange color
+          "orange-dark": "#EA580C", // Darker orange for hover states
         },
       },
       keyframes: {
