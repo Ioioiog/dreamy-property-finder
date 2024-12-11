@@ -1,8 +1,9 @@
 import React from 'react';
-import { Dialog, DialogContent } from './ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { use360Viewer } from '@/hooks/use360Viewer';
 import ViewerHeader from './360/ViewerHeader';
 import ViewerControls from './360/ViewerControls';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface ApartmentViewer360Props {
   isOpen: boolean;
@@ -26,6 +27,9 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl h-[90vh] p-0">
+        <DialogTitle className="sr-only">
+          360° View of Property
+        </DialogTitle>
         <div className="h-full flex flex-col">
           <ViewerHeader
             currentImageIndex={currentImageIndex}
@@ -39,6 +43,11 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
             onMouseMove={(e) => handleDragMove(e.clientX)}
             onMouseUp={handleDragEnd}
             onMouseLeave={handleDragEnd}
+            onTouchStart={(e) => handleDragStart(e.touches[0].clientX)}
+            onTouchMove={(e) => handleDragMove(e.touches[0].clientX)}
+            onTouchEnd={handleDragEnd}
+            role="region"
+            aria-label="360 degree view control area"
           >
             <ViewerControls
               onPrevious={previousImage}
@@ -46,15 +55,15 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
             />
 
             <img
-              src={`/assets/360/${propertyId}/${currentImageIndex}.jpg`}
-              alt={`360° view ${currentImageIndex}`}
+              src={`/assets/360/${propertyId}/image-${currentImageIndex}.jpg`}
+              alt={`360° view position ${currentImageIndex} of ${totalImages}`}
               className="max-h-[70vh] max-w-[90vw] object-contain select-none"
               draggable={false}
             />
           </div>
 
           <div className="p-4 text-center text-sm text-gray-600 border-t">
-            Drag left or right to rotate the view, or use the arrow buttons
+            Trageți spre stânga sau dreapta pentru a roti vederea, sau folosiți butoanele săgeată
           </div>
         </div>
       </DialogContent>
