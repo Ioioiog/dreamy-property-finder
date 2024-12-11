@@ -4,7 +4,7 @@ import { toast } from '@/components/ui/use-toast';
 
 const properties = [
   {
-    id: 1,
+    id: 'a25',
     title: 'Luxury Penthouse',
     price: 450000,
     description: 'Luxurious penthouse with amazing views',
@@ -18,7 +18,8 @@ const properties = [
     },
     location: {
       address: 'Central District, Bucharest',
-      complex: 'Luxury Towers'
+      complex: 'Luxury Towers',
+      coordinates: [44.426912264449236, 26.11123675633533]
     },
     images: ['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'],
     amenities: ['Parking', 'Pool', 'Gym']

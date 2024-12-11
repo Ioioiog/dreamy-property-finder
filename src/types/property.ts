@@ -1,23 +1,24 @@
 export interface PropertyDetails {
   rooms: number;
   area: number;
-  floor: string | number;  // Updated to accept both string and number
-  building: string;
   totalArea: number;
+  floor: string;
+  building: string;
   balcony?: number;
 }
 
 export interface PropertyLocation {
   complex: string;
   address: string;
+  coordinates: [number, number]; // Added coordinates as tuple of numbers
 }
 
 export interface Property {
-  id: number;
+  id: string; // Changed from number to string
   title: string;
+  price: number;
   description: string;
   status: string;
-  price: number;
   details: PropertyDetails;
   location: PropertyLocation;
   availableFrom?: string;
