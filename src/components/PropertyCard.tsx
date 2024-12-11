@@ -1,24 +1,36 @@
 import { Property, propertyStatuses } from '@/types/property';
-import { Eye, Info } from 'lucide-react';
+import { Rotate3d, Eye, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { useEffect, useState } from 'react';
 
 interface PropertyCardProps {
   property: Property;
   onViewGallery: (property: Property) => void;
   onViewDetails: (property: Property) => void;
+  on360View?: (property: Property) => void;
 }
 
 export default function PropertyCard({ 
   property, 
   onViewGallery, 
   onViewDetails,
+  on360View 
 }: PropertyCardProps) {
-  const [imageError, setImageError] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>('');
 
-  const getGitHubImageUrl = (imageName: string) => {
-    return `/assets/properties/${property.id}/${imageName}`;
-  };
+  useEffect(() => {
+    const loadImage = async () => {
+      if (property.images[0]) {
+        const { data } = supabase.storage
+          .from('property_images')
+          .getPublicUrl(`${property.id}/${property.images[0]}`);
+        console.log('Loading image:', data.publicUrl);
+        setImageUrl(data.publicUrl);
+      }
+    };
+    loadImage();
+  }, [property.id, property.images]);
 
   return (
     <motion.div 
@@ -31,11 +43,10 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageError ? '/placeholder.svg' : getGitHubImageUrl(property.images[0])}
+          src={imageUrl || '/placeholder.svg'}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
-          onError={() => setImageError(true)}
         />
         {property.status !== propertyStatuses.AVAILABLE && (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 
@@ -45,6 +56,19 @@ export default function PropertyCard({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="absolute bottom-4 right-4 flex gap-2">
+            {on360View && (
+              <motion.button
+                onClick={() => on360View(property)}
+                className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
+                  hover:bg-property-orange hover:text-white transition-colors flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Vezi apartamentul în 360°"
+              >
+                <Rotate3d size={18} />
+                Vedere 360°
+              </motion.button>
+            )}
             <motion.button
               onClick={() => onViewGallery(property)}
               className="bg-white/90 text-property-stone px-4 py-2 rounded-md 

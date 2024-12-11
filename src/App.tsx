@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -11,10 +12,10 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PropertyGallery from './components/PropertyGallery';
 import { Property } from './types/property';
-import { useState } from 'react';
 
 const queryClient = new QueryClient();
 
+// Root Layout Component
 const RootLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
@@ -29,6 +30,7 @@ const RootLayout = () => {
   );
 };
 
+// Main Layout Component
 const MainLayout = () => {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
   const [showGallery, setShowGallery] = useState(false);
@@ -56,6 +58,7 @@ const MainLayout = () => {
   );
 };
 
+// Router Configuration
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
@@ -64,6 +67,7 @@ const router = createBrowserRouter(
   )
 );
 
+// App Component
 const App = () => {
   return <RouterProvider router={router} />;
 };
