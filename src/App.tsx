@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter, createRoutesFromElements, Route, Outlet, Navigate } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -50,7 +50,10 @@ const router = createBrowserRouter(
     <Route element={<RootLayout />}>
       <Route path="/" element={<MainLayout />} />
       <Route path="/agentportal" element={<AgentPortal />} />
-      <Route path="/agent/viewing-request-form" element={<ViewingRequestForm />} />
+      <Route 
+        path="/agent/viewing-request-form" 
+        element={<Navigate to="/" replace />} // Redirect to home since this form should only be opened via modal
+      />
     </Route>
   )
 );
