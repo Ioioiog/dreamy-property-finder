@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 
 export function use360Viewer(propertyId: string) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [totalImages, setTotalImages] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -11,7 +11,7 @@ export function use360Viewer(propertyId: string) {
 
   useEffect(() => {
     console.log('Initializing 360 viewer for property:', propertyId);
-    setCurrentImageIndex(1);
+    setCurrentImageIndex(0);
     checkTotalImages();
   }, [propertyId]);
 
@@ -47,18 +47,22 @@ export function use360Viewer(propertyId: string) {
     return true;
   };
 
+  const getCurrentImageType = () => {
+    return imageTypes[currentImageIndex];
+  };
+
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
-      const next = (prev % totalImages) + 1;
-      console.log('Moving to next image:', next, 'Type:', imageTypes[next - 1]);
+      const next = (prev + 1) % totalImages;
+      console.log('Moving to next image:', next, 'Type:', imageTypes[next]);
       return next;
     });
   };
 
   const previousImage = () => {
     setCurrentImageIndex((prev) => {
-      const previous = prev === 1 ? totalImages : prev - 1;
-      console.log('Moving to previous image:', previous, 'Type:', imageTypes[previous - 1]);
+      const previous = prev === 0 ? totalImages - 1 : prev - 1;
+      console.log('Moving to previous image:', previous, 'Type:', imageTypes[previous]);
       return previous;
     });
   };
@@ -96,5 +100,6 @@ export function use360Viewer(propertyId: string) {
     handleDragStart,
     handleDragMove,
     handleDragEnd,
+    getCurrentImageType
   };
 }

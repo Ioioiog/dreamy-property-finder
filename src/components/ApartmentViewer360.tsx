@@ -20,14 +20,10 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
     handleDragStart,
     handleDragMove,
     handleDragEnd,
+    getCurrentImageType
   } = use360Viewer(propertyId);
 
   if (!isOpen || totalImages === 0) return null;
-
-  const getImageName = (index: number) => {
-    const imageTypes = ['living', 'bedroom', 'bathroom', 'balcony', 'kitchen'];
-    return imageTypes[index - 1] || 'living';
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -60,8 +56,8 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
             />
 
             <img
-              src={`/assets/360/${propertyId}/${getImageName(currentImageIndex)}.jpg`}
-              alt={`360° view position ${currentImageIndex} of ${totalImages}`}
+              src={`/assets/360/${propertyId}/${getCurrentImageType()}.jpg`}
+              alt={`360° view of ${getCurrentImageType()} area`}
               className="max-h-[70vh] max-w-[90vw] object-contain select-none"
               draggable={false}
             />
