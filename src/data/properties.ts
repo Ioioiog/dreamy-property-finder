@@ -40,12 +40,18 @@ export const propertyData = [
     price: 150000,
     details: {
       rooms: 2,
-      area: 65
+      area: 65,
+      floor: 3,
+      building: "A",
+      totalArea: 72,
+      balcony: 7
     },
     location: {
-      complex: "complex-a"
+      complex: "complex-a",
+      address: "Strada Exemplu, nr. 1, Complex A"
     },
-    images: ["1.jpg", "2.jpg", "3.jpg"]
-  },
-  // Add more sample properties as needed
+    images: ["1.jpg", "2.jpg", "3.jpg"],
+    amenities: ["Parcare", "Aer condiționat", "Centrală proprie", "Mobilat complet"],
+    availableFrom: "2024-03-01"
+  }
 ];

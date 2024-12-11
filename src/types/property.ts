@@ -1,10 +1,15 @@
 export interface PropertyDetails {
   rooms: number;
   area: number;
+  floor: number;
+  building: string;
+  totalArea: number;
+  balcony?: number;
 }
 
 export interface PropertyLocation {
   complex: string;
+  address: string;
 }
 
 export interface Property {
@@ -17,6 +22,7 @@ export interface Property {
   location: PropertyLocation;
   availableFrom?: string;
   images: string[];
+  amenities: string[];
 }
 
 export interface FilterButtonProps {
