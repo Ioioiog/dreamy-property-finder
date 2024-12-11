@@ -6,9 +6,12 @@ import PropertyModal from '@/components/PropertyModal';
 import PropertyGallery from '@/components/PropertyGallery';
 import PropertyFilterButton from '@/components/PropertyFilterButton';
 
-export default function PropertyList() {
+interface PropertyListProps {
+  onPropertySelect: (property: Property) => void;
+}
+
+export default function PropertyList({ onPropertySelect }: PropertyListProps) {
   const [selectedProperty, setSelectedProperty] = useState<Property | null>(null);
-  const [showGallery, setShowGallery] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState<Filters>({
@@ -183,10 +186,7 @@ export default function PropertyList() {
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
-                    onClick={() => {
-                      setSelectedProperty(property);
-                      setShowGallery(true);
-                    }}
+                    onClick={() => onPropertySelect(property)}
                     className="absolute bottom-4 right-4 bg-white/90 text-brand-dark px-4 py-2 rounded-md 
                       hover:bg-brand-orange hover:text-white transition-colors"
                   >
