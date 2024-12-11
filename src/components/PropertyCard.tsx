@@ -1,12 +1,19 @@
 import { Property, propertyStatuses } from '@/types/property';
+import { Rotate3d } from 'lucide-react';
 
 interface PropertyCardProps {
   property: Property;
   onViewGallery: (property: Property) => void;
   onViewDetails: (property: Property) => void;
+  on360View?: (property: Property) => void;
 }
 
-export default function PropertyCard({ property, onViewGallery, onViewDetails }: PropertyCardProps) {
+export default function PropertyCard({ 
+  property, 
+  onViewGallery, 
+  onViewDetails,
+  on360View 
+}: PropertyCardProps) {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden group hover:shadow-xl transition-all">
       <div className="relative h-64 overflow-hidden">
@@ -22,13 +29,25 @@ export default function PropertyCard({ property, onViewGallery, onViewDetails }:
           </div>
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-          <button
-            onClick={() => onViewGallery(property)}
-            className="absolute bottom-4 right-4 bg-white/90 text-brand-dark px-4 py-2 rounded-md 
-              hover:bg-property-gold hover:text-white transition-colors"
-          >
-            Vezi galerie foto
-          </button>
+          <div className="absolute bottom-4 right-4 flex gap-2">
+            {on360View && (
+              <button
+                onClick={() => on360View(property)}
+                className="bg-white/90 text-brand-dark px-4 py-2 rounded-md 
+                  hover:bg-property-gold hover:text-white transition-colors flex items-center gap-2"
+              >
+                <Rotate3d size={18} />
+                Vedere 360°
+              </button>
+            )}
+            <button
+              onClick={() => onViewGallery(property)}
+              className="bg-white/90 text-brand-dark px-4 py-2 rounded-md 
+                hover:bg-property-gold hover:text-white transition-colors"
+            >
+              Vezi galerie foto
+            </button>
+          </div>
         </div>
       </div>
 
