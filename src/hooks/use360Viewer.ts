@@ -2,35 +2,45 @@ import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 
 export function use360Viewer(propertyId: string) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [totalImages, setTotalImages] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
 
+  const imageTypes = ['living', 'bedroom', 'bathroom', 'balcony', 'kitchen'];
+
   useEffect(() => {
-    setCurrentImageIndex(1);
+    console.log('Initializing 360 viewer for property:', propertyId);
+    setCurrentImageIndex(0);
     checkTotalImages();
   }, [propertyId]);
 
   const checkTotalImages = async () => {
     let count = 0;
-    for (let i = 1; i <= 36; i++) {
+    for (const imageType of imageTypes) {
       try {
-        const response = await fetch(`/assets/360/${propertyId}/${i}.jpg`);
+        const imagePath = `/assets/360/${propertyId}/${imageType}.jpg`;
+        console.log(`Checking image path: ${imagePath}`);
+        
+        const response = await fetch(imagePath);
         if (response.ok) {
-          count = i;
+          count++;
+          console.log(`✅ Found image: ${imageType}.jpg`);
         } else {
-          break;
+          console.log(`❌ Image not found: ${imageType}.jpg (Status: ${response.status})`);
         }
-      } catch {
-        break;
+      } catch (error) {
+        console.error(`Error checking image ${imageType}:`, error);
       }
     }
     
+    console.log(`Total images found for property ${propertyId}: ${count}`);
+    
     if (count === 0) {
+      console.error('No 360° images found for property:', propertyId);
       toast({
-        title: "360° View Not Available",
-        description: "The 360° view for this property is not available yet.",
+        title: "Vedere 360° indisponibilă",
+        description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
         variant: "destructive"
       });
       return false;
@@ -40,17 +50,30 @@ export function use360Viewer(propertyId: string) {
     return true;
   };
 
+  const getCurrentImageType = () => {
+    return imageTypes[currentImageIndex];
+  };
+
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev % totalImages) + 1);
+    setCurrentImageIndex((prev) => {
+      const next = (prev + 1) % totalImages;
+      console.log('Moving to next image:', next, 'Type:', imageTypes[next]);
+      return next;
+    });
   };
 
   const previousImage = () => {
-    setCurrentImageIndex((prev) => (prev === 1 ? totalImages : prev - 1));
+    setCurrentImageIndex((prev) => {
+      const previous = prev === 0 ? totalImages - 1 : prev - 1;
+      console.log('Moving to previous image:', previous, 'Type:', imageTypes[previous]);
+      return previous;
+    });
   };
 
   const handleDragStart = (clientX: number) => {
     setIsDragging(true);
     setStartX(clientX);
+    console.log('Started dragging at position:', clientX);
   };
 
   const handleDragMove = (clientX: number) => {
@@ -69,6 +92,7 @@ export function use360Viewer(propertyId: string) {
 
   const handleDragEnd = () => {
     setIsDragging(false);
+    console.log('Ended dragging');
   };
 
   return {
@@ -79,5 +103,6 @@ export function use360Viewer(propertyId: string) {
     handleDragStart,
     handleDragMove,
     handleDragEnd,
+    getCurrentImageType
   };
 }
