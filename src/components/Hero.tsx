@@ -50,7 +50,7 @@ const Hero = () => {
                 e.preventDefault();
                 scrollToProperties();
               }}
-              className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-property-gold hover:bg-property-gold/90 transition-colors duration-300"
+              className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-medium rounded-md text-white bg-property-orange hover:bg-property-orange-dark transition-colors duration-300"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label="Vezi proprietățile noastre disponibile"
