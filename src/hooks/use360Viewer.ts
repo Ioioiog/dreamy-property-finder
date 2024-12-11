@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 
 export function use360Viewer(propertyId: string) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [currentImageIndex, setCurrentImageIndex] = useState(1);
   const [totalImages, setTotalImages] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -20,41 +20,33 @@ export function use360Viewer(propertyId: string) {
     let checking = true;
     let index = 1;
 
-    while (checking && index <= 20) {
+    while (checking && index <= 36) { // Check up to 36 images (10° intervals)
+      const imagePath = `/assets/360/${propertyId}/image-${index}.jpg`;
+      console.log(`🔍 Checking image: ${imagePath}`);
+      
       try {
-        const imagePath = `/assets/360/${propertyId}/image-${index}.jpg`;
-        console.log(`🔍 Checking image path: ${imagePath}`);
-        
-        const img = new Image();
-        img.src = imagePath;
-        
-        await new Promise((resolve) => {
-          img.onload = () => {
-            foundImages++;
-            console.log(`✅ Found image-${index}.jpg`);
-            resolve(true);
-          };
-          img.onerror = () => {
-            checking = false;
-            console.log(`❌ No more images found after image-${index-1}.jpg`);
-            resolve(false);
-          };
-        });
-        
-        index++;
+        const response = await fetch(imagePath);
+        if (response.ok) {
+          foundImages++;
+          console.log(`✅ Found image ${index}`);
+          index++;
+        } else {
+          checking = false;
+          console.log(`❌ No more images found after ${index-1}`);
+        }
       } catch (error) {
         console.error(`Error checking image ${index}:`, error);
         checking = false;
       }
     }
     
-    console.log(`📊 Total panorama images found: ${foundImages}`);
+    console.log(`📊 Total images found: ${foundImages}`);
     
     if (foundImages === 0) {
       console.error('❌ No 360° images found for property:', propertyId);
       toast({
-        title: "Vedere 360° indisponibilă",
-        description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
+        title: "360° View Unavailable",
+        description: "The 360° view for this property is not available at the moment.",
         variant: "destructive"
       });
     }
@@ -63,7 +55,7 @@ export function use360Viewer(propertyId: string) {
     setIsLoading(false);
   };
 
-  const getCurrentImageNumber = () => `image-${currentImageIndex}`;
+  const getCurrentImageNumber = () => currentImageIndex;
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
@@ -91,7 +83,9 @@ export function use360Viewer(propertyId: string) {
     if (!isDragging) return;
 
     const deltaX = clientX - startX;
-    if (Math.abs(deltaX) > 50) {
+    const threshold = 30; // Reduced threshold for more responsive rotation
+
+    if (Math.abs(deltaX) > threshold) {
       if (deltaX > 0) {
         previousImage();
       } else {
