@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { use360Viewer } from '@/hooks/use360Viewer';
 import ViewerHeader from './360/ViewerHeader';
 import ViewerControls from './360/ViewerControls';
+import { Loader } from 'lucide-react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface ApartmentViewer360Props {
@@ -20,10 +21,11 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
     handleDragStart,
     handleDragMove,
     handleDragEnd,
-    getCurrentImageType
+    getCurrentImageNumber,
+    isLoading
   } = use360Viewer(propertyId);
 
-  if (!isOpen || totalImages === 0) return null;
+  if (!isOpen) return null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -50,17 +52,26 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
             role="region"
             aria-label="360 degree view control area"
           >
-            <ViewerControls
-              onPrevious={previousImage}
-              onNext={nextImage}
-            />
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <Loader className="w-8 h-8 animate-spin text-property-gold" />
+                <VisuallyHidden>Loading 360° view</VisuallyHidden>
+              </div>
+            ) : totalImages > 0 ? (
+              <>
+                <ViewerControls
+                  onPrevious={previousImage}
+                  onNext={nextImage}
+                />
 
-            <img
-              src={`/assets/360/${propertyId}/${getCurrentImageType()}.jpg`}
-              alt={`360° view of ${getCurrentImageType()} area`}
-              className="max-h-[70vh] max-w-[90vw] object-contain select-none"
-              draggable={false}
-            />
+                <img
+                  src={`/assets/360/${propertyId}/${getCurrentImageNumber()}.jpg`}
+                  alt={`360° view ${currentImageIndex} of ${totalImages}`}
+                  className="max-h-[70vh] max-w-[90vw] object-contain select-none"
+                  draggable={false}
+                />
+              </>
+            ) : null}
           </div>
 
           <div className="p-4 text-center text-sm text-gray-600 border-t">

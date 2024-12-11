@@ -6,75 +6,84 @@ export function use360Viewer(propertyId: string) {
   const [totalImages, setTotalImages] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const imageTypes = ['living', 'bedroom', 'bathroom', 'balcony', 'kitchen'];
-
+  // We'll check for image-1.jpg, image-2.jpg etc. instead of specific room types
+  // since these are panorama images from iPhone
   useEffect(() => {
-    console.log('Initializing 360 viewer for property:', propertyId);
-    setCurrentImageIndex(0);
+    console.log('🔄 Initializing 360 viewer for property:', propertyId);
+    setCurrentImageIndex(1); // Start from image-1
     checkTotalImages();
   }, [propertyId]);
 
   const checkTotalImages = async () => {
-    let count = 0;
-    for (const imageType of imageTypes) {
+    setIsLoading(true);
+    let foundImages = 0;
+    let checking = true;
+    let index = 1;
+
+    while (checking && index <= 20) { // Check up to 20 images
       try {
-        // Using the correct GitHub repository path structure
-        const imagePath = `/assets/360/${propertyId}/${imageType}.jpg`;
+        const imagePath = `/assets/360/${propertyId}/image-${index}.jpg`;
         console.log(`🔍 Checking image path: ${imagePath}`);
         
-        // Create an Image object to check if the image exists
         const img = new Image();
         img.src = imagePath;
         
-        await new Promise((resolve, reject) => {
+        await new Promise((resolve) => {
           img.onload = () => {
-            count++;
-            console.log(`✅ Found image: ${imageType}.jpg at ${imagePath}`);
+            foundImages++;
+            console.log(`✅ Found image-${index}.jpg at ${imagePath}`);
             resolve(true);
           };
           img.onerror = () => {
-            console.log(`❌ Image not found: ${imageType}.jpg at ${imagePath}`);
+            checking = false; // Stop checking when we find a gap
+            console.log(`❌ No more images found after image-${index-1}.jpg`);
             resolve(false);
           };
         });
+        
+        index++;
       } catch (error) {
-        console.error(`Error checking image ${imageType}:`, error);
+        console.error(`Error checking image ${index}:`, error);
+        checking = false;
       }
     }
     
-    console.log(`📊 Total images found for property ${propertyId}: ${count}`);
+    console.log(`📊 Total panorama images found: ${foundImages}`);
     
-    if (count === 0) {
+    if (foundImages === 0) {
       console.error('❌ No 360° images found for property:', propertyId);
       toast({
         title: "Vedere 360° indisponibilă",
         description: "Vederea 360° pentru această proprietate nu este disponibilă momentan.",
         variant: "destructive"
       });
+      setIsLoading(false);
       return false;
     }
     
-    setTotalImages(count);
+    setTotalImages(foundImages);
+    setIsLoading(false);
     return true;
   };
 
-  const getCurrentImageType = () => {
-    return imageTypes[currentImageIndex];
+  const getCurrentImageNumber = () => {
+    return `image-${currentImageIndex}`;
   };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => {
-      const next = (prev + 1) % totalImages;
-      console.log('➡️ Moving to next image:', next, 'Type:', imageTypes[next]);
+      const next = prev === totalImages ? 1 : prev + 1;
+      console.log('➡️ Moving to next image:', next);
       return next;
     });
   };
 
   const previousImage = () => {
     setCurrentImageIndex((prev) => {
-      const previous = prev === 0 ? totalImages - 1 : prev - 1;
-      console.log('⬅️ Moving to previous image:', previous, 'Type:', imageTypes[previous]);
+      const previous = prev === 1 ? totalImages : prev - 1;
+      console.log('⬅️ Moving to previous image:', previous);
       return previous;
     });
   };
@@ -112,6 +121,7 @@ export function use360Viewer(propertyId: string) {
     handleDragStart,
     handleDragMove,
     handleDragEnd,
-    getCurrentImageType
+    getCurrentImageNumber,
+    isLoading
   };
 }
