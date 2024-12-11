@@ -15,9 +15,9 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleAgentClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleContactClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    const element = document.querySelector('#AgentPortal');
+    const element = document.querySelector('#contact');
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsOpen(false);
@@ -60,6 +60,7 @@ export default function Navbar() {
             </a>
             <a 
               href="#contact" 
+              onClick={handleContactClick}
               className={`font-medium hover:text-property-gold transition-colors ${
                 isScrolled ? 'text-property-stone' : 'text-white'
               }`}
@@ -68,11 +69,7 @@ export default function Navbar() {
             </a>
             <a
               href="https://chiriasi.apartamentdelux.ro"
-              className={`px-4 py-2 rounded-md transition-colors ${
-                isScrolled 
-                  ? 'bg-property-orange hover:bg-property-orange-dark text-white'
-                  : 'bg-property-orange hover:bg-property-orange-dark text-white'
-              }`}
+              className="px-4 py-2 rounded-md bg-property-orange hover:bg-property-orange-dark text-white transition-colors"
             >
               Portal Chiriași
             </a>
@@ -102,7 +99,8 @@ export default function Navbar() {
                 Proprietăți
               </a>
               <a 
-                href="#contact" 
+                href="#contact"
+                onClick={handleContactClick}
                 className="block px-3 py-2 text-property-stone hover:text-property-gold rounded-md"
               >
                 Contact
