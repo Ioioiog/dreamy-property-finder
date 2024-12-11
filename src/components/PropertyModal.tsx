@@ -19,6 +19,8 @@ interface ViewingFormData {
 
 export default function PropertyModal({ property, onClose, onOpenGallery }: PropertyModalProps) {
   const [showViewingForm, setShowViewingForm] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
   
   if (!property) return null;
 
@@ -49,6 +51,9 @@ Corp: ${property.details.building}
     window.location.href = `mailto:reddomainrent@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
     setShowViewingForm(false);
   };
+
+  const mainImage = property.images[0] || "/placeholder.svg";
+  console.log('🖼️ Loading property image:', mainImage);
 
   return (
     <>
@@ -130,10 +135,22 @@ Corp: ${property.details.building}
               {/* Right Column - Image & Price Info */}
               <div>
                 <div className="relative rounded-lg overflow-hidden mb-6">
+                  {isImageLoading && (
+                    <div className="absolute inset-0 bg-gray-100 animate-pulse" />
+                  )}
                   <img
-                    src={property.images[0] || "https://www.primavista.ro/wp-content/uploads/2023/04/1p.png"}
+                    src={imageError ? "/placeholder.svg" : mainImage}
                     alt={property.title}
                     className="w-full h-64 object-cover"
+                    onLoad={() => {
+                      console.log('✅ Property image loaded successfully');
+                      setIsImageLoading(false);
+                    }}
+                    onError={() => {
+                      console.error('❌ Failed to load property image:', mainImage);
+                      setImageError(true);
+                      setIsImageLoading(false);
+                    }}
                   />
                   <button
                     onClick={onOpenGallery}
