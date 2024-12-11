@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { X, MapPin, Home, Square, ArrowUpDown, Building } from 'lucide-react';
+import { X, MapPin } from 'lucide-react';
 import { Property } from '@/types/property';
 import ViewingRequestForm from './ViewingRequestForm';
+import PropertyDetails from './property/PropertyDetails';
+import PropertyImageSection from './property/PropertyImageSection';
 
 interface PropertyModalProps {
   property: Property;
@@ -19,8 +21,6 @@ interface ViewingFormData {
 
 export default function PropertyModal({ property, onClose, onOpenGallery }: PropertyModalProps) {
   const [showViewingForm, setShowViewingForm] = useState(false);
-  const [imageError, setImageError] = useState(false);
-  const [isImageLoading, setIsImageLoading] = useState(true);
   
   if (!property) return null;
 
@@ -52,146 +52,36 @@ Corp: ${property.details.building}
     setShowViewingForm(false);
   };
 
-  const mainImage = property.images[0] || "/placeholder.svg";
-  console.log('🖼️ Loading property image:', mainImage);
-
   return (
-    <>
-      <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm">
-        <div className="relative min-h-screen flex items-center justify-center p-4">
-          <div className="relative bg-white w-full max-w-6xl rounded-lg shadow-2xl overflow-hidden">
-            {/* Header */}
-            <div className="flex justify-between items-center p-6 border-b">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">{property.title}</h2>
-                <div className="flex items-center text-gray-600 mt-1">
-                  <MapPin size={18} className="mr-1" />
-                  <span>{property.location.address}</span>
-                </div>
-              </div>
-              <button
-                onClick={onClose}
-                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              >
-                <X size={24} />
-              </button>
-            </div>
-
-            <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Left Column - Details */}
-              <div className="space-y-6">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Informații Generale</h3>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center">
-                      <Home className="w-5 h-5 text-brand-orange mr-2" />
-                      <div>
-                        <p className="text-sm text-gray-500">Număr camere</p>
-                        <p className="font-medium">{property.details.rooms}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <Square className="w-5 h-5 text-brand-orange mr-2" />
-                      <div>
-                        <p className="text-sm text-gray-500">Suprafață utilă</p>
-                        <p className="font-medium">{property.details.area} mp</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <ArrowUpDown className="w-5 h-5 text-brand-orange mr-2" />
-                      <div>
-                        <p className="text-sm text-gray-500">Etaj</p>
-                        <p className="font-medium">{property.details.floor}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center">
-                      <Building className="w-5 h-5 text-brand-orange mr-2" />
-                      <div>
-                        <p className="text-sm text-gray-500">Corp</p>
-                        <p className="font-medium">{property.details.building}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Descriere</h3>
-                  <p className="text-gray-600">{property.description}</p>
-                </div>
-
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Facilități</h3>
-                  <div className="grid grid-cols-2 gap-3">
-                    {property.amenities.map((amenity, index) => (
-                      <div key={index} className="flex items-center text-gray-600">
-                        <span className="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
-                        {amenity}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Column - Image & Price Info */}
-              <div>
-                <div className="relative rounded-lg overflow-hidden mb-6">
-                  {isImageLoading && (
-                    <div className="absolute inset-0 bg-gray-100 animate-pulse" />
-                  )}
-                  <img
-                    src={imageError ? "/placeholder.svg" : mainImage}
-                    alt={property.title}
-                    className="w-full h-64 object-cover"
-                    onLoad={() => {
-                      console.log('✅ Property image loaded successfully');
-                      setIsImageLoading(false);
-                    }}
-                    onError={() => {
-                      console.error('❌ Failed to load property image:', mainImage);
-                      setImageError(true);
-                      setIsImageLoading(false);
-                    }}
-                  />
-                  <button
-                    onClick={onOpenGallery}
-                    className="absolute bottom-4 right-4 bg-white/90 text-brand-dark px-4 py-2 rounded-md 
-                      hover:bg-brand-orange hover:text-white transition-colors backdrop-blur-sm"
-                  >
-                    Vezi toate pozele
-                  </button>
-                </div>
-
-                <div className="bg-gray-50 p-6 rounded-lg">
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-gray-600">Preț chirie</span>
-                    <span className="text-3xl font-bold text-brand-orange">{property.price}€</span>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Complex</span>
-                      <span className="font-medium">{property.location.complex}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Suprafață totală</span>
-                      <span className="font-medium">{property.details.totalArea} mp</span>
-                    </div>
-                    {property.details.balcony && (
-                      <div className="flex justify-between text-sm">
-                        <span className="text-gray-600">Suprafață balcon</span>
-                        <span className="font-medium">{property.details.balcony} mp</span>
-                      </div>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => setShowViewingForm(true)}
-                    className="w-full mt-6 px-4 py-2 bg-brand-orange text-white rounded-md 
-                      hover:bg-brand-orange-dark transition-colors"
-                  >
-                    Programează vizionare
-                  </button>
-                </div>
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-black/70 backdrop-blur-sm">
+      <div className="relative min-h-screen flex items-center justify-center p-4">
+        <div className="relative bg-white w-full max-w-6xl rounded-lg shadow-2xl overflow-hidden">
+          {/* Header */}
+          <div className="flex justify-between items-center p-6 border-b">
+            <div>
+              <h2 className="text-2xl font-bold text-gray-900">{property.title}</h2>
+              <div className="flex items-center text-gray-600 mt-1">
+                <MapPin size={18} className="mr-1" />
+                <span>{property.location.address}</span>
               </div>
             </div>
+            <button
+              onClick={onClose}
+              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
+          <div className="p-6 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Left Column - Details */}
+            <PropertyDetails property={property} />
+
+            {/* Right Column - Image & Price Info */}
+            <PropertyImageSection 
+              property={property}
+              onOpenGallery={onOpenGallery}
+            />
           </div>
         </div>
       </div>
@@ -204,6 +94,6 @@ Corp: ${property.details.building}
           propertyTitle={property.title}
         />
       )}
-    </>
+    </div>
   );
 }
