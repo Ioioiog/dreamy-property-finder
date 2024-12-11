@@ -15,7 +15,7 @@ const Contact = () => {
               <input
                 type="text"
                 id="name"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-gold focus:ring-property-gold"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-orange focus:ring-property-orange"
               />
             </div>
             <div>
@@ -25,7 +25,7 @@ const Contact = () => {
               <input
                 type="email"
                 id="email"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-gold focus:ring-property-gold"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-orange focus:ring-property-orange"
               />
             </div>
             <div>
@@ -35,10 +35,10 @@ const Contact = () => {
               <textarea
                 id="message"
                 rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-gold focus:ring-property-gold"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-property-orange focus:ring-property-orange"
               ></textarea>
             </div>
-            <Button type="submit" className="w-full bg-property-gold hover:bg-property-gold/90">
+            <Button type="submit" className="w-full bg-property-orange hover:bg-property-orange-dark text-white">
               Trimite Mesaj
             </Button>
           </form>

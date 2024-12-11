@@ -43,7 +43,7 @@ export default function PropertyCard({
               <motion.button
                 onClick={() => on360View(property)}
                 className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
-                  hover:bg-property-gold hover:text-white transition-colors flex items-center gap-2"
+                  hover:bg-property-orange hover:text-white transition-colors flex items-center gap-2"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 aria-label="Vezi apartamentul în 360°"
@@ -55,7 +55,7 @@ export default function PropertyCard({
             <motion.button
               onClick={() => onViewGallery(property)}
               className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
-                hover:bg-property-gold hover:text-white transition-colors flex items-center gap-2"
+                hover:bg-property-orange hover:text-white transition-colors flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               aria-label="Vezi galeria foto"
@@ -73,7 +73,7 @@ export default function PropertyCard({
           <div className="text-property-muted">
             {property.details.rooms} camere • {property.details.area} mp
           </div>
-          <div className="text-2xl font-bold text-property-gold">
+          <div className="text-2xl font-bold text-property-orange">
             {property.price}€
           </div>
         </div>
@@ -85,8 +85,8 @@ export default function PropertyCard({
         {property.status === propertyStatuses.AVAILABLE ? (
           <motion.button
             onClick={() => onViewDetails(property)}
-            className="w-full px-4 py-2 bg-property-gold text-white rounded-md 
-              hover:bg-property-stone transition-colors flex items-center justify-center gap-2"
+            className="w-full px-4 py-2 bg-property-orange text-white rounded-md 
+              hover:bg-property-orange-dark transition-colors flex items-center justify-center gap-2"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             aria-label="Vezi detalii complete"
