@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { X } from 'lucide-react';
-import ImageRotate from 'react-360-view';
 
 interface ApartmentViewer360Props {
   isOpen: boolean;
@@ -10,15 +9,15 @@ interface ApartmentViewer360Props {
 }
 
 export default function ApartmentViewer360({ isOpen, onClose, propertyId }: ApartmentViewer360Props) {
-  console.log('Opening 360 viewer for property:', propertyId);
+  console.log('Opening panorama viewer for property:', propertyId);
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl h-[80vh] p-0">
+      <DialogContent className="max-w-7xl h-[80vh] p-0">
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
-              Vizualizare 360°
+              Vizualizare Panoramică
             </h3>
             <button
               onClick={onClose}
@@ -28,14 +27,16 @@ export default function ApartmentViewer360({ isOpen, onClose, propertyId }: Apar
             </button>
           </div>
           
-          <div className="flex-1 relative flex items-center justify-center bg-property-cream p-4">
-            <ImageRotate
-              amount={36}
-              imagePath={`/assets/360/${propertyId}/image-`}
-              fileName="jpg"
-              spinReverse
-              autoplay={1}
-              loop
+          <div className="flex-1 relative overflow-x-scroll bg-property-cream">
+            <img
+              src={`/assets/360/${propertyId}/panorama.jpg`}
+              alt="Panoramic view"
+              className="h-full object-cover"
+              style={{
+                width: 'auto',
+                maxWidth: 'none',
+                height: '100%'
+              }}
             />
           </div>
         </div>
