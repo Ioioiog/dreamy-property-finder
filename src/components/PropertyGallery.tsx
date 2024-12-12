@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { toast } from './ui/use-toast';
 
 interface Property {
   id: string;
@@ -18,14 +19,16 @@ interface PropertyGalleryProps {
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [imageLoadErrors, setImageLoadErrors] = useState<boolean[]>([]);
 
   useEffect(() => {
     if (property) {
-      const urls = property.images.map((_, index) => 
-        `/assets/images/properties/${property.id}/${index + 1}.jpg`
+      const urls = property.images.map((image) => 
+        `/assets/images/properties/${property.id}/${image}`
       );
       console.log('Generated gallery image URLs:', urls);
       setImageUrls(urls);
+      setImageLoadErrors(new Array(urls.length).fill(false));
     }
   }, [property]);
 
@@ -48,6 +51,18 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   const prevImage = () => {
     setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
+  };
+
+  const handleImageError = (index: number) => {
+    console.error('Failed to load gallery image:', imageUrls[index]);
+    const newErrors = [...imageLoadErrors];
+    newErrors[index] = true;
+    setImageLoadErrors(newErrors);
+    toast({
+      title: "Eroare la încărcarea imaginii",
+      description: "Nu am putut încărca imaginea. Vă rugăm încercați din nou mai târziu.",
+      variant: "destructive",
+    });
   };
 
   return (
@@ -76,13 +91,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={imageUrls[currentIndex] || '/placeholder.svg'}
+              src={imageLoadErrors[currentIndex] ? '/placeholder.svg' : imageUrls[currentIndex]}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
-              onError={(e) => {
-                console.error('Failed to load gallery image:', imageUrls[currentIndex]);
-                e.currentTarget.src = '/placeholder.svg';
-              }}
+              onError={() => handleImageError(currentIndex)}
               onLoad={() => console.log('Gallery image loaded successfully:', imageUrls[currentIndex])}
             />
 
@@ -109,13 +121,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     }`}
                 >
                   <img
-                    src={imageUrl}
+                    src={imageLoadErrors[index] ? '/placeholder.svg' : imageUrl}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      console.error('Failed to load thumbnail:', imageUrl);
-                      e.currentTarget.src = '/placeholder.svg';
-                    }}
+                    onError={() => handleImageError(index)}
                   />
                 </button>
               ))}
