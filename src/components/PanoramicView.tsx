@@ -42,6 +42,7 @@ export default function PanoramicView() {
     textureLoader.load(
       `/assets/images/properties/${property.id}/panoramic.jpg`,
       (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
         const material = new THREE.MeshBasicMaterial({ map: texture });
         const sphere = new THREE.Mesh(geometry, material);
         scene.add(sphere);
@@ -63,14 +64,13 @@ export default function PanoramicView() {
       sceneRef.current.animationId = animationId;
 
       if (sceneRef.current.sphere) {
-        // Rotație automată stânga-dreapta
         sceneRef.current.sphere.rotation.y += 0.001;
       }
 
       renderer.render(scene, camera);
     }
 
-    // Mouse controls
+    // Controls state
     let isUserInteracting = false;
     let onPointerDownMouseX = 0;
     let onPointerDownMouseY = 0;
@@ -81,19 +81,42 @@ export default function PanoramicView() {
     let phi = 0;
     let theta = 0;
 
-    function onPointerDown(event: MouseEvent) {
+    function updateCamera() {
+      lat = Math.max(-85, Math.min(85, lat));
+      phi = THREE.MathUtils.degToRad(90 - lat);
+      theta = THREE.MathUtils.degToRad(lon);
+
+      const x = 500 * Math.sin(phi) * Math.cos(theta);
+      const y = 500 * Math.cos(phi);
+      const z = 500 * Math.sin(phi) * Math.sin(theta);
+
+      camera.lookAt(x, y, z);
+    }
+
+    // Mouse/Touch event handlers
+    function onPointerDown(event: MouseEvent | TouchEvent) {
+      event.preventDefault();
       isUserInteracting = true;
-      onPointerDownMouseX = event.clientX;
-      onPointerDownMouseY = event.clientY;
+
+      const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+      const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
+
+      onPointerDownMouseX = clientX;
+      onPointerDownMouseY = clientY;
       onPointerDownLon = lon;
       onPointerDownLat = lat;
     }
 
-    function onPointerMove(event: MouseEvent) {
-      if (isUserInteracting) {
-        lon = (onPointerDownMouseX - event.clientX) * 0.1 + onPointerDownLon;
-        lat = (event.clientY - onPointerDownMouseY) * 0.1 + onPointerDownLat;
-      }
+    function onPointerMove(event: MouseEvent | TouchEvent) {
+      if (!isUserInteracting) return;
+
+      const clientX = 'touches' in event ? event.touches[0].clientX : event.clientX;
+      const clientY = 'touches' in event ? event.touches[0].clientY : event.clientY;
+
+      lon = (onPointerDownMouseX - clientX) * 0.1 + onPointerDownLon;
+      lat = (clientY - onPointerDownMouseY) * 0.1 + onPointerDownLat;
+
+      updateCamera();
     }
 
     function onPointerUp() {
@@ -106,11 +129,27 @@ export default function PanoramicView() {
       camera.updateProjectionMatrix();
     }
 
+    // Handle window resize
+    function onWindowResize() {
+      if (!containerRef.current) return;
+      
+      const newWidth = containerRef.current.clientWidth;
+      const newHeight = containerRef.current.clientHeight;
+      
+      camera.aspect = newWidth / newHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(newWidth, newHeight);
+    }
+
     // Event listeners
     container.addEventListener('mousedown', onPointerDown);
     container.addEventListener('mousemove', onPointerMove);
     container.addEventListener('mouseup', onPointerUp);
+    container.addEventListener('touchstart', onPointerDown);
+    container.addEventListener('touchmove', onPointerMove);
+    container.addEventListener('touchend', onPointerUp);
     container.addEventListener('wheel', onWheel);
+    window.addEventListener('resize', onWindowResize);
 
     // Start animation
     animate();
@@ -123,7 +162,11 @@ export default function PanoramicView() {
       container.removeEventListener('mousedown', onPointerDown);
       container.removeEventListener('mousemove', onPointerMove);
       container.removeEventListener('mouseup', onPointerUp);
+      container.removeEventListener('touchstart', onPointerDown);
+      container.removeEventListener('touchmove', onPointerMove);
+      container.removeEventListener('touchend', onPointerUp);
       container.removeEventListener('wheel', onWheel);
+      window.removeEventListener('resize', onWindowResize);
       container.removeChild(renderer.domElement);
       renderer.dispose();
     };
@@ -154,8 +197,11 @@ export default function PanoramicView() {
       </div>
       <div 
         ref={containerRef} 
-        className="flex-1 bg-gray-100 relative"
-        style={{ minHeight: 'calc(100vh - 120px)' }}
+        className="flex-1 bg-gray-100"
+        style={{ 
+          height: 'calc(100vh - 120px)',
+          touchAction: 'none' // Prevents default touch behaviors
+        }}
       />
     </div>
   );
