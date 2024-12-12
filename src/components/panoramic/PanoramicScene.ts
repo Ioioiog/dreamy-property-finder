@@ -25,8 +25,6 @@ export class PanoramicScene {
 
   loadPanorama(imageUrl: string) {
     return new Promise<void>((resolve, reject) => {
-      console.log(`[PanoramicScene] Starting to load panorama from: ${imageUrl}`);
-      
       // Create cylinder
       const geometry = new THREE.CylinderGeometry(
         100, // radius
@@ -38,34 +36,21 @@ export class PanoramicScene {
       );
       geometry.scale(-1, 1, 1); // Invert the cylinder so the image is on the inside
 
-      // Load panoramic texture with absolute path
-      const absoluteUrl = imageUrl.startsWith('/') ? imageUrl : `/${imageUrl}`;
-      console.log(`[PanoramicScene] Attempting to load with absolute path: ${absoluteUrl}`);
-      
+      // Load panoramic texture
       const textureLoader = new THREE.TextureLoader();
       textureLoader.load(
-        absoluteUrl,
+        imageUrl,
         (texture) => {
-          console.log(`[PanoramicScene] Texture loaded successfully from: ${absoluteUrl}`);
           texture.colorSpace = THREE.SRGBColorSpace;
           const material = new THREE.MeshBasicMaterial({ map: texture });
           this.cylinder = new THREE.Mesh(geometry, material);
           this.scene.add(this.cylinder);
+          console.log('Panoramic texture loaded successfully');
           resolve();
         },
-        (progressEvent) => {
-          if (progressEvent.lengthComputable) {
-            const percentComplete = (progressEvent.loaded / progressEvent.total) * 100;
-            console.log(`[PanoramicScene] Loading progress: ${percentComplete.toFixed(2)}%`);
-          }
-        },
+        undefined,
         (error) => {
-          console.error(`[PanoramicScene] Error loading panoramic texture from: ${absoluteUrl}`, error);
-          console.error(`[PanoramicScene] Error details:`, {
-            url: absoluteUrl,
-            errorType: error.type,
-            errorMessage: error.message
-          });
+          console.error('Error loading panoramic texture:', error);
           reject(error);
         }
       );
@@ -79,11 +64,6 @@ export class PanoramicScene {
   }
 
   dispose() {
-    if (this.cylinder) {
-      this.scene.remove(this.cylinder);
-      this.cylinder.geometry.dispose();
-      (this.cylinder.material as THREE.Material).dispose();
-    }
     this.renderer.dispose();
   }
 
