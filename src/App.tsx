@@ -21,9 +21,9 @@ const RootLayout = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <div className="min-h-screen">
+        <div className="w-full">
+          <Toaster />
+          <Sonner />
           <Outlet />
         </div>
       </TooltipProvider>
@@ -37,7 +37,7 @@ const MainLayout = () => {
   const [showGallery, setShowGallery] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="w-full min-h-screen bg-gray-50">
       <Navbar />
       <Hero />
       <PropertyList 
