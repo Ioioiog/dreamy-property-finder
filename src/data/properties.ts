@@ -33,9 +33,20 @@ export const filterOptions = {
   ],
 };
 
-// Helper function to generate image array
+// Helper function to generate image array based on actual image count
 const generatePropertyImages = (propertyId: string): string[] => {
-  return Array.from({ length: 15 }, (_, i) => `${i + 1}.jpg`);
+  const imageCounts: { [key: string]: number } = {
+    'a25': 11,
+    'b110': 11,
+    'b27': 11,
+    'b29': 11,
+    'p21': 11,
+    'p26': 11,
+    'p51': 11
+  };
+  
+  const count = imageCounts[propertyId] || 0;
+  return Array.from({ length: count }, (_, i) => `${i + 1}.jpg`);
 };
 
 export const propertyData: Property[] = [

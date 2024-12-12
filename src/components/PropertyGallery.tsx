@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent } from './ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from './ui/use-toast';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface Property {
   id: string;
@@ -68,6 +69,9 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl h-[90vh] p-0">
+        <DialogTitle className="sr-only">
+          Galerie foto pentru {property.title}
+        </DialogTitle>
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
@@ -76,6 +80,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             <button
               onClick={onClose}
               className="p-2 hover:bg-property-cream rounded-full transition-colors"
+              aria-label="Închide galeria"
             >
               <X size={24} className="text-property-stone" />
             </button>
@@ -119,6 +124,8 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                         ? 'ring-2 ring-property-gold scale-105' 
                         : 'opacity-50 hover:opacity-100'
                     }`}
+                  aria-label={`Vezi imaginea ${index + 1}`}
+                  aria-current={currentIndex === index}
                 >
                   <img
                     src={imageLoadErrors[index] ? '/placeholder.svg' : imageUrl}
