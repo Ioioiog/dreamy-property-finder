@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogDescription } from './ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 
 interface Property {
   id: string;
@@ -21,9 +22,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   useEffect(() => {
     if (property) {
-      const urls = property.images.map((_, index) => 
-        `/properties/${property.id}/${index + 1}.jpg`
-      );
+      const urls = property.images.map((image) => `/properties/${property.id}/${image}`);
       console.log('Generated gallery image URLs:', urls);
       setImageUrls(urls);
     }
@@ -52,10 +51,11 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0" aria-describedby="gallery-description">
-        <DialogDescription id="gallery-description" className="sr-only">
-          Galerie foto pentru {property.title} cu {imageUrls.length} imagini
-        </DialogDescription>
+      <DialogContent className="max-w-7xl h-[90vh] p-0">
+        <DialogTitle className="sr-only">
+          Galerie foto pentru {property.title}
+        </DialogTitle>
+        
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
@@ -64,6 +64,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             <button
               onClick={onClose}
               className="p-2 hover:bg-property-cream rounded-full transition-colors"
+              aria-label="Închide galeria"
             >
               <X size={24} className="text-property-stone" />
             </button>
@@ -79,7 +80,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={imageUrls[currentIndex] || '/placeholder.svg'}
+              src={imageUrls[currentIndex]}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
               onError={(e) => {
@@ -110,6 +111,8 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                         ? 'ring-2 ring-property-gold scale-105' 
                         : 'opacity-50 hover:opacity-100'
                     }`}
+                  aria-label={`Vezi imaginea ${index + 1}`}
+                  aria-pressed={currentIndex === index}
                 >
                   <img
                     src={imageUrl}
