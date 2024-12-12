@@ -21,7 +21,6 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   useEffect(() => {
     if (property) {
-      // If there's a main image, put it first in the array
       const urls = property.images.map((_, index) => 
         `/assets/images/properties/${property.id}/${index + 1}.jpg`
       );
@@ -67,10 +66,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
           </div>
 
-          <div className="flex-1 relative flex items-center justify-center px-4 bg-property-cream">
+          <div className="flex-1 relative flex items-center justify-center bg-property-cream">
             <button
               onClick={prevImage}
-              className="absolute left-8 p-2 bg-property-gold/10 hover:bg-property-gold/20 rounded-full transition-colors"
+              className="absolute left-4 z-10 p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
               aria-label="Imagine anterioară"
             >
               <ChevronLeft size={24} className="text-property-stone" />
@@ -89,7 +88,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
             <button
               onClick={nextImage}
-              className="absolute right-8 p-2 bg-property-gold/10 hover:bg-property-gold/20 rounded-full transition-colors"
+              className="absolute right-4 z-10 p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
               aria-label="Imagine următoare"
             >
               <ChevronRight size={24} className="text-property-stone" />
