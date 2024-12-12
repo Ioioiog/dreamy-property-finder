@@ -25,6 +25,8 @@ export class PanoramicScene {
 
   loadPanorama(imageUrl: string) {
     return new Promise<void>((resolve, reject) => {
+      console.log(`[PanoramicScene] Attempting to load panorama from: ${imageUrl}`);
+      
       // Create cylinder
       const geometry = new THREE.CylinderGeometry(
         100, // radius
@@ -45,12 +47,14 @@ export class PanoramicScene {
           const material = new THREE.MeshBasicMaterial({ map: texture });
           this.cylinder = new THREE.Mesh(geometry, material);
           this.scene.add(this.cylinder);
-          console.log('Panoramic texture loaded successfully');
+          console.log(`[PanoramicScene] Panoramic texture loaded successfully from: ${imageUrl}`);
           resolve();
         },
-        undefined,
+        (progress) => {
+          console.log(`[PanoramicScene] Loading progress for ${imageUrl}:`, progress);
+        },
         (error) => {
-          console.error('Error loading panoramic texture:', error);
+          console.error(`[PanoramicScene] Error loading panoramic texture from: ${imageUrl}`, error);
           reject(error);
         }
       );
