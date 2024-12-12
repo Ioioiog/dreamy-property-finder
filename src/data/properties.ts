@@ -1,9 +1,36 @@
 import { Property } from '@/types/property';
-import { propertyStatuses } from './constants';
 
-// Helper function to generate image array
-const generateImages = (count: number = 15): string[] => {
-  return Array.from({ length: count }, (_, i) => `${i + 1}.jpg`);
+export const propertyStatuses = {
+  AVAILABLE: 'available',
+  RENTED: 'rented',
+  RESERVED: 'reserved',
+} as const;
+
+export const filterOptions = {
+  status: [
+    { label: 'Toate', value: 'all' },
+    { label: 'Disponibile', value: 'available' },
+    { label: 'Închiriate', value: 'rented' },
+    { label: 'Rezervate', value: 'reserved' },
+  ],
+  rooms: [
+    { label: 'Toate', value: 'all' },
+    { label: '1', value: '1' },
+    { label: '2', value: '2' },
+    { label: '3', value: '3' },
+    { label: '4+', value: '4' },
+  ],
+  complex: [
+    { label: 'Toate', value: 'all' },
+    { label: 'Yacht Kid', value: 'yacht-kid' },
+    { label: 'Prima Vista', value: 'prima-vista' },
+  ],
+  priceRange: [
+    { label: 'Toate', value: 'all' },
+    { label: '1000-1300€', value: '1000-1300' },
+    { label: '1301-1600€', value: '1301-1600' },
+    { label: '1601+€', value: '1601-9999' },
+  ],
 };
 
 export const propertyData: Property[] = [
@@ -27,9 +54,9 @@ export const propertyData: Property[] = [
       coordinates: [44.426912264449236, 26.11123675633533] as [number, number]
     },
     mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Balcon generos', 'Vedere panoramică', 'Parcare'],
-    panoramicUrl: '/assets/images/properties/a25/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/9303891d183c47db90e91352a9b2969d'
   },
   {
     id: 'b110',
@@ -51,9 +78,9 @@ export const propertyData: Property[] = [
       coordinates: [44.42841495259169, 26.105463339845763] as [number, number]
     },
     mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare'],
-    panoramicUrl: '/assets/images/properties/b110/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/1a09f969a4c3447eb33547c57ee10b53'
   },
   {
     id: 'b27',
@@ -74,10 +101,9 @@ export const propertyData: Property[] = [
       complex: 'yacht-kid',
       coordinates: [44.427336515998576, 26.106689630289278] as [number, number]
     },
-    mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare'],
-    panoramicUrl: '/assets/images/properties/b27/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/2c09f969a4c3447eb33547c57ee10b54'
   },
   {
     id: 'b29',
@@ -98,10 +124,9 @@ export const propertyData: Property[] = [
       complex: 'yacht-kid',
       coordinates: [44.42929604108499, 26.108057494961265] as [number, number]
     },
-    mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare'],
-    panoramicUrl: '/assets/images/properties/b29/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/3d09f969a4c3447eb33547c57ee10b55'
   },
   {
     id: 'p26',
@@ -122,10 +147,9 @@ export const propertyData: Property[] = [
       complex: 'prima-vista',
       coordinates: [44.42763169599856, 26.105758692854238] as [number, number]
     },
-    mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare'],
-    panoramicUrl: '/assets/images/properties/p26/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/4e09f969a4c3447eb33547c57ee10b56'
   },
   {
     id: 'p21',
@@ -147,10 +171,9 @@ export const propertyData: Property[] = [
       complex: 'prima-vista',
       coordinates: [44.43555871126546, 26.103366204191687] as [number, number]
     },
-    mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare'],
-    panoramicUrl: '/assets/images/properties/p21/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/5f09f969a4c3447eb33547c57ee10b57'
   },
   {
     id: 'p51',
@@ -172,9 +195,8 @@ export const propertyData: Property[] = [
       complex: 'prima-vista',
       coordinates: [44.42838350522629, 26.103564375902668] as [number, number]
     },
-    mainImage: '1.jpg',
-    images: generateImages(),
+    images: ['1.jpg'],
     amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Parcare'],
-    panoramicUrl: '/assets/images/properties/p51/panoramic.jpg'
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
   }
 ];
