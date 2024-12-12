@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { propertyData } from '@/data/properties';
 import { PanoramicScene } from './panoramic/PanoramicScene';
 import { PanoramicControls } from './panoramic/PanoramicControls';
+import { toast } from './ui/use-toast';
 
 export default function PanoramicView() {
   const { id } = useParams();
@@ -18,8 +19,12 @@ export default function PanoramicView() {
   }>({});
 
   useEffect(() => {
-    if (!containerRef.current || !property) return;
+    if (!containerRef.current || !property) {
+      console.error('Container or property not found:', { container: !!containerRef.current, propertyId: id });
+      return;
+    }
 
+    console.log('Initializing panoramic view for property:', property.id);
     const container = containerRef.current;
     
     // Setup scene
@@ -32,7 +37,39 @@ export default function PanoramicView() {
     // Load panorama using the correct path
     const panoramicPath = `/assets/images/properties/${property.id}/panoramic.jpg`;
     console.log('Loading panoramic image from:', panoramicPath);
-    panoramicScene.loadPanorama(panoramicPath);
+
+    // Test image loading
+    const img = new Image();
+    img.onload = () => {
+      console.log('Panoramic image loaded successfully:', panoramicPath);
+      panoramicScene.loadPanorama(panoramicPath)
+        .then(() => {
+          console.log('Panorama initialized successfully');
+          toast({
+            title: "Panoramă încărcată",
+            description: "Imaginea panoramică a fost încărcată cu succes.",
+          });
+        })
+        .catch(error => {
+          console.error('Failed to initialize panorama:', error);
+          toast({
+            title: "Eroare",
+            description: "Nu am putut încărca imaginea panoramică. Vă rugăm încercați din nou.",
+            variant: "destructive",
+          });
+        });
+    };
+    
+    img.onerror = () => {
+      console.error('Failed to load panoramic image:', panoramicPath);
+      toast({
+        title: "Eroare",
+        description: "Nu am putut găsi imaginea panoramică pentru această proprietate.",
+        variant: "destructive",
+      });
+    };
+    
+    img.src = panoramicPath;
 
     // Handle window resize
     const onWindowResize = () => {
@@ -56,6 +93,7 @@ export default function PanoramicView() {
 
     // Cleanup
     return () => {
+      console.log('Cleaning up panoramic view');
       if (sceneRef.current.animationId) {
         cancelAnimationFrame(sceneRef.current.animationId);
       }
@@ -64,9 +102,10 @@ export default function PanoramicView() {
       container.removeChild(panoramicScene.renderer.domElement);
       panoramicScene.dispose();
     };
-  }, [property]);
+  }, [property, id]);
 
   if (!property || !property.panoramicUrl) {
+    console.error('Property or panoramic URL not found:', { propertyId: id, hasPanoramicUrl: !!property?.panoramicUrl });
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">

@@ -7,6 +7,8 @@ export class PanoramicScene {
   cylinder?: THREE.Mesh;
 
   constructor(container: HTMLDivElement) {
+    console.log('Initializing PanoramicScene');
+    
     // Setup scene
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(
@@ -21,9 +23,12 @@ export class PanoramicScene {
 
     // Position camera
     this.camera.position.set(0, 0, 0.1);
+    console.log('PanoramicScene initialized successfully');
   }
 
   loadPanorama(imageUrl: string) {
+    console.log('Starting to load panorama from:', imageUrl);
+    
     return new Promise<void>((resolve, reject) => {
       // Create cylinder
       const geometry = new THREE.CylinderGeometry(
@@ -41,14 +46,17 @@ export class PanoramicScene {
       textureLoader.load(
         imageUrl,
         (texture) => {
+          console.log('Texture loaded successfully');
           texture.colorSpace = THREE.SRGBColorSpace;
           const material = new THREE.MeshBasicMaterial({ map: texture });
           this.cylinder = new THREE.Mesh(geometry, material);
           this.scene.add(this.cylinder);
-          console.log('Panoramic texture loaded successfully');
+          console.log('Panoramic texture loaded and applied successfully');
           resolve();
         },
-        undefined,
+        (progressEvent) => {
+          console.log('Loading progress:', progressEvent);
+        },
         (error) => {
           console.error('Error loading panoramic texture:', error);
           reject(error);
@@ -58,12 +66,14 @@ export class PanoramicScene {
   }
 
   updateSize(width: number, height: number) {
+    console.log('Updating scene size:', { width, height });
     this.camera.aspect = width / height;
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(width, height);
   }
 
   dispose() {
+    console.log('Disposing PanoramicScene');
     this.renderer.dispose();
   }
 
