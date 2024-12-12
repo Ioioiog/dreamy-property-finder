@@ -5,6 +5,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 interface Property {
   id: string;
   title: string;
+  mainImage?: string;
   images: string[];
 }
 
@@ -20,6 +21,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   useEffect(() => {
     if (property) {
+      // If there's a main image, put it first in the array
       const urls = property.images.map((_, index) => 
         `/assets/images/properties/${property.id}/${index + 1}.jpg`
       );

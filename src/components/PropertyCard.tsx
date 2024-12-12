@@ -18,10 +18,12 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
-  const imagePath = `/assets/images/properties/${property.id}/1.jpg`;
+  const mainImagePath = property.mainImage 
+    ? `/assets/images/properties/${property.id}/${property.mainImage}`
+    : `/assets/images/properties/${property.id}/1.jpg`;
 
   console.log('Loading image for property:', property.id);
-  console.log('Image path:', imagePath);
+  console.log('Image path:', mainImagePath);
 
   return (
     <motion.div 
@@ -34,15 +36,15 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageError ? '/placeholder.svg' : imagePath}
+          src={imageError ? '/placeholder.svg' : mainImagePath}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
           onError={() => {
-            console.error('Failed to load image:', imagePath);
+            console.error('Failed to load image:', mainImagePath);
             setImageError(true);
           }}
-          onLoad={() => console.log('Image loaded successfully:', imagePath)}
+          onLoad={() => console.log('Image loaded successfully:', mainImagePath)}
         />
         {property.status === propertyStatuses.AVAILABLE ? (
           <div className="absolute top-4 right-4">
@@ -81,7 +83,7 @@ export default function PropertyCard({
               aria-label="Vezi galeria foto"
             >
               <Eye size={18} />
-              Galerie foto
+              Galerie foto ({property.images.length})
             </motion.button>
           </div>
         </div>

@@ -53,6 +53,7 @@ export const propertyData: Property[] = [
       complex: 'yacht-kid',
       coordinates: [44.426912264449236, 26.11123675633533] as [number, number]
     },
+    mainImage: '1.jpg',
     images: ['1.jpg'],
     amenities: ['Balcon generos', 'Vedere panoramică', 'Parcare'],
     panoramicUrl: 'https://momento360.com/e/u/9303891d183c47db90e91352a9b2969d'
@@ -76,7 +77,8 @@ export const propertyData: Property[] = [
       complex: 'yacht-kid',
       coordinates: [44.42841495259169, 26.105463339845763] as [number, number]
     },
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare'],
     panoramicUrl: 'https://momento360.com/e/u/1a09f969a4c3447eb33547c57ee10b53'
   },
