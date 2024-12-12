@@ -69,13 +69,6 @@ const properties: Property[] = [
 ];
 
 export const PropertiesGrid = () => {
-  const handle360View = (property: Property) => {
-    toast({
-      title: "360° View Coming Soon",
-      description: `360° view for ${property.title} will be available soon.`,
-    });
-  };
-
   const handleViewGallery = (property: Property) => {
     console.log('View gallery for:', property.title);
   };
@@ -92,7 +85,6 @@ export const PropertiesGrid = () => {
           property={property}
           onViewGallery={handleViewGallery}
           onViewDetails={handleViewDetails}
-          on360View={handle360View}
         />
       ))}
     </div>
