@@ -29,8 +29,10 @@ export default function PanoramicView() {
     sceneRef.current.scene = panoramicScene;
     sceneRef.current.controls = controls;
 
-    // Load panorama
-    panoramicScene.loadPanorama(`/assets/images/properties/${property.id}/panoramic.jpg`);
+    // Load panorama using the correct path
+    const panoramicPath = `/assets/images/properties/${property.id}/panoramic.jpg`;
+    console.log('Loading panoramic image from:', panoramicPath);
+    panoramicScene.loadPanorama(panoramicPath);
 
     // Handle window resize
     const onWindowResize = () => {
