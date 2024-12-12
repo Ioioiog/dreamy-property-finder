@@ -19,8 +19,13 @@ interface ViewingFormData {
 
 export default function PropertyModal({ property, onClose, onOpenGallery }: PropertyModalProps) {
   const [showViewingForm, setShowViewingForm] = useState(false);
+  const [imageError, setImageError] = useState(false);
   
   if (!property) return null;
+
+  const mainImagePath = property.mainImage 
+    ? `/assets/images/properties/${property.id}/${property.mainImage}`
+    : `/assets/images/properties/${property.id}/1.jpg`;
 
   const handleViewingRequest = (formData: ViewingFormData) => {
     const subject = `Cerere vizionare - ${property.title}`;
@@ -131,9 +136,14 @@ Corp: ${property.details.building}
               <div>
                 <div className="relative rounded-lg overflow-hidden mb-6">
                   <img
-                    src={property.images[0] || "https://www.primavista.ro/wp-content/uploads/2023/04/1p.png"}
+                    src={imageError ? '/placeholder.svg' : mainImagePath}
                     alt={property.title}
                     className="w-full h-64 object-cover"
+                    onError={() => {
+                      console.error('Failed to load image:', mainImagePath);
+                      setImageError(true);
+                    }}
+                    onLoad={() => console.log('Image loaded successfully:', mainImagePath)}
                   />
                   <button
                     onClick={onOpenGallery}
@@ -141,7 +151,7 @@ Corp: ${property.details.building}
                       hover:bg-property-orange hover:text-white transition-colors backdrop-blur-sm flex items-center gap-2"
                   >
                     <Eye size={18} />
-                    Vezi galeria foto
+                    Vezi galeria foto ({property.images.length})
                   </button>
                 </div>
 
