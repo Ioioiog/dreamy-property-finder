@@ -7,6 +7,16 @@ const Contact = () => {
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center mb-12">Contactați-ne</h2>
         <div className="max-w-lg mx-auto">
+          <div className="space-y-6 mb-8">
+            <div>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">Informații Contact</h3>
+              <p className="text-gray-600">
+                <strong>Email:</strong> reddomainrent@gmail.com<br />
+                <strong>Telefon:</strong> +40 744 77 87 92<br />
+                <strong>Adresă:</strong> Str. Anton Holban, nr 6, București
+              </p>
+            </div>
+          </div>
           <form className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-700">
