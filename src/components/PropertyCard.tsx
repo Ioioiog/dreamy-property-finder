@@ -18,7 +18,7 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
-  const mainImagePath = `/properties/${property.id}/${property.images[0]}`;
+  const mainImagePath = `/assets/images/properties/${property.id}/${property.images[0]}`;
 
   console.log('Loading image for property:', property.id);
   console.log('Image path:', mainImagePath);
