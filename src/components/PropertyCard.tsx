@@ -1,8 +1,9 @@
 import { Property, propertyStatuses } from '@/types/property';
-import { Eye, Info, View } from 'lucide-react';
+import { Eye, Info, View, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Badge } from "@/components/ui/badge";
 
 interface PropertyCardProps {
   property: Property;
@@ -43,7 +44,14 @@ export default function PropertyCard({
           }}
           onLoad={() => console.log('Image loaded successfully:', imagePath)}
         />
-        {property.status !== propertyStatuses.AVAILABLE && (
+        {property.status === propertyStatuses.AVAILABLE ? (
+          <div className="absolute top-4 right-4">
+            <Badge className="bg-green-500 hover:bg-green-600 text-white flex items-center gap-1.5">
+              <CheckCircle className="w-3.5 h-3.5" />
+              DISPONIBIL
+            </Badge>
+          </div>
+        ) : (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 
             bg-black/70 text-white backdrop-blur-sm">
             {property.status === propertyStatuses.RENTED ? 'Închiriat' : 'Rezervat'}
