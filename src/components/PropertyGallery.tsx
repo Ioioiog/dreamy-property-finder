@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent } from './ui/dialog';
+import { Dialog, DialogContent, DialogDescription } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface Property {
@@ -22,7 +22,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   useEffect(() => {
     if (property) {
       const urls = property.images.map((_, index) => 
-        `/assets/images/properties/${property.id}/${index + 1}.jpg`
+        `/properties/${property.id}/${index + 1}.jpg`
       );
       console.log('Generated gallery image URLs:', urls);
       setImageUrls(urls);
@@ -52,7 +52,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0">
+      <DialogContent className="max-w-7xl h-[90vh] p-0" aria-describedby="gallery-description">
+        <DialogDescription id="gallery-description" className="sr-only">
+          Galerie foto pentru {property.title} cu {imageUrls.length} imagini
+        </DialogDescription>
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
