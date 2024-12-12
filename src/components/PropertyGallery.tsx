@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Property {
   id: string;
@@ -20,6 +21,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imageError, setImageError] = useState<boolean[]>([]);
+  const isMobile = useIsMobile();
 
   // Fallback image from Unsplash
   const fallbackImage = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
@@ -61,16 +63,31 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     setImageError(newImageError);
   };
 
+  const handleSwipe = (e: React.TouchEvent) => {
+    const touch = e.changedTouches[0];
+    const swipeThreshold = 50;
+    
+    if (touch.screenX - (e as any).startX > swipeThreshold) {
+      prevImage();
+    } else if ((e as any).startX - touch.screenX > swipeThreshold) {
+      nextImage();
+    }
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    (e as any).startX = e.touches[0].screenX;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-7xl h-[90vh] p-0">
+      <DialogContent className={`max-w-7xl ${isMobile ? 'h-[100svh] p-0' : 'h-[90vh] p-0'}`}>
         <DialogTitle className="sr-only">
           Galerie foto pentru {property.title}
         </DialogTitle>
         
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
-            <h3 className="text-xl font-semibold text-property-stone">
+            <h3 className={`${isMobile ? 'text-lg' : 'text-xl'} font-semibold text-property-stone truncate pr-2`}>
               {property.title} - Imagine {currentIndex + 1} din {imageUrls.length}
             </h3>
             <button
@@ -78,44 +95,51 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
               className="p-2 hover:bg-property-cream rounded-full transition-colors"
               aria-label="Închide galeria"
             >
-              <X size={24} className="text-property-stone" />
+              <X size={isMobile ? 20 : 24} className="text-property-stone" />
             </button>
           </div>
 
-          <div className="flex-1 relative flex items-center justify-center bg-property-cream">
+          <div 
+            className="flex-1 relative flex items-center justify-center bg-property-cream"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleSwipe}
+          >
             <button
               onClick={prevImage}
-              className="absolute left-4 z-10 p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
+              className={`absolute left-2 md:left-4 z-10 p-2 md:p-3 bg-white/90 hover:bg-white shadow-lg 
+                rounded-full transition-all duration-200 transform hover:scale-105 ${isMobile ? 'w-10 h-10' : ''}`}
               aria-label="Imagine anterioară"
             >
-              <ChevronLeft size={24} className="text-property-stone" />
+              <ChevronLeft size={isMobile ? 20 : 24} className="text-property-stone" />
             </button>
 
             <img
               src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
-              className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
+              className={`${isMobile ? 'max-h-[80vh] w-full' : 'max-h-[70vh] max-w-[90vw]'} 
+                object-contain rounded-lg`}
               onError={() => handleImageError(currentIndex)}
               onLoad={() => console.log('Gallery image loaded successfully:', imageUrls[currentIndex])}
             />
 
             <button
               onClick={nextImage}
-              className="absolute right-4 z-10 p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
+              className={`absolute right-2 md:right-4 z-10 p-2 md:p-3 bg-white/90 hover:bg-white shadow-lg 
+                rounded-full transition-all duration-200 transform hover:scale-105 ${isMobile ? 'w-10 h-10' : ''}`}
               aria-label="Imagine următoare"
             >
-              <ChevronRight size={24} className="text-property-stone" />
+              <ChevronRight size={isMobile ? 20 : 24} className="text-property-stone" />
             </button>
           </div>
 
-          <div className="p-4 border-t bg-white">
+          <div className={`p-2 md:p-4 border-t bg-white ${isMobile ? 'pb-safe' : ''}`}>
             <div className="flex gap-2 overflow-x-auto pb-2 justify-center">
               {imageUrls.map((imageUrl, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
-                  className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden 
-                    transition-all duration-200 ${
+                  className={`relative flex-shrink-0 ${isMobile ? 'w-16 h-16' : 'w-20 h-20'} rounded-lg 
+                    overflow-hidden transition-all duration-200 ${
                       currentIndex === index 
                         ? 'ring-2 ring-property-gold scale-105' 
                         : 'opacity-50 hover:opacity-100'
