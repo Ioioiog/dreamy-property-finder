@@ -55,7 +55,7 @@ export const propertyData: Property[] = [
     },
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg'],
     amenities: ['Balcon generos', 'Vedere panoramică', 'Parcare'],
-    panoramicUrl: 'https://momento360.com/e/u/9303891d183c47db90e91352a9b2969d' // Example panoramic URL
+    panoramicUrl: 'https://momento360.com/e/u/9303891d183c47db90e91352a9b2969d'
   },
   {
     id: 'b110',
@@ -78,7 +78,7 @@ export const propertyData: Property[] = [
     },
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg'],
     amenities: ['Balcon', 'Parcare', 'Depozitare'],
-    panoramicUrl: 'https://momento360.com/e/u/1a09f969a4c3447eb33547c57ee10b53' // Example panoramic URL
+    panoramicUrl: 'https://momento360.com/e/u/1a09f969a4c3447eb33547c57ee10b53'
   },
   {
     id: 'b27',
@@ -100,7 +100,8 @@ export const propertyData: Property[] = [
       coordinates: [44.427336515998576, 26.106689630289278] as [number, number]
     },
     images: ['1.jpg'],
-    amenities: ['Balcon', 'Parcare', 'Depozitare']
+    amenities: ['Balcon', 'Parcare', 'Depozitare'],
+    panoramicUrl: 'https://momento360.com/e/u/2c09f969a4c3447eb33547c57ee10b54'
   },
   {
     id: 'b29',
@@ -122,7 +123,8 @@ export const propertyData: Property[] = [
       coordinates: [44.42929604108499, 26.108057494961265] as [number, number]
     },
     images: ['1.jpg'],
-    amenities: ['Balcon', 'Parcare', 'Depozitare']
+    amenities: ['Balcon', 'Parcare', 'Depozitare'],
+    panoramicUrl: 'https://momento360.com/e/u/3d09f969a4c3447eb33547c57ee10b55'
   },
   {
     id: 'p26',
@@ -144,7 +146,8 @@ export const propertyData: Property[] = [
       coordinates: [44.42763169599856, 26.105758692854238] as [number, number]
     },
     images: ['1.jpg'],
-    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
+    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare'],
+    panoramicUrl: 'https://momento360.com/e/u/4e09f969a4c3447eb33547c57ee10b56'
   },
   {
     id: 'p21',
@@ -166,7 +169,8 @@ export const propertyData: Property[] = [
       coordinates: [44.43555871126546, 26.103366204191687] as [number, number]
     },
     images: ['1.jpg'],
-    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare']
+    amenities: ['Balcoane multiple', 'Vedere panoramică', 'Parcare'],
+    panoramicUrl: 'https://momento360.com/e/u/5f09f969a4c3447eb33547c57ee10b57'
   },
   {
     id: 'p51',
@@ -188,6 +192,7 @@ export const propertyData: Property[] = [
       coordinates: [44.42838350522629, 26.103564375902668] as [number, number]
     },
     images: ['1.jpg'],
-    amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Parcare']
+    amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Parcare'],
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
   }
 ];
