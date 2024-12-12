@@ -35,9 +35,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <p className="text-gray-300">
-              Email: contact@apartamentdelux.ro<br />
-              Telefon: +40 721 234 567<br />
-              Adresă: Str. Exemplu nr. 1, București
+              Email: reddomainrent@gmail.com<br />
+              Telefon: +40 744 77 87 92<br />
+              Adresă: Str. Anton Holban, nr 6, București
             </p>
           </div>
         </div>
