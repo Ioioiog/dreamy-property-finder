@@ -38,3 +38,10 @@ export type Filters = {
   complex: string;
   priceRange: string;
 };
+
+export interface FilterButtonProps {
+  label: string;
+  value: string;
+  currentValue: string;
+  onChange: (value: string) => void;
+}
