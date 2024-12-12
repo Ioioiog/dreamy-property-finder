@@ -31,12 +31,15 @@ export default function PanoramicView() {
         </Button>
         <h1 className="text-2xl font-bold">{property.title} - Vedere Panoramică</h1>
       </div>
-      <div className="flex-1 bg-gray-100">
-        <iframe
-          src={property.panoramicUrl}
-          className="w-full h-full border-0"
-          allowFullScreen
-          title={`Vedere panoramică - ${property.title}`}
+      <div className="flex-1 bg-gray-100 relative">
+        <img
+          src={`/assets/images/properties/${property.id}/panoramic.jpg`}
+          alt={`Vedere panoramică - ${property.title}`}
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            console.error('Failed to load panoramic image:', property.id);
+            e.currentTarget.src = '/placeholder.svg';
+          }}
         />
       </div>
     </div>
