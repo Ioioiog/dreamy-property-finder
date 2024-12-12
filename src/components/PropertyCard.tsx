@@ -1,8 +1,7 @@
 import { Property, propertyStatuses } from '@/types/property';
 import { Rotate3d, Eye, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { supabase } from '@/integrations/supabase/client';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface PropertyCardProps {
   property: Property;
@@ -17,30 +16,11 @@ export default function PropertyCard({
   onViewDetails,
   on360View 
 }: PropertyCardProps) {
-  const [imageUrl, setImageUrl] = useState<string>('');
+  const [imageError, setImageError] = useState(false);
+  const imagePath = `/assets/images/properties/${property.id}/1.jpg`;
 
-  useEffect(() => {
-    const loadImage = async () => {
-      if (property.images[0]) {
-        console.log('Attempting to load image for property:', property.id);
-        console.log('Image path:', `${property.id}/${property.images[0]}`);
-        
-        const { data } = supabase.storage
-          .from('property_images')
-          .getPublicUrl(`${property.id}/${property.images[0]}`);
-        
-        console.log('Generated public URL:', data.publicUrl);
-        setImageUrl(data.publicUrl);
-
-        // Verify if the image exists by trying to load it
-        const img = new Image();
-        img.onload = () => console.log('Image loaded successfully:', data.publicUrl);
-        img.onerror = () => console.error('Failed to load image:', data.publicUrl);
-        img.src = data.publicUrl;
-      }
-    };
-    loadImage();
-  }, [property.id, property.images]);
+  console.log('Loading image for property:', property.id);
+  console.log('Image path:', imagePath);
 
   return (
     <motion.div 
@@ -53,10 +33,15 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageUrl || '/placeholder.svg'}
+          src={imageError ? '/placeholder.svg' : imagePath}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
+          onError={() => {
+            console.error('Failed to load image:', imagePath);
+            setImageError(true);
+          }}
+          onLoad={() => console.log('Image loaded successfully:', imagePath)}
         />
         {property.status !== propertyStatuses.AVAILABLE && (
           <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-sm font-medium 

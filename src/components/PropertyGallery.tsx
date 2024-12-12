@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogContent } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
 
 interface Property {
   id: string;
@@ -20,21 +19,13 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
   useEffect(() => {
-    const loadImages = async () => {
-      if (property) {
-        const urls = await Promise.all(
-          property.images.map(async (imageName) => {
-            const { data } = supabase.storage
-              .from('property_images')
-              .getPublicUrl(`${property.id}/${imageName}`);
-            return data.publicUrl;
-          })
-        );
-        console.log('Loaded gallery images:', urls);
-        setImageUrls(urls);
-      }
-    };
-    loadImages();
+    if (property) {
+      const urls = property.images.map((_, index) => 
+        `/assets/images/properties/${property.id}/${index + 1}.jpg`
+      );
+      console.log('Generated gallery image URLs:', urls);
+      setImageUrls(urls);
+    }
   }, [property]);
 
   useEffect(() => {
@@ -87,6 +78,11 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
               src={imageUrls[currentIndex] || '/placeholder.svg'}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
+              onError={(e) => {
+                console.error('Failed to load gallery image:', imageUrls[currentIndex]);
+                e.currentTarget.src = '/placeholder.svg';
+              }}
+              onLoad={() => console.log('Gallery image loaded successfully:', imageUrls[currentIndex])}
             />
 
             <button
@@ -115,6 +111,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     src={imageUrl}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
+                    onError={(e) => {
+                      console.error('Failed to load thumbnail:', imageUrl);
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
                   />
                 </button>
               ))}
