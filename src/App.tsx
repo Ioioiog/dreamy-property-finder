@@ -11,6 +11,7 @@ import PropertyList from './components/PropertyList';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import PropertyGallery from './components/PropertyGallery';
+import PanoramicView from './components/PanoramicView';
 import { Property } from './types/property';
 
 const queryClient = new QueryClient();
@@ -63,6 +64,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route element={<RootLayout />}>
       <Route path="/" element={<MainLayout />} />
+      <Route path="/panoramic/:id" element={<PanoramicView />} />
     </Route>
   )
 );

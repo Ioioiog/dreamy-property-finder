@@ -1,7 +1,8 @@
 import { Property, propertyStatuses } from '@/types/property';
-import { Eye, Info } from 'lucide-react';
+import { Eye, Info, View } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface PropertyCardProps {
   property: Property;
@@ -15,6 +16,7 @@ export default function PropertyCard({
   onViewDetails,
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
+  const navigate = useNavigate();
   const imagePath = `/assets/images/properties/${property.id}/1.jpg`;
 
   console.log('Loading image for property:', property.id);
@@ -49,6 +51,19 @@ export default function PropertyCard({
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="absolute bottom-4 right-4 flex gap-2">
+            {property.panoramicUrl && (
+              <motion.button
+                onClick={() => navigate(`/panoramic/${property.id}`)}
+                className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
+                  hover:bg-property-orange hover:text-white transition-colors flex items-center gap-2"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                aria-label="Vezi panorama"
+              >
+                <View size={18} />
+                Panoramă
+              </motion.button>
+            )}
             <motion.button
               onClick={() => onViewGallery(property)}
               className="bg-white/90 text-property-stone px-4 py-2 rounded-md 

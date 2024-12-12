@@ -24,6 +24,7 @@ export interface Property {
   availableFrom?: string;
   images: string[];
   amenities: string[];
+  panoramicUrl?: string;
 }
 
 export const propertyStatuses = {
