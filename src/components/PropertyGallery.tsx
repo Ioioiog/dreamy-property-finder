@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
+import { Dialog, DialogContent } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { toast } from './ui/use-toast';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -24,10 +24,9 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   useEffect(() => {
     if (property) {
-      const urls = property.images.map((image) => 
-        `/assets/images/properties/${property.id}/${image}`
-      );
-      console.log('Generated gallery image URLs:', urls);
+      // Folosim direct array-ul de imagini din proprietate
+      const urls = property.images;
+      console.log('Property images array:', urls);
       setImageUrls(urls);
       setImageLoadErrors(new Array(urls.length).fill(false));
     }
@@ -66,12 +65,17 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     });
   };
 
+  const getImagePath = (imageUrl: string) => {
+    return `/properties/${property.id}/${imageUrl}`;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-7xl h-[90vh] p-0">
-        <DialogTitle className="sr-only">
-          Galerie foto pentru {property.title}
-        </DialogTitle>
+        <VisuallyHidden>
+          <h2>Galerie foto pentru {property.title}</h2>
+        </VisuallyHidden>
+        
         <div className="h-full flex flex-col">
           <div className="flex justify-between items-center p-4 border-b">
             <h3 className="text-xl font-semibold text-property-stone">
@@ -96,11 +100,11 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
 
             <img
-              src={imageLoadErrors[currentIndex] ? '/placeholder.svg' : imageUrls[currentIndex]}
+              src={imageLoadErrors[currentIndex] ? '/placeholder.svg' : getImagePath(imageUrls[currentIndex])}
               alt={`${property.title} - Imagine ${currentIndex + 1}`}
               className="max-h-[70vh] max-w-[90vw] object-contain rounded-lg"
               onError={() => handleImageError(currentIndex)}
-              onLoad={() => console.log('Gallery image loaded successfully:', imageUrls[currentIndex])}
+              onLoad={() => console.log('Gallery image loaded successfully:', getImagePath(imageUrls[currentIndex]))}
             />
 
             <button
@@ -128,7 +132,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                   aria-current={currentIndex === index}
                 >
                   <img
-                    src={imageLoadErrors[index] ? '/placeholder.svg' : imageUrl}
+                    src={imageLoadErrors[index] ? '/placeholder.svg' : getImagePath(imageUrl)}
                     alt={`Miniatură ${index + 1}`}
                     className="w-full h-full object-cover"
                     onError={() => handleImageError(index)}
