@@ -18,6 +18,11 @@ export default function PropertyCard({
 }: PropertyCardProps) {
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
+  
+  // Use unsplash fallback if image fails to load
+  const fallbackImage = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
+  
+  // Try to load from public/assets first
   const mainImagePath = `/assets/images/properties/${property.id}/${property.images[0]}`;
 
   console.log('Loading image for property:', property.id);
@@ -34,11 +39,11 @@ export default function PropertyCard({
     >
       <div className="relative h-64 overflow-hidden">
         <img
-          src={imageError ? '/placeholder.svg' : mainImagePath}
+          src={imageError ? fallbackImage : mainImagePath}
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
-          onError={() => {
+          onError={(e) => {
             console.error('Failed to load image:', mainImagePath);
             setImageError(true);
           }}
