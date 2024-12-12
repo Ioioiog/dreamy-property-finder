@@ -22,7 +22,8 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   useEffect(() => {
     if (property) {
-      const urls = property.images.map((image) => `/properties/${property.id}/${image}`);
+      // Use the images array directly from the property
+      const urls = property.images.map(image => `/properties/${property.id}/${image}`);
       console.log('Generated gallery image URLs:', urls);
       setImageUrls(urls);
     }
