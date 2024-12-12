@@ -154,7 +154,8 @@ export const propertyData: Property[] = [
     title: 'Apartament Prima 21 - Prima Vista',
     price: 1200,
     description: 'Apartament elegant în Prima Vista, cu 3 camere și multiple balcoane (46.9 mp în total). Perfect pentru cei care doresc spațiu extra și posibilități de relaxare în aer liber.',
-    status: propertyStatuses.RESERVED,
+    status: propertyStatuses.RENTED,
+    availableFrom: '01.01.2027',
     details: {
       rooms: 3,
       area: 68.5,
@@ -178,6 +179,7 @@ export const propertyData: Property[] = [
     price: 1800,
     description: 'Penthouse spectaculos pe două niveluri în Prima Vista. Cu 4 camere și o suprafață generoasă, oferă un living impresionant și dormitoare spațioase. Ideal pentru cei care caută lux și exclusivitate.',
     status: propertyStatuses.RENTED,
+    availableFrom: '01.01.2027',
     details: {
       rooms: 4,
       area: 149.9,
