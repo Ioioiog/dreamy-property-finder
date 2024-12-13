@@ -226,8 +226,8 @@ export const propertyData: Property[] = [
       complex: 'Belvedere Residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
-    mainImage: '53.pdf', // If converted to a preview image, replace with appropriate image name
-    images: ['53.pdf'], // Add additional images or preview of the PDF if available
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase'],
     panoramicUrl: null // Add panoramic URL if available
   },
