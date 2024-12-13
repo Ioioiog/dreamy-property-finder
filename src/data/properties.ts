@@ -208,7 +208,7 @@ export const propertyData: Property[] = [
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
   },
   {
-    id: 'b11ap53a',
+    id: 'ap 53',
     title: 'Duplex 3 Camere AP 53 - Belvedere Residences',
     price: "---",
     description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
