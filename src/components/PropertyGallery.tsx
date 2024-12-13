@@ -200,10 +200,12 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                   aria-pressed={currentIndex === index}
                 >
                   <img
-                    src={imageError[index] ? fallbackImage : imageUrl}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    onError={() => handleImageError(index)}
+                    src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
+                    alt={`${property.title} - Image ${currentIndex + 1}`}
+                    className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] w-[80vw] sm:w-[70vw] object-contain rounded-lg transition-all duration-300 ${
+                      isZoomed ? 'pointer-events-none' : ''
+                    }`}
+                    onError={() => handleImageError(currentIndex)}
                   />
                 </button>
               ))}
