@@ -78,7 +78,7 @@ export const propertyData: Property[] = [
       coordinates: [44.42841495259169, 26.105463339845763] as [number, number]
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon generos', 'Vedere panoramică', 'Primul chiriaş', 'Apartament in complex nou 2024'],
     panoramicUrl: 'https://momento360.com/e/u/1a09f969a4c3447eb33547c57ee10b53'
   },
