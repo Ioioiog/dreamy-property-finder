@@ -1,0 +1,4 @@
+{
+  "python.analysis.userFileIndexingLimit": -1,
+  "githubRepositories.indexing.cacheRepoLimit": 100
+}
