@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -11,26 +10,6 @@ const Footer = () => {
             <p className="text-gray-300">
               Proprietăți de lux în cele mai căutate zone din București
             </p>
-          </div>
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Link-uri Rapide</h4>
-            <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
-                  Acasă
-                </Link>
-              </li>
-              <li>
-                <Link to="/properties" className="text-gray-300 hover:text-white transition-colors">
-                  Proprietăți
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-gray-300 hover:text-white transition-colors">
-                  Contact
-                </Link>
-              </li>
-            </ul>
           </div>
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
