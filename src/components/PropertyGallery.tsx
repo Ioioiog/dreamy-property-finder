@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 import { Property } from '@/types/property';
 
 interface PropertyGalleryProps {
@@ -11,6 +11,8 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
   const [imageError, setImageError] = useState<boolean[]>([]);
+  const [scale, setScale] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
 
   const imageUrls = property?.images.map(image => 
     `/assets/images/properties/${property.id}/${image}`
@@ -19,33 +21,53 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
   useEffect(() => {
     if (property) {
       setImageError(new Array(property.images.length).fill(false));
+      resetZoom();
     }
   }, [property]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowRight') handleNext();
-      if (e.key === 'ArrowLeft') handlePrev();
-      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight' && !isZoomed) handleNext();
+      if (e.key === 'ArrowLeft' && !isZoomed) handlePrev();
+      if (e.key === 'Escape') {
+        if (isZoomed) {
+          resetZoom();
+        } else {
+          onClose();
+        }
+      }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
+  }, [onClose, isZoomed]);
+
+  const resetZoom = () => {
+    setScale(1);
+    setIsZoomed(false);
+  };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
+    if (!isZoomed) {
+      setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
+      resetZoom();
+    }
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
+    if (!isZoomed) {
+      setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
+      resetZoom();
+    }
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    if (isZoomed) return;
     setTouchStart(e.touches[0].clientX);
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
+    if (isZoomed) return;
     const touchEnd = e.changedTouches[0].clientX;
     const touchDiff = touchStart - touchEnd;
 
@@ -64,6 +86,15 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
     setImageError(newImageError);
   };
 
+  const toggleZoom = () => {
+    if (isZoomed) {
+      resetZoom();
+    } else {
+      setScale(2);
+      setIsZoomed(true);
+    }
+  };
+
   if (!property) return null;
 
   return (
@@ -75,42 +106,59 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
             <h2 className="text-lg font-semibold text-gray-900">
               {property.title} - {currentIndex + 1}/{imageUrls.length}
             </h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-              aria-label="Close gallery"
-            >
-              <X size={24} className="text-gray-600" />
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={toggleZoom}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label={isZoomed ? "Zoom out" : "Zoom in"}
+              >
+                {isZoomed ? (
+                  <ZoomOut size={20} className="text-gray-600" />
+                ) : (
+                  <ZoomIn size={20} className="text-gray-600" />
+                )}
+              </button>
+              <button
+                onClick={onClose}
+                className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                aria-label="Close gallery"
+              >
+                <X size={24} className="text-gray-600" />
+              </button>
+            </div>
           </div>
 
           {/* Main Image Area */}
-          <div className="relative bg-gray-900 flex-1">
+          <div className="relative bg-white flex-1">
             <div 
-              className="relative h-[60vh] flex items-center justify-center"
+              className="relative h-[60vh] flex items-center justify-center overflow-hidden"
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
             >
               {/* Navigation Buttons */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-4 z-10 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
-                aria-label="Previous image"
-              >
-                <ChevronLeft size={24} className="text-gray-600" />
-              </button>
-              
-              <button
-                onClick={handleNext}
-                className="absolute right-4 z-10 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
-                aria-label="Next image"
-              >
-                <ChevronRight size={24} className="text-gray-600" />
-              </button>
+              {!isZoomed && (
+                <>
+                  <button
+                    onClick={handlePrev}
+                    className="absolute left-4 z-10 p-3 bg-white hover:bg-gray-100 rounded-full shadow-lg transition-all"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={24} className="text-gray-600" />
+                  </button>
+                  
+                  <button
+                    onClick={handleNext}
+                    className="absolute right-4 z-10 p-3 bg-white hover:bg-gray-100 rounded-full shadow-lg transition-all"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={24} className="text-gray-600" />
+                  </button>
+                </>
+              )}
 
               {/* Image Container */}
               <div 
-                className="w-full h-full flex transition-transform duration-300 ease-out"
+                className="w-full h-full flex transition-all duration-300 ease-out cursor-zoom-in"
                 style={{
                   transform: `translateX(-${currentIndex * 100}%)`,
                 }}
@@ -120,11 +168,16 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
                     key={url}
                     className="min-w-full h-full flex items-center justify-center"
                     style={{ flex: '0 0 100%' }}
+                    onClick={toggleZoom}
                   >
                     <img
                       src={imageError[index] ? '/placeholder.svg' : url}
                       alt={`${property.title} - Image ${index + 1}`}
-                      className="max-h-full max-w-full object-contain p-4"
+                      className="max-h-full max-w-full object-contain p-4 transition-transform duration-300"
+                      style={{
+                        transform: currentIndex === index ? `scale(${scale})` : 'scale(1)',
+                        cursor: isZoomed ? 'zoom-out' : 'zoom-in'
+                      }}
                       onError={() => handleImageError(index)}
                       draggable={false}
                     />
@@ -140,7 +193,10 @@ export default function PropertyGallery({ property, onClose }: PropertyGalleryPr
               {imageUrls.map((url, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={() => {
+                    setCurrentIndex(index);
+                    resetZoom();
+                  }}
                   className={`
                     relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 
                     rounded-lg overflow-hidden transition-all duration-200
