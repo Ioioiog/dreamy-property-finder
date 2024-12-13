@@ -24,6 +24,9 @@ export const filterOptions = {
     { label: 'Toate', value: 'all' },
     { label: 'Yacht Kid', value: 'yacht-kid' },
     { label: 'Prima Vista', value: 'prima-vista' },
+    { label: 'Belvedere Residences', value: 'belvedere-residences' },
+    { label: 'Custom Complex', value: 'custom-complex' },
+    { label: 'Calea Floreasca', value: 'calea-floreasca' },
   ],
   priceRange: [
     { label: 'Toate', value: 'all' },
@@ -203,5 +206,172 @@ export const propertyData: Property[] = [
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
     amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Vedere panoramică spre lac', 'Apartament in complex nou 2024'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
+  },
+  {
+    id: 'b11ap53a',
+    title: 'Duplex 3 Camere B11.AP53A - Belvedere Residences',
+    price: 1450,
+    description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 120, // Suprafața utilă (replace with accurate data from document if needed)
+      totalArea: 150, // Suprafața totală construită (replace with accurate data from document if needed)
+      floor: 'Duplex',
+      building: 'B11',
+      balcony: 15 // Suprafața terasă (replace with accurate data from document if needed)
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc B11',
+      complex: 'Belvedere Residences',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '53.pdf', // If converted to a preview image, replace with appropriate image name
+    images: ['53.pdf'], // Add additional images or preview of the PDF if available
+    amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase'],
+    panoramicUrl: null // Add panoramic URL if available
+  },
+  {
+    id: 'b7ap60a',
+    title: 'Duplex B7.AP60A - Belvedere Residences',
+    price: 1350,
+    description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 82.7, // Suprafața utilă
+      totalArea: 95.9, // Suprafața totală
+      floor: '10', // Indicating it's a duplex
+      building: 'B7',
+      balcony: 13.1 // Sum of the balconies
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc B7',
+      complex: 'Belvedere Residences,',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: ['Balcon generos', 'Compartimentare eficientă', 'Design modern', 'Apartament duplex'],
+    panoramicUrl: null // Add a panoramic URL if available
+  },
+  {
+    id: 'b8ap55a',
+    title: 'Apartament B8.AP55A - Custom Complex',
+    price: 1450,
+    description: 'Apartament duplex cu trei camere, potrivit pentru familii. Oferă spații bine organizate și un balcon impresionant.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 85, // Adjust based on visible area details
+      totalArea: 100, // Adjust based on total area details
+      floor: '10/11',
+      building: 'B8',
+      balcony: 15 // Replace with actual total balcony area if different
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc B8',
+      complex: 'Belvedere Residences',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională'],
+    panoramicUrl: null // Add a panoramic URL if available
+  },
+  {
+    id: 'b5ap113b',
+    title: 'Apartament 113 - Custom Complex',
+    price: 1300,
+    description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 113.2, // Suprafața utilă
+      totalArea: 121.2, // Suprafața totală
+      floor: 'Duplex',
+      building: 'b5',
+      balcony: 8// Sum of balconies
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc 113',
+      complex: 'Belvedere Residences',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
+    panoramicUrl: null
+  },
+  {
+    id: 'b6ap109b',
+    title: 'Apartament 109 - Belvedere Residences,',
+    price: 1400,
+    description: 'Apartament duplex cu 3 camere și balcoane generoase. Perfect pentru cei care caută confort și spațiu.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 119.6, // Suprafața utilă
+      totalArea: 143.5, // Suprafața totală
+      floor: '10/11',
+      building: 'Belvedere Residences,',
+      balcony: 7.8 + 8.3 + 7.8 // Total balcony areas
+    },
+    location: {
+      address: 'Belvedere Residences,, Bloc 109',
+      complex: 'Belvedere Residences,',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: ['Balcon panoramic', 'Compartimentare modernă', 'Design luxos', 'Apartament duplex'],
+    panoramicUrl: null
+  },
+  {
+    id: 'glinka1',
+    title: '2 Camere Calea Floreasca - Dorobanti',
+    price: 1100,
+    description: 'Apartament modern 2 camere, situat pe Calea Floreasca, ideal pentru un stil de viață urban. Oferă un living spațios și un dormitor confortabil.',
+    status: propertyStatuses.RENTED,
+    details: {
+      rooms: 2,
+      area: 50, // Suprafața utilă apartament
+      totalArea: 64, // Suprafața totală construită
+      floor: '2',
+      building: 'A',
+      balcony: 0 // Suprafața terasă
+    },
+    location: {
+      address: 'Glinka, Nr 1',
+      complex: 'Calea Floreasca',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: [ 'In inima orasului', 'Modern si urban', 'Apartament luminos'],
+    panoramicUrl: null // Add panoramic URL if available
+  },
+  { id: 'b6ap108b',
+    title: 'Duplex 2 Camere 108- Belvedere Residences',
+    price: 1100,
+    description: 'Duplex modern cu 2 camere, situat în Belvedere Residences. Ideal pentru un stil de viață contemporan, cu terasă generoasă și compartimentare eficientă.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 2,
+      area: 62.4, // Suprafața utilă apartament
+      totalArea: 85.5, // Suprafața totală construită
+      floor: '10',
+      building: 'B',
+      balcony: 10.5 // Suprafața terasă
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc B',
+      complex: 'belvedere-residences',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    amenities: ['Terasă spațioasă', 'Loc de luat masa', 'Duplex modern', 'Apartament luminos'],
+    panoramicUrl: null // Add panoramic URL if available
   }
 ];
