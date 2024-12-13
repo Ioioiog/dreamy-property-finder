@@ -1,10 +1,9 @@
 import { Property, propertyStatuses } from '@/types/property';
 import { Eye, Info, View, CheckCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge } from "@/components/ui/badge";
-import { toast } from "@/components/ui/use-toast";
 
 interface PropertyCardProps {
   property: Property;
@@ -20,31 +19,14 @@ export default function PropertyCard({
   const [imageError, setImageError] = useState(false);
   const navigate = useNavigate();
   
-  // Fallback image if loading fails
+  // Use unsplash fallback if image fails to load
   const fallbackImage = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
   
-  // Construct the main image path
-  const mainImagePath = property.mainImage 
-    ? `/assets/images/properties/${property.id}/${property.mainImage}`
-    : `/assets/images/properties/${property.id}/${property.images[0]}`;
+  // Try to load from public/assets first
+  const mainImagePath = `/assets/images/properties/${property.id}/${property.images[0]}`;
 
-  useEffect(() => {
-    // Preload the first few images
-    property.images.slice(0, 5).forEach(image => {
-      const img = new Image();
-      img.src = `/assets/images/properties/${property.id}/${image}`;
-    });
-  }, [property.id, property.images]);
-
-  const handleImageError = () => {
-    console.error('Failed to load image:', mainImagePath);
-    setImageError(true);
-    toast({
-      title: "Eroare la încărcarea imaginii",
-      description: "Se folosește o imagine alternativă.",
-      variant: "destructive",
-    });
-  };
+  console.log('Loading image for property:', property.id);
+  console.log('Image path:', mainImagePath);
 
   return (
     <motion.div 
@@ -61,7 +43,10 @@ export default function PropertyCard({
           alt={property.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           loading="lazy"
-          onError={handleImageError}
+          onError={(e) => {
+            console.error('Failed to load image:', mainImagePath);
+            setImageError(true);
+          }}
           onLoad={() => console.log('Image loaded successfully:', mainImagePath)}
         />
         {property.status === propertyStatuses.AVAILABLE ? (
@@ -93,10 +78,7 @@ export default function PropertyCard({
               </motion.button>
             )}
             <motion.button
-              onClick={() => {
-                console.log('Opening gallery for property:', property.id, 'with images:', property.images);
-                onViewGallery(property);
-              }}
+              onClick={() => onViewGallery(property)}
               className="bg-white/90 text-property-stone px-4 py-2 rounded-md 
                 hover:bg-property-orange hover:text-white transition-colors flex items-center gap-2"
               whileHover={{ scale: 1.05 }}
