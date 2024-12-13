@@ -202,7 +202,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                   <img
                     src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
                     alt={`${property.title} - Image ${currentIndex + 1}`}
-                    className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] w-[80vw] sm:w-[70vw] object-contain rounded-lg transition-all duration-300 ${
+                    className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] w-[80vw] sm:w-[70vw] object-contain mx-auto rounded-lg transition-all duration-300 ${
                       isZoomed ? 'pointer-events-none' : ''
                     }`}
                     onError={() => handleImageError(currentIndex)}
