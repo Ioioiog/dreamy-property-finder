@@ -15,6 +15,7 @@ interface PropertyGalleryProps {
   onClose: () => void;
   property: Property | null;
 }
+
 const imgStyles = {
   maxWidth: '100%',
   maxHeight: '90vh',
