@@ -104,112 +104,112 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   };
 
   return (
-<Dialog open={isOpen} onOpenChange={onClose}>
-  <DialogContent className="max-w-full sm:max-w-7xl h-[100vh] sm:h-[90vh] p-0 m-0 sm:m-4 overflow-hidden">
-    <DialogTitle className="sr-only">
-      Gallery for {property.title}
-    </DialogTitle>
-    
-    <div className="h-full flex flex-col">
-      {/* Header */}
-      <div className="flex justify-between items-center p-3 sm:p-4 border-b bg-white">
-        <h3 className="text-sm sm:text-xl font-semibold text-property-stone truncate">
-          {property.title} - Image {currentIndex + 1}/{imageUrls.length}
-        </h3>
-        <div className="flex items-center gap-2">
-          {isMobile && (
-            <button
-              onClick={toggleZoom}
-              className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
-              aria-label={isZoomed ? "Zoom out" : "Zoom in"}
-            >
-              {isZoomed ? (
-                <ZoomOut size={20} className="text-property-stone" />
-              ) : (
-                <ZoomIn size={20} className="text-property-stone" />
+    <Dialog open={isOpen} onOpenChange={onClose}>
+      <DialogContent className="max-w-full sm:max-w-7xl h-[100vh] sm:h-[90vh] p-0 m-0 sm:m-4 overflow-hidden">
+        <DialogTitle className="sr-only">
+          Gallery for {property.title}
+        </DialogTitle>
+        
+        <div className="h-full flex flex-col">
+          {/* Header */}
+          <div className="flex justify-between items-center p-3 sm:p-4 border-b bg-white">
+            <h3 className="text-sm sm:text-xl font-semibold text-property-stone truncate">
+              {property.title} - Image {currentIndex + 1}/{imageUrls.length}
+            </h3>
+            <div className="flex items-center gap-2">
+              {isMobile && (
+                <button
+                  onClick={toggleZoom}
+                  className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
+                  aria-label={isZoomed ? "Zoom out" : "Zoom in"}
+                >
+                  {isZoomed ? (
+                    <ZoomOut size={20} className="text-property-stone" />
+                  ) : (
+                    <ZoomIn size={20} className="text-property-stone" />
+                  )}
+                </button>
               )}
-            </button>
-          )}
-          <button
-            onClick={onClose}
-            className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
-            aria-label="Close gallery"
+              <button
+                onClick={onClose}
+                className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
+                aria-label="Close gallery"
+              >
+                <X size={20} className="text-property-stone" />
+              </button>
+            </div>
+          </div>
+
+          {/* Main Image Area */}
+          <div 
+            className="flex-1 relative flex items-center justify-center bg-property-cream overflow-hidden"
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
           >
-            <X size={20} className="text-property-stone" />
-          </button>
-        </div>
-      </div>
+            {!isMobile && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 sm:left-4 z-10 p-2 sm:p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
+                  aria-label="Previous image"
+                >
+                  <ChevronLeft size={24} className="text-property-stone" />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 sm:right-4 z-10 p-2 sm:p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
+                  aria-label="Next image"
+                >
+                  <ChevronRight size={24} className="text-property-stone" />
+                </button>
+              </>
+            )}
 
-      {/* Main Image Area */}
-      <div 
-        className="flex-1 relative flex items-center justify-center bg-property-cream overflow-hidden"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-      >
-        {!isMobile && (
-          <>
-            <button
-              onClick={prevImage}
-              className="absolute left-2 sm:left-4 z-10 p-2 sm:p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
-              aria-label="Previous image"
-            >
-              <ChevronLeft size={24} className="text-property-stone" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-2 sm:right-4 z-10 p-2 sm:p-3 bg-white/90 hover:bg-white shadow-lg rounded-full transition-all duration-200 transform hover:scale-105"
-              aria-label="Next image"
-            >
-              <ChevronRight size={24} className="text-property-stone" />
-            </button>
-          </>
-        )}
-
-        <div 
-          className={`transition-transform duration-300 ${
-            isZoomed ? 'scale-150 cursor-move' : 'scale-100'
-          }`}
-        >
-          <img
-            src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
-            alt={`${property.title} - Image ${currentIndex + 1}`}
-            className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] max-w-full object-contain mx-auto rounded-lg transition-all duration-300 ${
-              isZoomed ? 'pointer-events-none' : ''
-            }`}
-            onError={() => handleImageError(currentIndex)}
-          />
-        </div>
-      </div>
-
-      {/* Thumbnail Navigation */}
-      <div className="p-2 sm:p-4 border-t bg-white">
-        <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 justify-center">
-          {imageUrls.map((imageUrl, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`relative flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-lg overflow-hidden 
-                transition-all duration-200 ${
-                  currentIndex === index 
-                    ? 'ring-2 ring-property-gold scale-105' 
-                    : 'opacity-50 hover:opacity-100'
-                }`}
-              aria-label={`View image ${index + 1}`}
-              aria-pressed={currentIndex === index}
+            <div 
+              className={`transition-transform duration-300 ${
+                isZoomed ? 'scale-150 cursor-move' : 'scale-100'
+              }`}
             >
               <img
-                src={imageError[index] ? fallbackImage : imageUrl}
-                alt={`Thumbnail ${index + 1}`}
-                className="w-full h-full object-cover"
-                onError={() => handleImageError(index)}
+                src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
+                alt={`${property.title} - Image ${currentIndex + 1}`}
+                className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] max-w-full object-contain mx-auto rounded-lg transition-all duration-300 ${
+                  isZoomed ? 'pointer-events-none' : ''
+                }`}
+                onError={() => handleImageError(currentIndex)}
               />
-            </button>
-          ))}
+            </div>
+          </div>
+
+          {/* Thumbnail Navigation */}
+          <div className="p-2 sm:p-4 border-t bg-white">
+            <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-2 justify-center">
+              {imageUrls.map((imageUrl, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`relative flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-lg overflow-hidden 
+                    transition-all duration-200 ${
+                      currentIndex === index 
+                        ? 'ring-2 ring-property-gold scale-105' 
+                        : 'opacity-50 hover:opacity-100'
+                    }`}
+                  aria-label={`View image ${index + 1}`}
+                  aria-pressed={currentIndex === index}
+                >
+                  <img
+                    src={imageError[index] ? fallbackImage : imageUrl}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="w-full h-full object-cover"
+                    onError={() => handleImageError(index)}
+                  />
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </DialogContent>
-</Dialog>
+      </DialogContent>
+    </Dialog>
   );
 }
