@@ -15,6 +15,11 @@ interface PropertyGalleryProps {
   onClose: () => void;
   property: Property | null;
 }
+const imgStyles = {
+  maxWidth: '100%',
+  maxHeight: '90vh',
+  objectFit: 'contain',
+};
 
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -229,7 +234,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                 ref={imageRef}
                 src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
                 alt={`${property?.title} - Image ${currentIndex + 1}`}
-                className="max-h-[calc(100vh-10rem)] sm:max-h-[70vh] max-w-full object-contain mx-auto rounded-lg select-none"
+                style={imgStyles} // Apply the responsive styles here
                 onError={() => handleImageError(currentIndex)}
                 draggable={false}
               />
