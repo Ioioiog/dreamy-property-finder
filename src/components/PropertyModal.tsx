@@ -178,8 +178,7 @@ Corp: ${property.details.building}
                   </div>
                   <button
                     onClick={() => setShowViewingForm(true)}
-                    className="w-full mt-6 px-4 py-2 bg-brand-orange text-white rounded-md 
-                      hover:bg-brand-orange-dark transition-colors"
+                    className="w-full mt-6 px-4 py-2 bg-brand-orange text-white rounded-md hover:bg-brand-orange-dark transition-colors"
                   >
                     Programează vizionare
                   </button>
