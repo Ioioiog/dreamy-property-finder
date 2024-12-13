@@ -61,7 +61,6 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     }
   };
 
-  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight') navigate('next');
@@ -77,7 +76,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full h-[100vh] sm:h-[90vh] max-w-6xl p-0">
+      <DialogContent className="w-full h-[100vh] max-w-full p-0">
         <div className="flex flex-col h-full bg-black">
           {/* Header */}
           <div className="flex items-center justify-between p-3 bg-white z-10">
@@ -94,21 +93,20 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
           </div>
 
           {/* Carousel */}
-          <div className="relative flex-1 overflow-hidden">
-            <div 
+          <div className="relative flex-1 overflow-hidden bg-gray-900">
+            <div
               className="absolute inset-0 flex items-center justify-center"
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
             >
-              {/* Images */}
-              <div 
+              <div
                 className="relative w-full h-full flex transition-transform duration-300 ease-out"
                 style={{
                   transform: `translateX(-${currentIndex * 100}%)`,
                 }}
               >
                 {imageUrls.map((url, index) => (
-                  <div 
+                  <div
                     key={url}
                     className="min-w-full h-full flex items-center justify-center"
                     style={{ flex: '0 0 100%' }}
@@ -116,8 +114,8 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     <img
                       src={url}
                       alt={`${property.title} - Image ${index + 1}`}
-                      className="max-h-full max-w-full object-contain"
-                      loading={Math.abs(currentIndex - index) <= 1 ? "eager" : "lazy"}
+                      className="max-h-full max-w-full object-contain p-4"
+                      loading={Math.abs(currentIndex - index) <= 1 ? 'eager' : 'lazy'}
                       decoding="async"
                       onLoad={() => setLoadedImages(prev => new Set([...prev, index]))}
                       draggable={false}
@@ -150,40 +148,47 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </div>
           </div>
 
-          {/* Thumbnail Navigation */}
-          <div className="bg-white p-2 border-t">
-            <div className="flex gap-2 overflow-x-auto justify-center">
-              {imageUrls.map((url, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`
-                    relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden
-                    transition-all duration-200
-                    ${currentIndex === index 
-                      ? 'ring-2 ring-blue-500 opacity-100' 
-                      : 'opacity-60 hover:opacity-100'
-                    }
-                  `}
-                  disabled={isAnimating}
-                  aria-label={`View image ${index + 1}`}
-                  aria-pressed={currentIndex === index}
-                >
-                  <img
-                    src={url}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
-                  {loadedImages.has(index) && (
-                    <div 
-                      className={`absolute inset-0 bg-black/20 transition-opacity
-                        ${currentIndex === index ? 'opacity-0' : 'opacity-100'}
+          {/* Responsive Thumbnail Navigation */}
+          <div className="bg-white border-t">
+            <div className="max-w-full overflow-x-auto px-2 py-3">
+              <div className="flex gap-2 justify-center min-w-min">
+                {imageUrls.map((url, index) => {
+                  const isActive = currentIndex === index;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentIndex(index)}
+                      className={`
+                        relative flex-shrink-0
+                        w-10 h-10 sm:w-14 sm:h-14 md:w-16 md:h-16
+                        rounded-lg overflow-hidden
+                        transition-all duration-200
+                        hover:opacity-100
+                        ${isActive ? 'ring-2 ring-blue-500 opacity-100' : 'opacity-60'}
                       `}
-                    />
-                  )}
-                </button>
-              ))}
+                      disabled={isAnimating}
+                      aria-label={`View image ${index + 1}`}
+                      aria-pressed={isActive}
+                    >
+                      <div className="w-full h-full relative">
+                        <img
+                          src={url}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="absolute inset-0 w-full h-full object-cover"
+                          loading="lazy"
+                        />
+                        {loadedImages.has(index) && (
+                          <div
+                            className={`absolute inset-0 bg-black/20 transition-opacity
+                              ${isActive ? 'opacity-0' : 'opacity-100'}
+                            `}
+                          />
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>
