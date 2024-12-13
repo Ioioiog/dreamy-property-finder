@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import logo from '/path/to/your/logo.png'; // Add this line
+import logo from '/public/logo.png'; 
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center px-4 sm:px-6 lg:px-8">
           <div className="flex-shrink-0 py-4">
-            <Link to= "public/logo.png" className="flex items-center gap-4">
+            <Link to= "logo.png" className="flex items-center gap-4">
               <img src={logo} alt="Logo" className="h-8 w-auto"/> {/* Add this line */}
               <div className="flex flex-col">
                 <span className={`text-2xl font-semibold tracking-tight ${
