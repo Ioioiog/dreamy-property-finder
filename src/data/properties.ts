@@ -209,7 +209,7 @@ export const propertyData: Property[] = [
   },
   {
     id: 'b11ap53a',
-    title: 'Duplex 3 Camere B11.AP53A - Belvedere Residences',
+    title: 'Duplex 3 Camere AP 53 - Belvedere Residences',
     price: "---",
     description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
     status: propertyStatuses.RENTED,
@@ -233,7 +233,7 @@ export const propertyData: Property[] = [
   },
   {
     id: 'b7ap60a',
-    title: 'Duplex B7.AP60A - Belvedere Residences',
+    title: 'Duplex 3 Camere AP 60 - Belvedere Residences',
     price: "---",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
     status: propertyStatuses.RENTED,
@@ -257,7 +257,7 @@ export const propertyData: Property[] = [
   },
   {
     id: 'b8ap55a',
-    title: 'Apartament B8.AP55A - Custom Complex',
+    title: 'Duplex 3 Camere Ap 55 - Belvedere Residences',
     price: "---",
     description: 'Apartament duplex cu trei camere, potrivit pentru familii. Oferă spații bine organizate și un balcon impresionant.',
     status: propertyStatuses.RENTED,
@@ -270,7 +270,7 @@ export const propertyData: Property[] = [
       balcony: 15 // Replace with actual total balcony area if different
     },
     location: {
-      address: 'Belvedere Residences, Bloc B8',
+      address: 'Belvedere Residences, Bloc 8B',
       complex: 'Belvedere Residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
@@ -281,7 +281,7 @@ export const propertyData: Property[] = [
   },
   {
     id: 'b5ap113b',
-    title: 'Apartament 113 - Custom Complex',
+    title: 'Duplex 3 Camere Ap 113B - Belvedere Residences',
     price: "---",
     description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
     status: propertyStatuses.RENTED,
@@ -294,7 +294,7 @@ export const propertyData: Property[] = [
       balcony: 8// Sum of balconies
     },
     location: {
-      address: 'Belvedere Residences, Bloc 113',
+      address: 'Belvedere Residences, Bloc 5B',
       complex: 'Belvedere Residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
@@ -305,7 +305,7 @@ export const propertyData: Property[] = [
   },
   {
     id: 'b6ap109b',
-    title: 'Apartament 109 - Belvedere Residences,',
+    title: 'Duplex 4 Camere AP 109 - Belvedere Residences,',
     price: "---",
     description: 'Apartament duplex cu 3 camere și balcoane generoase. Perfect pentru cei care caută confort și spațiu.',
     status: propertyStatuses.RENTED,
@@ -314,11 +314,11 @@ export const propertyData: Property[] = [
       area: 119.6, // Suprafața utilă
       totalArea: 143.5, // Suprafața totală
       floor: '10/11',
-      building: 'Belvedere Residences,',
+      building: 'Belvedere Residences',
       balcony: 7.8 + 8.3 + 7.8 // Total balcony areas
     },
     location: {
-      address: 'Belvedere Residences,, Bloc 109',
+      address: 'Belvedere Residences,, Bloc 6',
       complex: 'Belvedere Residences,',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
@@ -361,11 +361,11 @@ export const propertyData: Property[] = [
       area: 62.4, // Suprafața utilă apartament
       totalArea: 85.5, // Suprafața totală construită
       floor: '10',
-      building: 'B',
+      building: 'B6',
       balcony: 10.5 // Suprafața terasă
     },
     location: {
-      address: 'Belvedere Residences, Bloc B',
+      address: 'Belvedere Residences, Bloc B6',
       complex: 'belvedere-residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
