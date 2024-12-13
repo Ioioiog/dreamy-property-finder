@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 import { X, ChevronLeft, ChevronRight, ZoomIn, ZoomOut } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -20,10 +20,14 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   const [currentIndex, setCurrentIndex] = useState(0);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [imageError, setImageError] = useState<boolean[]>([]);
-  const [touchStart, setTouchStart] = useState({ x: 0, y: 0 });
-  const [touchEnd, setTouchEnd] = useState({ x: 0, y: 0 });
   const [isZoomed, setIsZoomed] = useState(false);
+  const [isPanning, setIsPanning] = useState(false);
+  const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
+  const [initialPinchDistance, setInitialPinchDistance] = useState(0);
+  const [scale, setScale] = useState(1);
   const isMobile = useIsMobile();
+  const imageRef = useRef<HTMLImageElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const fallbackImage = '/public/placeholder.svg';
 
@@ -32,9 +36,16 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
       const urls = property.images.map(image => `/assets/images/properties/${property.id}/${image}`);
       setImageUrls(urls);
       setImageError(new Array(urls.length).fill(false));
-      setIsZoomed(false);
+      resetZoomAndPan();
     }
   }, [property]);
+
+  const resetZoomAndPan = () => {
+    setIsZoomed(false);
+    setScale(1);
+    setPanPosition({ x: 0, y: 0 });
+    setInitialPinchDistance(0);
+  };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -47,17 +58,17 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentIndex, onClose]);
 
-  if (!property) return null;
-
   const nextImage = () => {
-    if (!isZoomed) {
+    if (!isPanning && scale === 1) {
       setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
+      resetZoomAndPan();
     }
   };
 
   const prevImage = () => {
-    if (!isZoomed) {
+    if (!isPanning && scale === 1) {
       setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
+      resetZoomAndPan();
     }
   };
 
@@ -67,69 +78,109 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     setImageError(newImageError);
   };
 
+  // Touch handling for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchStart({
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY
-    });
+    if (e.touches.length === 2) {
+      // Pinch zoom
+      const distance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      setInitialPinchDistance(distance);
+    } else if (e.touches.length === 1) {
+      // Single touch for panning or swiping
+      setIsPanning(true);
+      const touch = e.touches[0];
+      setPanPosition({
+        x: panPosition.x,
+        y: panPosition.y
+      });
+    }
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd({
-      x: e.touches[0].clientX,
-      y: e.touches[0].clientY
-    });
-  };
+    e.preventDefault();
 
-  const handleTouchEnd = () => {
-    const swipeThreshold = 50;
-    const horizontalSwipe = Math.abs(touchStart.x - touchEnd.x);
-    const verticalSwipe = Math.abs(touchStart.y - touchEnd.y);
-
-    // Only handle horizontal swipes if they're more significant than vertical movement
-    if (horizontalSwipe > verticalSwipe && horizontalSwipe > swipeThreshold) {
-      if (touchStart.x - touchEnd.x > 0) {
-        nextImage();
-      } else {
-        prevImage();
+    if (e.touches.length === 2 && initialPinchDistance > 0) {
+      // Handle pinch zoom
+      const distance = Math.hypot(
+        e.touches[0].clientX - e.touches[1].clientX,
+        e.touches[0].clientY - e.touches[1].clientY
+      );
+      const newScale = Math.max(1, Math.min(3, (distance / initialPinchDistance) * scale));
+      setScale(newScale);
+      setIsZoomed(newScale > 1);
+    } else if (e.touches.length === 1 && isPanning && scale > 1) {
+      // Handle panning when zoomed
+      const touch = e.touches[0];
+      const boundingRect = containerRef.current?.getBoundingClientRect();
+      if (boundingRect) {
+        const maxPanX = (boundingRect.width * (scale - 1)) / 2;
+        const maxPanY = (boundingRect.height * (scale - 1)) / 2;
+        
+        setPanPosition({
+          x: Math.max(-maxPanX, Math.min(maxPanX, touch.clientX - boundingRect.left)),
+          y: Math.max(-maxPanY, Math.min(maxPanY, touch.clientY - boundingRect.top))
+        });
       }
     }
+  };
 
-    setTouchStart({ x: 0, y: 0 });
-    setTouchEnd({ x: 0, y: 0 });
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (e.touches.length === 0) {
+      setIsPanning(false);
+      setInitialPinchDistance(0);
+      
+      // If not zoomed, check for swipe
+      if (scale === 1) {
+        const swipeThreshold = 50;
+        const deltaX = panPosition.x;
+        
+        if (Math.abs(deltaX) > swipeThreshold) {
+          if (deltaX > 0) {
+            prevImage();
+          } else {
+            nextImage();
+          }
+        }
+      }
+    }
   };
 
   const toggleZoom = () => {
-    setIsZoomed(!isZoomed);
+    if (isZoomed) {
+      resetZoomAndPan();
+    } else {
+      setScale(2);
+      setIsZoomed(true);
+    }
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-full sm:max-w-7xl h-[100vh] sm:h-[90vh] p-0 m-0 sm:m-4 overflow-hidden">
         <DialogTitle className="sr-only">
-          Gallery for {property.title}
+          Gallery for {property?.title}
         </DialogTitle>
         
         <div className="h-full flex flex-col">
           {/* Header */}
           <div className="flex justify-between items-center p-3 sm:p-4 border-b bg-white">
             <h3 className="text-sm sm:text-xl font-semibold text-property-stone truncate">
-              {property.title} - Image {currentIndex + 1}/{imageUrls.length}
+              {property?.title} - Image {currentIndex + 1}/{imageUrls.length}
             </h3>
             <div className="flex items-center gap-2">
-              {isMobile && (
-                <button
-                  onClick={toggleZoom}
-                  className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
-                  aria-label={isZoomed ? "Zoom out" : "Zoom in"}
-                >
-                  {isZoomed ? (
-                    <ZoomOut size={20} className="text-property-stone" />
-                  ) : (
-                    <ZoomIn size={20} className="text-property-stone" />
-                  )}
-                </button>
-              )}
+              <button
+                onClick={toggleZoom}
+                className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
+                aria-label={isZoomed ? "Zoom out" : "Zoom in"}
+              >
+                {isZoomed ? (
+                  <ZoomOut size={20} className="text-property-stone" />
+                ) : (
+                  <ZoomIn size={20} className="text-property-stone" />
+                )}
+              </button>
               <button
                 onClick={onClose}
                 className="p-1.5 hover:bg-property-cream rounded-full transition-colors"
@@ -142,7 +193,8 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
           {/* Main Image Area */}
           <div 
-            className="flex-1 relative flex items-center justify-center bg-property-cream overflow-hidden"
+            ref={containerRef}
+            className="flex-1 relative flex items-center justify-center bg-property-cream overflow-hidden touch-none"
             onTouchStart={handleTouchStart}
             onTouchMove={handleTouchMove}
             onTouchEnd={handleTouchEnd}
@@ -167,17 +219,19 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             )}
 
             <div 
-              className={`transition-transform duration-300 ${
-                isZoomed ? 'scale-150 cursor-move' : 'scale-100'
-              }`}
+              className="transition-transform duration-300 ease-out"
+              style={{
+                transform: `scale(${scale}) translate(${panPosition.x}px, ${panPosition.y}px)`,
+                touchAction: 'none'
+              }}
             >
               <img
+                ref={imageRef}
                 src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
-                alt={`${property.title} - Image ${currentIndex + 1}`}
-                className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] max-w-full object-contain mx-auto rounded-lg transition-all duration-300 ${
-                  isZoomed ? 'pointer-events-none' : ''
-                }`}
+                alt={`${property?.title} - Image ${currentIndex + 1}`}
+                className="max-h-[calc(100vh-10rem)] sm:max-h-[70vh] max-w-full object-contain mx-auto rounded-lg select-none"
                 onError={() => handleImageError(currentIndex)}
+                draggable={false}
               />
             </div>
           </div>
@@ -188,8 +242,11 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
               {imageUrls.map((imageUrl, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`relative flex-shrink-0 w-14 h-14 sm:w-20 sm:h-20 rounded-lg overflow-hidden 
+                  onClick={() => {
+                    setCurrentIndex(index);
+                    resetZoomAndPan();
+                  }}
+                  className={`relative flex-shrink-0 w-12 h-12 sm:w-20 sm:h-20 rounded-lg overflow-hidden 
                     transition-all duration-200 ${
                       currentIndex === index 
                         ? 'ring-2 ring-property-gold scale-105' 
