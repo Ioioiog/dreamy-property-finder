@@ -16,10 +16,18 @@ interface PropertyGalleryProps {
   property: Property | null;
 }
 
+interface TouchVelocity {
+  x: number;
+  y: number;
+  time: number;
+}
+
 const imgStyles = {
   maxWidth: '100%',
   maxHeight: '90vh',
   objectFit: 'contain',
+  userSelect: 'none',
+  WebkitUserSelect: 'none',
 };
 
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
@@ -31,11 +39,19 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
   const [panPosition, setPanPosition] = useState({ x: 0, y: 0 });
   const [initialPinchDistance, setInitialPinchDistance] = useState(0);
   const [scale, setScale] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [lastTap, setLastTap] = useState(0);
+  const [touchVelocity, setTouchVelocity] = useState<TouchVelocity>({ x: 0, y: 0, time: 0 });
+  
   const isMobile = useIsMobile();
   const imageRef = useRef<HTMLImageElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const initialTouchRef = useRef<{ x: number; y: number; time: number } | null>(null);
 
   const fallbackImage = '/public/placeholder.svg';
+  const DOUBLE_TAP_DELAY = 300; // ms
+  const SWIPE_THRESHOLD = 50; // px
+  const VELOCITY_THRESHOLD = 0.5; // px/ms
 
   useEffect(() => {
     if (property) {
@@ -51,6 +67,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     setScale(1);
     setPanPosition({ x: 0, y: 0 });
     setInitialPinchDistance(0);
+    setIsPanning(false);
   };
 
   useEffect(() => {
@@ -64,8 +81,20 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentIndex, onClose]);
 
+  const handleDoubleTap = (e: React.TouchEvent) => {
+    const currentTime = new Date().getTime();
+    const tapLength = currentTime - lastTap;
+    
+    if (tapLength < DOUBLE_TAP_DELAY && tapLength > 0) {
+      e.preventDefault();
+      toggleZoom();
+    }
+    setLastTap(currentTime);
+  };
+
   const nextImage = () => {
     if (!isPanning && scale === 1) {
+      setIsLoading(true);
       setCurrentIndex((prev) => (prev + 1) % imageUrls.length);
       resetZoomAndPan();
     }
@@ -73,34 +102,40 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   const prevImage = () => {
     if (!isPanning && scale === 1) {
+      setIsLoading(true);
       setCurrentIndex((prev) => (prev - 1 + imageUrls.length) % imageUrls.length);
       resetZoomAndPan();
     }
+  };
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
   };
 
   const handleImageError = (index: number) => {
     const newImageError = [...imageError];
     newImageError[index] = true;
     setImageError(newImageError);
+    setIsLoading(false);
   };
 
-  // Touch handling for mobile
   const handleTouchStart = (e: React.TouchEvent) => {
+    const touch = e.touches[0];
+    initialTouchRef.current = {
+      x: touch.clientX,
+      y: touch.clientY,
+      time: Date.now()
+    };
+
     if (e.touches.length === 2) {
-      // Pinch zoom
       const distance = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
       );
       setInitialPinchDistance(distance);
     } else if (e.touches.length === 1) {
-      // Single touch for panning or swiping
       setIsPanning(true);
-      const touch = e.touches[0];
-      setPanPosition({
-        x: panPosition.x,
-        y: panPosition.y
-      });
+      handleDoubleTap(e);
     }
   };
 
@@ -108,7 +143,6 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     e.preventDefault();
 
     if (e.touches.length === 2 && initialPinchDistance > 0) {
-      // Handle pinch zoom
       const distance = Math.hypot(
         e.touches[0].clientX - e.touches[1].clientX,
         e.touches[0].clientY - e.touches[1].clientY
@@ -116,33 +150,44 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
       const newScale = Math.max(1, Math.min(3, (distance / initialPinchDistance) * scale));
       setScale(newScale);
       setIsZoomed(newScale > 1);
-    } else if (e.touches.length === 1 && isPanning && scale > 1) {
-      // Handle panning when zoomed
+    } else if (e.touches.length === 1 && isPanning) {
       const touch = e.touches[0];
-      const boundingRect = containerRef.current?.getBoundingClientRect();
-      if (boundingRect) {
-        const maxPanX = (boundingRect.width * (scale - 1)) / 2;
-        const maxPanY = (boundingRect.height * (scale - 1)) / 2;
-        
-        setPanPosition({
-          x: Math.max(-maxPanX, Math.min(maxPanX, touch.clientX - boundingRect.left)),
-          y: Math.max(-maxPanY, Math.min(maxPanY, touch.clientY - boundingRect.top))
+      
+      if (initialTouchRef.current) {
+        const deltaX = touch.clientX - initialTouchRef.current.x;
+        const deltaY = touch.clientY - initialTouchRef.current.y;
+        const deltaTime = Date.now() - initialTouchRef.current.time;
+
+        setTouchVelocity({
+          x: deltaX / deltaTime,
+          y: deltaY / deltaTime,
+          time: deltaTime
         });
+
+        if (scale > 1) {
+          const boundingRect = containerRef.current?.getBoundingClientRect();
+          if (boundingRect) {
+            const maxPanX = (boundingRect.width * (scale - 1)) / 2;
+            const maxPanY = (boundingRect.height * (scale - 1)) / 2;
+            
+            setPanPosition({
+              x: Math.max(-maxPanX, Math.min(maxPanX, deltaX)),
+              y: Math.max(-maxPanY, Math.min(maxPanY, deltaY))
+            });
+          }
+        }
       }
     }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    if (e.touches.length === 0) {
-      setIsPanning(false);
-      setInitialPinchDistance(0);
+    if (e.touches.length === 0 && initialTouchRef.current) {
+      const deltaTime = Date.now() - initialTouchRef.current.time;
       
-      // If not zoomed, check for swipe
-      if (scale === 1) {
-        const swipeThreshold = 50;
-        const deltaX = panPosition.x;
+      if (scale === 1 && deltaTime < 300) {
+        const deltaX = touchVelocity.x * touchVelocity.time;
         
-        if (Math.abs(deltaX) > swipeThreshold) {
+        if (Math.abs(deltaX) > SWIPE_THRESHOLD || Math.abs(touchVelocity.x) > VELOCITY_THRESHOLD) {
           if (deltaX > 0) {
             prevImage();
           } else {
@@ -150,6 +195,10 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
           }
         }
       }
+      
+      setIsPanning(false);
+      setInitialPinchDistance(0);
+      initialTouchRef.current = null;
     }
   };
 
@@ -164,7 +213,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-full sm:max-w-7xl h-[100vh] sm:h-[90vh] p-0 m-0 sm:m-4 overflow-hidden">
+      <DialogContent className="max-w-full sm:max-w-7xl h-full sm:h-[90vh] p-0 m-0 sm:m-4 overflow-hidden">
         <DialogTitle className="sr-only">
           Gallery for {property?.title}
         </DialogTitle>
@@ -224,6 +273,12 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
               </>
             )}
 
+            {isLoading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-property-cream/50">
+                <div className="w-8 h-8 border-4 border-property-gold border-t-transparent rounded-full animate-spin" />
+              </div>
+            )}
+
             <div 
               className="transition-transform duration-300 ease-out"
               style={{
@@ -235,8 +290,9 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                 ref={imageRef}
                 src={imageError[currentIndex] ? fallbackImage : imageUrls[currentIndex]}
                 alt={`${property?.title} - Image ${currentIndex + 1}`}
-                style={imgStyles} // Apply the responsive styles here
+                style={imgStyles}
                 onError={() => handleImageError(currentIndex)}
+                onLoad={handleImageLoad}
                 draggable={false}
               />
             </div>
