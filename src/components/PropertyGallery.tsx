@@ -205,8 +205,9 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
                     className={`max-h-[calc(100vh-10rem)] sm:max-h-[70vh] w-[80vw] sm:w-[70vw] object-contain mx-auto rounded-lg transition-all duration-300 ${
                       isZoomed ? 'pointer-events-none' : ''
                     }`}
+                    style={{ maxWidth: '100%', overflow: 'hidden' }}
                     onError={() => handleImageError(currentIndex)}
-                  />
+                    />
                 </button>
               ))}
             </div>
