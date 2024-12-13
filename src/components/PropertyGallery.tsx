@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Dialog, DialogContent } from './ui/dialog';
-import { X } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Property {
@@ -19,18 +19,14 @@ interface PropertyGalleryProps {
 export default function PropertyGallery({ isOpen, onClose, property }: PropertyGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
   const isMobile = useIsMobile();
 
-  const fallbackImage = '/public/placeholder.svg';
+  const imageUrls = property?.images.map(image => 
+    `/assets/images/properties/${property.id}/${image}`
+  ) ?? [];
 
-  // Memoize image URLs to prevent unnecessary recalculations
-  const imageUrls = useMemo(() => {
-    if (!property) return [];
-    return property.images.map(image => `/assets/images/properties/${property.id}/${image}`);
-  }, [property]);
-
-  // Reset state when property changes
   useEffect(() => {
     if (property) {
       setCurrentIndex(0);
@@ -38,58 +34,44 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
     }
   }, [property]);
 
-  // Preload adjacent images
-  useEffect(() => {
-    if (!imageUrls.length) return;
+  const navigate = useCallback((direction: 'next' | 'prev') => {
+    if (isAnimating || !imageUrls.length) return;
 
-    const preloadImage = (index: number) => {
-      if (index < 0 || index >= imageUrls.length || loadedImages.has(index)) return;
-      
-      const img = new Image();
-      img.onload = () => {
-        setLoadedImages(prev => new Set([...prev, index]));
-      };
-      img.src = imageUrls[index];
-    };
+    setIsAnimating(true);
+    setCurrentIndex(prev => {
+      if (direction === 'next') {
+        return (prev + 1) % imageUrls.length;
+      }
+      return (prev - 1 + imageUrls.length) % imageUrls.length;
+    });
 
-    // Preload current image and adjacent ones
-    preloadImage(currentIndex);
-    preloadImage(currentIndex + 1);
-    preloadImage(currentIndex - 1);
-  }, [currentIndex, imageUrls, loadedImages]);
+    setTimeout(() => setIsAnimating(false), 300);
+  }, [imageUrls.length, isAnimating]);
 
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
-  }, []);
+  };
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+  const handleTouchEnd = (e: React.TouchEvent) => {
     const touchEnd = e.changedTouches[0].clientX;
     const touchDiff = touchStart - touchEnd;
 
     if (Math.abs(touchDiff) > 40) {
-      setCurrentIndex(prev => {
-        if (touchDiff > 0) {
-          return (prev + 1) % imageUrls.length;
-        }
-        return (prev - 1 + imageUrls.length) % imageUrls.length;
-      });
+      navigate(touchDiff > 0 ? 'next' : 'prev');
     }
-  }, [touchStart, imageUrls.length]);
+  };
 
-  const handleImageSelect = useCallback((index: number) => {
-    requestAnimationFrame(() => {
-      setCurrentIndex(index);
-    });
-  }, []);
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight') navigate('next');
+      if (e.key === 'ArrowLeft') navigate('prev');
+      if (e.key === 'Escape') onClose();
+    };
 
-  // Memoize thumbnail style
-  const thumbnailStyle = useMemo(() => ({
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover' as const,
-    opacity: '0',
-    transition: 'opacity 0.2s ease-in-out',
-  }), []);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [navigate, onClose]);
 
   if (!property) return null;
 
@@ -98,7 +80,7 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
       <DialogContent className="w-full h-[100vh] sm:h-[90vh] max-w-6xl p-0">
         <div className="flex flex-col h-full bg-black">
           {/* Header */}
-          <div className="flex items-center justify-between p-3 bg-white">
+          <div className="flex items-center justify-between p-3 bg-white z-10">
             <h3 className="text-sm sm:text-lg font-medium truncate pr-4">
               {property.title} - {currentIndex + 1}/{imageUrls.length}
             </h3>
@@ -111,70 +93,95 @@ export default function PropertyGallery({ isOpen, onClose, property }: PropertyG
             </button>
           </div>
 
-          <div className="flex flex-col sm:flex-row h-full">
-            {/* Main Image */}
+          {/* Carousel */}
+          <div className="relative flex-1 overflow-hidden">
             <div 
-              className={`
-                ${isMobile ? 'h-[70vh]' : 'flex-1 min-h-0'}
-                relative flex items-center justify-center bg-black p-2
-              `}
+              className="absolute inset-0 flex items-center justify-center"
               onTouchStart={handleTouchStart}
               onTouchEnd={handleTouchEnd}
             >
-              {imageUrls.map((url, index) => (
-                <img
-                  key={url}
-                  src={url}
-                  alt={`${property.title} - Image ${index + 1}`}
-                  className={`
-                    absolute inset-0 m-auto max-h-full max-w-full object-contain
-                    transition-opacity duration-300
-                    ${currentIndex === index ? 'opacity-100' : 'opacity-0 pointer-events-none'}
-                  `}
-                  loading={Math.abs(currentIndex - index) <= 1 ? "eager" : "lazy"}
-                  decoding="async"
-                  onLoad={(e) => {
-                    (e.target as HTMLImageElement).style.opacity = '1';
-                  }}
-                  draggable={false}
-                />
-              ))}
-            </div>
+              {/* Images */}
+              <div 
+                className="relative w-full h-full flex transition-transform duration-300 ease-out"
+                style={{
+                  transform: `translateX(-${currentIndex * 100}%)`,
+                }}
+              >
+                {imageUrls.map((url, index) => (
+                  <div 
+                    key={url}
+                    className="min-w-full h-full flex items-center justify-center"
+                    style={{ flex: '0 0 100%' }}
+                  >
+                    <img
+                      src={url}
+                      alt={`${property.title} - Image ${index + 1}`}
+                      className="max-h-full max-w-full object-contain"
+                      loading={Math.abs(currentIndex - index) <= 1 ? "eager" : "lazy"}
+                      decoding="async"
+                      onLoad={() => setLoadedImages(prev => new Set([...prev, index]))}
+                      draggable={false}
+                    />
+                  </div>
+                ))}
+              </div>
 
-            {/* Preview Strip */}
-            <div 
-              className={`
-                ${isMobile ? 'h-auto overflow-x-auto' : 'w-32 overflow-y-auto'}
-                bg-white p-2 flex ${isMobile ? 'flex-row' : 'flex-col'}
-                gap-2
-              `}
-            >
+              {/* Navigation Buttons */}
+              {!isMobile && (
+                <>
+                  <button
+                    onClick={() => navigate('prev')}
+                    className="absolute left-4 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
+                    disabled={isAnimating}
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={24} />
+                  </button>
+                  <button
+                    onClick={() => navigate('next')}
+                    className="absolute right-4 p-3 bg-white/90 hover:bg-white rounded-full shadow-lg transition-all"
+                    disabled={isAnimating}
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={24} />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Thumbnail Navigation */}
+          <div className="bg-white p-2 border-t">
+            <div className="flex gap-2 overflow-x-auto justify-center">
               {imageUrls.map((url, index) => (
                 <button
                   key={index}
-                  onClick={() => handleImageSelect(index)}
+                  onClick={() => setCurrentIndex(index)}
                   className={`
-                    ${isMobile ? 'w-20 h-20' : 'w-28 h-28'}
-                    flex-shrink-0 rounded-lg overflow-hidden
-                    transition-all duration-200 bg-gray-100
+                    relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden
+                    transition-all duration-200
                     ${currentIndex === index 
                       ? 'ring-2 ring-blue-500 opacity-100' 
                       : 'opacity-60 hover:opacity-100'
                     }
                   `}
+                  disabled={isAnimating}
                   aria-label={`View image ${index + 1}`}
                   aria-pressed={currentIndex === index}
                 >
                   <img
                     src={url}
-                    alt={`Preview ${index + 1}`}
-                    style={thumbnailStyle}
+                    alt={`Thumbnail ${index + 1}`}
+                    className="w-full h-full object-cover"
                     loading="lazy"
-                    decoding="async"
-                    onLoad={(e) => {
-                      (e.target as HTMLImageElement).style.opacity = '1';
-                    }}
                   />
+                  {loadedImages.has(index) && (
+                    <div 
+                      className={`absolute inset-0 bg-black/20 transition-opacity
+                        ${currentIndex === index ? 'opacity-0' : 'opacity-100'}
+                      `}
+                    />
+                  )}
                 </button>
               ))}
             </div>
