@@ -210,7 +210,7 @@ export const propertyData: Property[] = [
   {
     id: 'b11ap53a',
     title: 'Duplex 3 Camere B11.AP53A - Belvedere Residences',
-    price: 1450,
+    price: "---",
     description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
     status: propertyStatuses.AVAILABLE,
     details: {
@@ -234,7 +234,7 @@ export const propertyData: Property[] = [
   {
     id: 'b7ap60a',
     title: 'Duplex B7.AP60A - Belvedere Residences',
-    price: 1350,
+    price: "---",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
     status: propertyStatuses.AVAILABLE,
     details: {
@@ -258,7 +258,7 @@ export const propertyData: Property[] = [
   {
     id: 'b8ap55a',
     title: 'Apartament B8.AP55A - Custom Complex',
-    price: 1450,
+    price: "---",
     description: 'Apartament duplex cu trei camere, potrivit pentru familii. Oferă spații bine organizate și un balcon impresionant.',
     status: propertyStatuses.AVAILABLE,
     details: {
@@ -282,7 +282,7 @@ export const propertyData: Property[] = [
   {
     id: 'b5ap113b',
     title: 'Apartament 113 - Custom Complex',
-    price: 1300,
+    price: "---",
     description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
     status: propertyStatuses.AVAILABLE,
     details: {
@@ -306,7 +306,7 @@ export const propertyData: Property[] = [
   {
     id: 'b6ap109b',
     title: 'Apartament 109 - Belvedere Residences,',
-    price: 1400,
+    price: "---",
     description: 'Apartament duplex cu 3 camere și balcoane generoase. Perfect pentru cei care caută confort și spațiu.',
     status: propertyStatuses.AVAILABLE,
     details: {
@@ -330,7 +330,7 @@ export const propertyData: Property[] = [
   {
     id: 'glinka1',
     title: '2 Camere Calea Floreasca - Dorobanti',
-    price: 1100,
+    price: "---",
     description: 'Apartament modern 2 camere, situat pe Calea Floreasca, ideal pentru un stil de viață urban. Oferă un living spațios și un dormitor confortabil.',
     status: propertyStatuses.RENTED,
     details: {
@@ -353,7 +353,7 @@ export const propertyData: Property[] = [
   },
   { id: 'b6ap108b',
     title: 'Duplex 2 Camere 108- Belvedere Residences',
-    price: 1100,
+    price: "---",
     description: 'Duplex modern cu 2 camere, situat în Belvedere Residences. Ideal pentru un stil de viață contemporan, cu terasă generoasă și compartimentare eficientă.',
     status: propertyStatuses.AVAILABLE,
     details: {
