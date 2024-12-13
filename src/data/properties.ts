@@ -150,7 +150,7 @@ export const propertyData: Property[] = [
       coordinates: [44.42763169599856, 26.105758692854238] as [number, number]
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg, '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg'],
     amenities: ['Balcoane multiple', 'Vedere panoramică', 'Apartament in complex nou 2024'],
     panoramicUrl: 'https://momento360.com/e/u/4e09f969a4c3447eb33547c57ee10b56'
   },
@@ -175,7 +175,7 @@ export const propertyData: Property[] = [
       coordinates: [44.43555871126546, 26.103366204191687] as [number, number]
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg, '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcoane de 47 mp', 'Vedere panoramică spre lac', 'Apartament in complex nou 2024'],
     panoramicUrl: 'https://momento360.com/e/u/5f09f969a4c3447eb33547c57ee10b57'
   },
@@ -200,7 +200,7 @@ export const propertyData: Property[] = [
       coordinates: [44.42838350522629, 26.103564375902668] as [number, number]
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg'],
     amenities: ['Penthouse', 'Vedere panoramică', 'Terasă', 'Vedere panoramică spre lac', 'Apartament in complex nou 2024'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
   }
