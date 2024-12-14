@@ -285,10 +285,9 @@ export const propertyData: Property[] = [
   {
     id: 'ap 113',
     title: 'Duplex 3 Camere Ap 113B - Belvedere Residences',
-    price: "---",
+    price: 2100,
     description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
     status: propertyStatuses.AVAILABLE,
-    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 113.2, // Suprafața utilă
