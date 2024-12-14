@@ -228,12 +228,12 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
     amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b59'
   },
   {
-    id: 'b7ap60a',
+    id: 'ap 60',
     title: 'Duplex 3 Camere AP 60 - Belvedere Residences',
     price: "---",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
@@ -258,7 +258,7 @@ export const propertyData: Property[] = [
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b60'
   },
   {
-    id: 'b8ap55a',
+    id: 'ap 55',
     title: 'Duplex 3 Camere Ap 55 - Belvedere Residences',
     price: "---",
     description: 'Apartament duplex cu trei camere, potrivit pentru familii. Oferă spații bine organizate și un balcon impresionant.',
@@ -278,12 +278,12 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg', '22.jpg'],
     amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b61'
   },
   {
-    id: 'b5ap113b',
+    id: 'ap 113',
     title: 'Duplex 3 Camere Ap 113B - Belvedere Residences',
     price: "---",
     description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
@@ -303,12 +303,12 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'],
     amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b62'
   },
   {
-    id: 'b6ap109b',
+    id: 'ap 109',
     title: 'Duplex 4 Camere AP 109 - Belvedere Residences,',
     price: "---",
     description: 'Apartament duplex cu 3 camere și balcoane generoase. Perfect pentru cei care caută confort și spațiu.',
@@ -328,12 +328,12 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg', '22.jpg', '23.jpg', '24.jpg'],
     amenities: ['Balcon panoramic', 'Compartimentare modernă', 'Design luxos', 'Apartament duplex'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b63'
   },
   {
-    id: 'glinka1',
+    id: 'glinka 1',
     title: '2 Camere Calea Floreasca - Dorobanti',
     price: "---",
     description: 'Apartament modern 2 camere, situat pe Calea Floreasca, ideal pentru un stil de viață urban. Oferă un living spațios și un dormitor confortabil.',
@@ -352,11 +352,11 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg'],
     amenities: [ 'In inima orasului', 'Modern si urban', 'Apartament luminos'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b64'
   },
-  { id: 'b6ap108b',
+  { id: 'AP 108',
     title: 'Duplex 2 Camere 108- Belvedere Residences',
     price: "---",
     description: 'Duplex modern cu 2 camere, situat în Belvedere Residences. Ideal pentru un stil de viață contemporan, cu terasă generoasă și compartimentare eficientă.',
@@ -376,7 +376,7 @@ export const propertyData: Property[] = [
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg'],
     amenities: ['Terasă spațioasă', 'Loc de luat masa', 'Duplex modern', 'Apartament luminos'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b65'
   }
