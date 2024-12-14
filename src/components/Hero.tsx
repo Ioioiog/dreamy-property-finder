@@ -18,7 +18,7 @@ const Hero = () => {
     <div className="relative bg-property-stone min-h-screen">
       <div className="absolute inset-0">
         <img
-          src="/lovable-uploads/8ae6d84e-b054-4f7e-8528-391d7b7793c5.png"
+          src="/hero/8ae6d84e-b054-4f7e-8528-391d7b7793c5.png"
           alt="Apartament de lux cu priveliște panoramică"
           className="w-full h-full object-cover"
           loading="eager"
