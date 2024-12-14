@@ -107,20 +107,20 @@ export default function PropertyCard({
           {property.description}
         </p>
 
-        {property.status === propertyStatuses.AVAILABLE ? (
-          <motion.button
-            onClick={() => onViewDetails(property)}
-            className="w-full px-4 py-2 bg-property-orange text-white rounded-md 
-              hover:bg-property-orange-dark transition-colors flex items-center justify-center gap-2"
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            aria-label="Vezi detalii complete"
-          >
-            <Info size={18} />
-            Vezi detalii
-          </motion.button>
-        ) : (
-          <div className="text-center text-property-muted text-sm">
+        <motion.button
+          onClick={() => onViewDetails(property)}
+          className="w-full px-4 py-2 bg-property-orange text-white rounded-md 
+            hover:bg-property-orange-dark transition-colors flex items-center justify-center gap-2"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          aria-label="Vezi detalii complete"
+        >
+          <Info size={18} />
+          Vezi detalii
+        </motion.button>
+
+        {property.status !== propertyStatuses.AVAILABLE && (
+          <div className="text-center text-property-muted text-sm mt-2">
             Disponibil din: {property.availableFrom}
           </div>
         )}
