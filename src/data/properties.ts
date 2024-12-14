@@ -25,7 +25,6 @@ export const filterOptions = {
     { label: 'Yacht Kid', value: 'yacht-kid' },
     { label: 'Prima Vista', value: 'prima-vista' },
     { label: 'Belvedere Residences', value: 'belvedere-residences' },
-    { label: 'Custom Complex', value: 'custom-complex' },
     { label: 'Calea Floreasca', value: 'calea-floreasca' },
   ],
   priceRange: [
@@ -208,6 +207,30 @@ export const propertyData: Property[] = [
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b58'
   },
   {
+    id: 'ap 113',
+    title: 'Duplex 3 Camere Ap 113B - Belvedere Residences',
+    price: 2100,
+    description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
+    status: propertyStatuses.AVAILABLE,
+    details: {
+      rooms: 3,
+      area: 113.2, // Suprafața utilă
+      totalArea: 121.2, // Suprafața totală
+      floor: 'Duplex',
+      building: 'b5',
+      balcony: 8// Sum of balconies
+    },
+    location: {
+      address: 'Belvedere Residences, Bloc 5B',
+      complex: 'belvedere-residences',
+      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
+    },
+    mainImage: '1.jpg',
+    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'],
+    amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b62'
+  },
+  {
     id: 'ap 53',
     title: 'Duplex 3 Camere AP 53 - Belvedere Residences',
     price: "---",
@@ -224,7 +247,7 @@ export const propertyData: Property[] = [
     },
     location: {
       address: 'Belvedere Residences, Bloc B11',
-      complex: 'Belvedere Residences',
+      complex: 'belvedere-residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
@@ -249,7 +272,7 @@ export const propertyData: Property[] = [
     },
     location: {
       address: 'Belvedere Residences, Bloc B7',
-      complex: 'Belvedere Residences,',
+      complex: 'belvedere-residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
@@ -274,37 +297,13 @@ export const propertyData: Property[] = [
     },
     location: {
       address: 'Belvedere Residences, Bloc 8B',
-      complex: 'Belvedere Residences',
+      complex: 'belvedere-residences',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b61'
-  },
-  {
-    id: 'ap 113',
-    title: 'Duplex 3 Camere Ap 113B - Belvedere Residences',
-    price: 2100,
-    description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
-    status: propertyStatuses.AVAILABLE,
-    details: {
-      rooms: 3,
-      area: 113.2, // Suprafața utilă
-      totalArea: 121.2, // Suprafața totală
-      floor: 'Duplex',
-      building: 'b5',
-      balcony: 8// Sum of balconies
-    },
-    location: {
-      address: 'Belvedere Residences, Bloc 5B',
-      complex: 'Belvedere Residences',
-      coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
-    },
-    mainImage: '1.jpg',
-    images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'],
-    amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
-    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b62'
   },
   {
     id: 'ap 109',
@@ -323,7 +322,7 @@ export const propertyData: Property[] = [
     },
     location: {
       address: 'Belvedere Residences,, Bloc 6',
-      complex: 'Belvedere Residences,',
+      complex: 'belvedere-residences,',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
@@ -346,8 +345,8 @@ export const propertyData: Property[] = [
       building: 'A',
     },
     location: {
-      address: 'Glinka, Nr 1',
-      complex: 'Calea Floreasca',
+      address: 'Calea Floreasca',
+      complex: 'calea-floreasca',
       coordinates: [44.000000, 26.000000] as [number, number] // Replace with actual coordinates if available
     },
     mainImage: '1.jpg',
