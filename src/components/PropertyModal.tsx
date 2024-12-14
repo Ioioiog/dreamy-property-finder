@@ -176,15 +176,17 @@ Corp: ${property.details.building}
                       </div>
                     )}
                   </div>
-                  <button
-                    onClick={() => setShowViewingForm(true)}
-                    className="w-full mt-6 px-4 py-2 bg-brand-orange text-white rounded-md hover:bg-brand-orange-dark transition-colors"
-                    style={{ backgroundColor: 'orange', borderColor: 'darkorange' }}
-                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'darkorange'}
-                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'orange'}
-                  >
-                    Programează vizionare
-                  </button>
+                  {property.status === propertyStatuses.AVAILABLE && (
+                     <button    
+                     onClick={() => setShowViewingForm(true)}
+                     className="w-full mt-6 px-4 py-2 bg-brand-orange text-white rounded-md hover:bg-brand-orange-dark transition-colors"
+                     style={{ backgroundColor: 'orange', borderColor: 'darkorange' }}
+                     onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'darkorange'}
+                     onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'orange'}
+                   >
+                      Programează vizionare
+                     </button>
+                    )}
                 </div>
               </div>
             </div>
