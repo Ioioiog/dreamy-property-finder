@@ -356,7 +356,7 @@ export const propertyData: Property[] = [
     amenities: [ 'In inima orasului', 'Modern si urban', 'Apartament luminos'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b64'
   },
-  { id: 'AP 108',
+  { id: 'ap 108',
     title: 'Duplex 2 Camere 108- Belvedere Residences',
     price: "---",
     description: 'Duplex modern cu 2 camere, situat în Belvedere Residences. Ideal pentru un stil de viață contemporan, cu terasă generoasă și compartimentare eficientă.',
