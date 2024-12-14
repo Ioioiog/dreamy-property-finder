@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
-import { Property, propertyStatuses } from '@/data/properties';
 
 
 const Hero = () => {

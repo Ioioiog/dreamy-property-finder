@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { X, MapPin, Home, Square, ArrowUpDown, Building, Eye } from 'lucide-react';
-import { Property } from '@/types/property';
 import ViewingRequestForm from './ViewingRequestForm';
+import { Property, propertyStatuses } from '@/data/properties';
 
 interface PropertyModalProps {
   property: Property;
