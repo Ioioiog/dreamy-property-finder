@@ -213,6 +213,7 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 120, // Suprafața utilă (replace with accurate data from document if needed)
@@ -229,7 +230,7 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase'],
-    panoramicUrl: null // Add panoramic URL if available
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b59'
   },
   {
     id: 'b7ap60a',
@@ -237,6 +238,7 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 82.7, // Suprafața utilă
@@ -253,7 +255,7 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon generos', 'Compartimentare eficientă', 'Design modern', 'Apartament duplex'],
-    panoramicUrl: null // Add a panoramic URL if available
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b60'
   },
   {
     id: 'b8ap55a',
@@ -261,6 +263,7 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament duplex cu trei camere, potrivit pentru familii. Oferă spații bine organizate și un balcon impresionant.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 85, // Adjust based on visible area details
@@ -277,7 +280,7 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională'],
-    panoramicUrl: null // Add a panoramic URL if available
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b61'
   },
   {
     id: 'b5ap113b',
@@ -285,6 +288,7 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament spațios cu design modern, ideal pentru familii. Include camere generoase și balcoane panoramice.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 113.2, // Suprafața utilă
@@ -301,7 +305,7 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
-    panoramicUrl: null
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b62'
   },
   {
     id: 'b6ap109b',
@@ -309,6 +313,7 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament duplex cu 3 camere și balcoane generoase. Perfect pentru cei care caută confort și spațiu.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 3,
       area: 119.6, // Suprafața utilă
@@ -325,7 +330,7 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Balcon panoramic', 'Compartimentare modernă', 'Design luxos', 'Apartament duplex'],
-    panoramicUrl: null
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b63'
   },
   {
     id: 'glinka1',
@@ -333,13 +338,13 @@ export const propertyData: Property[] = [
     price: "---",
     description: 'Apartament modern 2 camere, situat pe Calea Floreasca, ideal pentru un stil de viață urban. Oferă un living spațios și un dormitor confortabil.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 2,
       area: 50, // Suprafața utilă apartament
       totalArea: 64, // Suprafața totală construită
       floor: '2',
       building: 'A',
-      balcony: 0 // Suprafața terasă
     },
     location: {
       address: 'Glinka, Nr 1',
@@ -349,13 +354,14 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: [ 'In inima orasului', 'Modern si urban', 'Apartament luminos'],
-    panoramicUrl: null // Add panoramic URL if available
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b64'
   },
   { id: 'b6ap108b',
     title: 'Duplex 2 Camere 108- Belvedere Residences',
     price: "---",
     description: 'Duplex modern cu 2 camere, situat în Belvedere Residences. Ideal pentru un stil de viață contemporan, cu terasă generoasă și compartimentare eficientă.',
     status: propertyStatuses.RENTED,
+    availableFrom: '---------',
     details: {
       rooms: 2,
       area: 62.4, // Suprafața utilă apartament
@@ -372,6 +378,6 @@ export const propertyData: Property[] = [
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
     amenities: ['Terasă spațioasă', 'Loc de luat masa', 'Duplex modern', 'Apartament luminos'],
-    panoramicUrl: null // Add panoramic URL if available
+    panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b65'
   }
 ];
