@@ -147,7 +147,7 @@ ${formData.message}
               
               <button
                 type="submit"
-                className="w-full px-6 py-4 bg-brand-orange text-white rounded-lg hover:bg-brand-orange-dark transition-all duration-200 transform hover:scale-[1.02] focus:ring-4 focus:ring-brand-orange/20 font-medium flex items-center justify-center gap-2"
+                className="w-full px-6 py-4 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-all duration-200 transform hover:scale-[1.02] focus:ring-4 focus:ring-orange-300 font-medium flex items-center justify-center gap-2"
               >
                 <Mail size={20} />
                 Trimite mesajul
