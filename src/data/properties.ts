@@ -137,7 +137,7 @@ export const propertyData: Property[] = [
     title: 'Apartament Prima 26 - Prima Vista',
     price: 1200,
     description: 'Apartament luxos în complexul Prima Vista, cu 3 camere și balcoane impresionante totalizând 58.2 mp. Oferă o vedere panoramică și spații generoase de locuit.',
-    status: propertyStatuses.AVAILABLE,
+    status: propertyStatuses.RENTED,
     details: {
       rooms: 3,
       area: 68,
