@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, MapPin, Home, Square, ArrowUpDown, Building, Eye, Year } from 'lucide-react';
+import { X, MapPin, Home, Square, ArrowUpDown, Building, Eye } from 'lucide-react';
 import ViewingRequestForm from './ViewingRequestForm';
 import { Property, propertyStatuses } from '@/data/properties';
 
@@ -110,6 +110,8 @@ Corp: ${property.details.building}
                         <p className="text-sm text-gray-500">Corp</p>
                         <p className="font-medium">{property.details.building}</p>
                       </div>
+                    </div>
+                  </div>
                 </div>
 
                 <div>
@@ -124,10 +126,11 @@ Corp: ${property.details.building}
                       <div key={index} className="flex items-center text-gray-600">
                         <span className="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
                         {amenity}
-                        </div>
-                     </div> 
+                      </div>
+                    ))}
                   </div>
                 </div>
+              </div>
 
               {/* Right Column - Image & Price Info */}
               <div>
