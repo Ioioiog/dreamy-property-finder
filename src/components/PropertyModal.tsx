@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, MapPin, Home, Square, ArrowUpDown, Building, Eye } from 'lucide-react';
+import { X, MapPin, Home, Square, ArrowUpDown, Building, Eye, Year } from 'lucide-react';
 import ViewingRequestForm from './ViewingRequestForm';
 import { Property, propertyStatuses } from '@/data/properties';
 
@@ -112,7 +112,7 @@ Corp: ${property.details.building}
                       </div>
                     </div>
                     <div className="text-sm text-gray-500">Anul Construcției</p>
-                    <pYear className="font-medium">{property.constructionYear}</p>
+                    <Year className="font-medium">{property.constructionYear}</p>
                     </div>
                   </div>
                 </div>
