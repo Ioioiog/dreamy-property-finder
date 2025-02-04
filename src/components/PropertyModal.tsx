@@ -111,6 +111,9 @@ Corp: ${property.details.building}
                         <p className="font-medium">{property.details.building}</p>
                       </div>
                     </div>
+                    <div className="text-sm text-gray-500">Anul Construcției</p>
+                    <pYear className="font-medium">{property.constructionYear}</p>
+                    </div>
                   </div>
                 </div>
 
