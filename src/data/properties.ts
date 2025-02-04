@@ -261,7 +261,7 @@ export const propertyData: Property[] = [
     price: "1450",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
     status: propertyStatuses.reserved,
-    availableFrom: '---------',
+    availableFrom: '20.02.2025',
     details: {
       rooms: 3,
       area: 82.7, // Suprafața utilă
