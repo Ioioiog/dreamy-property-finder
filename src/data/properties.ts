@@ -48,6 +48,7 @@ export const propertyData: Property[] = [
       totalArea: 108.5,
       floor: '2',
       building: 'A',
+      constructionYear: 2024, 
       balcony: 37.1
     },
     location: {
@@ -72,6 +73,7 @@ export const propertyData: Property[] = [
       totalArea: 65,
       floor: '1',
       building: 'B',
+      constructionYear: 2024,
       balcony: 12.6
     },
     location: {
@@ -96,6 +98,7 @@ export const propertyData: Property[] = [
       totalArea: 63.8,
       floor: '2',
       building: 'B',
+      constructionYear: 2024,
       balcony: 12.7
     },
     location: {
@@ -120,6 +123,7 @@ export const propertyData: Property[] = [
       totalArea: 64.5,
       floor: '2',
       building: 'B',
+      constructionYear: 2024,
       balcony: 12.3
     },
     location: {
@@ -144,6 +148,7 @@ export const propertyData: Property[] = [
       totalArea: 126.2,
       floor: '5',
       building: '4B',
+      constructionYear: 2024,
       balcony: 58.2
     },
     location: {
@@ -169,6 +174,7 @@ export const propertyData: Property[] = [
       totalArea: 115.4,
       floor: '4',
       building: '4B',
+      constructionYear: 2024,
       balcony: 46.9
     },
     location: {
@@ -194,6 +200,7 @@ export const propertyData: Property[] = [
       totalArea: 149.9,
       floor: '10',
       building: '4B',
+      constructionYear: 2024,
       balcony: 70
     },
     location: {
@@ -218,6 +225,7 @@ export const propertyData: Property[] = [
       totalArea: 121.2, // Suprafața totală
       floor: 'Duplex',
       building: 'b5',
+      constructionYear: 2023,
       balcony: 8// Sum of balconies
     },
     location: {
@@ -243,6 +251,7 @@ export const propertyData: Property[] = [
       totalArea: 120, // Suprafața totală construită (replace with accurate data from document if needed)
       floor: 'Duplex',
       building: 'B11',
+      constructionYear: 2022,
       balcony: 15 // Suprafața terasă (replace with accurate data from document if needed)
     },
     location: {
@@ -268,6 +277,7 @@ export const propertyData: Property[] = [
       totalArea: 95.9, // Suprafața totală
       floor: '10', // Indicating it's a duplex
       building: 'B7',
+      constructionYear: 2023,
       balcony: 13.1 // Sum of the balconies
     },
     location: {
@@ -293,6 +303,7 @@ export const propertyData: Property[] = [
       totalArea: 100, // Adjust based on total area details
       floor: '10/11',
       building: 'B8',
+      constructionYear: 2023,
       balcony: 15 // Replace with actual total balcony area if different
     },
     location: {
@@ -318,6 +329,7 @@ export const propertyData: Property[] = [
       totalArea: 143.5, // Suprafața totală
       floor: '10/11',
       building: 'Belvedere Residences',
+      constructionYear: 2023,
       balcony: 7.8 + 8.3 + 7.8 // Total balcony areas
     },
     location: {
@@ -343,6 +355,7 @@ export const propertyData: Property[] = [
       totalArea: 64, // Suprafața totală construită
       floor: '2',
       building: 'A',
+      constructionYear: 1980,
     },
     location: {
       address: 'Calea Floreasca',
@@ -366,6 +379,7 @@ export const propertyData: Property[] = [
       totalArea: 85.5, // Suprafața totală construită
       floor: '10',
       building: 'B6',
+      constructionYear: 2023,
       balcony: 10.5 // Suprafața terasă
     },
     location: {
