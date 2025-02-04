@@ -233,14 +233,14 @@ export const propertyData: Property[] = [
   {
     id: 'ap 53',
     title: 'Duplex 3 Camere AP 53 - Belvedere Residences',
-    price: "---",
+    price: 1450,
     description: 'Apartament duplex spațios cu 3 camere, perfect pentru familii. Include camere luminoase, terasă generoasă și compartimentare eficientă.',
-    status: propertyStatuses.RENTED,
-    availableFrom: '---------',
+    status: propertyStatuses.reserved,
+    availableFrom: '02.04.2025',
     details: {
       rooms: 3,
-      area: 120, // Suprafața utilă (replace with accurate data from document if needed)
-      totalArea: 150, // Suprafața totală construită (replace with accurate data from document if needed)
+      area: 110, // Suprafața utilă (replace with accurate data from document if needed)
+      totalArea: 120, // Suprafața totală construită (replace with accurate data from document if needed)
       floor: 'Duplex',
       building: 'B11',
       balcony: 15 // Suprafața terasă (replace with accurate data from document if needed)
@@ -258,9 +258,9 @@ export const propertyData: Property[] = [
   {
     id: 'ap 60',
     title: 'Duplex 3 Camere AP 60 - Belvedere Residences',
-    price: "---",
+    price: "1450",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
-    status: propertyStatuses.RENTED,
+    status: propertyStatuses.reserved,
     availableFrom: '---------',
     details: {
       rooms: 3,
