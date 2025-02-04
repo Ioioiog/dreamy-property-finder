@@ -235,7 +235,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg'],
-    amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă'],
+    amenities: ['Balcon panoramic', 'Vedere spectaculoasă', 'Duplex modern', 'Compartimentare eficientă', 'Apartament in complex nou 2023'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b62'
   },
   {
@@ -251,7 +251,7 @@ export const propertyData: Property[] = [
       totalArea: 120, // Suprafața totală construită (replace with accurate data from document if needed)
       floor: 'Duplex',
       building: 'B11',
-      constructionYear: 2022,
+      constructionYear: 2021,
       balcony: 15 // Suprafața terasă (replace with accurate data from document if needed)
     },
     location: {
@@ -261,7 +261,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg'],
-    amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase'],
+    amenities: ['Terasă spațioasă', 'Apartament duplex', 'Compartimentare eficientă', 'Camere luminoase', 'Apartament in complex nou 2021'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b59'
   },
   {
@@ -287,7 +287,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
-    amenities: ['Balcon generos', 'Compartimentare eficientă', 'Design modern', 'Apartament duplex'],
+    amenities: ['Balcon generos', 'Compartimentare eficientă', 'Design modern', 'Apartament duplex', 'Apartament in complex nou 2022'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b60'
   },
   {
@@ -313,7 +313,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg'],
-    amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională'],
+    amenities: ['Balcon mare', 'Duplex modern', 'Vedere panoramică', 'Compartimentare funcțională', 'Apartament in complex nou 2022'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b61'
   },
   {
@@ -339,7 +339,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg', '19.jpg', '20.jpg', '21.jpg', '22.jpg', '23.jpg', '24.jpg'],
-    amenities: ['Balcon panoramic', 'Compartimentare modernă', 'Design luxos', 'Apartament duplex'],
+    amenities: ['Balcon panoramic', 'Compartimentare modernă', 'Design luxos', 'Penthouse', 'Apartament in complex nou 2023'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b63'
   },
   {
@@ -389,7 +389,7 @@ export const propertyData: Property[] = [
     },
     mainImage: '1.jpg',
     images: ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg', '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg', '14.jpg', '15.jpg', '16.jpg', '17.jpg', '18.jpg'],
-    amenities: ['Terasă spațioasă', 'Loc de luat masa', 'Duplex modern', 'Apartament luminos'],
+    amenities: ['Terasă spațioasă', 'Living pe douǎ etaje', 'Duplex modern', 'Apartament in complex nou 2023'],
     panoramicUrl: 'https://momento360.com/e/u/6g09f969a4c3447eb33547c57ee10b65'
   }
 ];
