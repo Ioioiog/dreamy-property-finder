@@ -124,11 +124,10 @@ Corp: ${property.details.building}
                       <div key={index} className="flex items-center text-gray-600">
                         <span className="w-2 h-2 bg-brand-orange rounded-full mr-2"></span>
                         {amenity}
-                      </div>
-                    ))}
+                        </div>
+                     </div> 
                   </div>
                 </div>
-              </div>
 
               {/* Right Column - Image & Price Info */}
               <div>
