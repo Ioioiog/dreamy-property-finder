@@ -267,7 +267,7 @@ export const propertyData: Property[] = [
   {
     id: 'ap 60',
     title: 'Duplex 3 Camere AP 60 - Belvedere Residences',
-    price: "1450",
+    price: "-----",
     description: 'Apartament pe două niveluri, cu design modern și spații generoase. Dispune de camere bine compartimentate și balcon spațios.',
     status: propertyStatuses.RENTED,
     availableFrom: '---------',
